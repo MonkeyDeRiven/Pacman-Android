@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#171515"
+    tools:context=".hauptbildschirm">
+
+    <TextView
+        android:id="@+id/txtPacMan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pacman"
+        android:shadowColor="#ff9e9e9e"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="10"
+        android:text="Pac_Man"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#FFFF00"
+        android:textColorHighlight="#FFFF00"
+        android:textColorHint="#FFFF00"
+        android:textSize="70sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.12" />
+
+    <Button
+        android:id="@+id/btnBestenliste"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFF00"
+        android:text="Bestenliste"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintVertical_bias="0.545" />
+
+    <Button
+        android:id="@+id/btnEinsellungen"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFF00"
+        android:text="Einstellungen"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:textStyle="bold"
+        app:layout_constraintVertical_bias="0.716" />
+
+    <Button
+        android:id="@+id/btnSpielen"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFF00"
+        android:text="Spielen"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.374"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/btnHilfe"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFF00"
+        android:text="Hilfe"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.887"
+        android:textStyle="bold"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
