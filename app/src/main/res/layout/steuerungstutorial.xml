@@ -106,7 +106,7 @@
         app:srcCompat="@drawable/steuerungsbuttonhilfe" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/btnExitSteuerungstutorial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="45dp"

@@ -1,6 +1,7 @@
 package com.example.pacman_android;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,14 +21,18 @@ public class fruchtlexikon extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.geisterlexikon);
+        setContentView(R.layout.fruchlexikon);
         RecyclerView rv= findViewById(R.id.recycleview);
 
         MyAdapter myAdapter = new MyAdapter(this,s1,s2,images);
         rv.setAdapter(myAdapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
+        ImageButton btnExit = (ImageButton) findViewById(R.id.btnExitFruechtelexikon);
 
+        btnExit.setOnClickListener(view -> {
+            finish();
+        });
 
     }
 }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import com.example.myfirstapp.R;
 
@@ -28,6 +29,11 @@ int images[] = {R.drawable.rotergeist_rechts,R.drawable.pinkergeist_rechts,R.dra
         rv.setAdapter(myAdapter);
        rv.setLayoutManager(new LinearLayoutManager(this));
 
+        ImageButton btnExit = (ImageButton) findViewById(R.id.btnExitGeisterlexikon);
+
+        btnExit.setOnClickListener(view -> {
+            finish();
+        });
 
 
     }

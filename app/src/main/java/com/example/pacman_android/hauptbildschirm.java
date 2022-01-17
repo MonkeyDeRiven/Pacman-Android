@@ -35,7 +35,6 @@ public class hauptbildschirm extends AppCompatActivity {
         });
 
         btnHilfe.setOnClickListener(view -> {
-
             openActivityHilfe();
         });
     }
