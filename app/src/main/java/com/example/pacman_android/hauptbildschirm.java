@@ -19,29 +19,46 @@ public class hauptbildschirm extends AppCompatActivity {
         setContentView(R.layout.hauptbildschirm);
         btnBestenliste = (Button)findViewById(R.id.btnBestenliste);
         btnEinstellungen = (Button) findViewById(R.id.btnEinsellungen);
+        btnHilfe = (Button) findViewById(R.id.btnHilfe);
+        btnSpielen = (Button) findViewById(R.id.btnSpielen);
 
         btnEinstellungen.setOnClickListener(view ->{
-
             openActivityEinstellungen();
-
         });
 
         btnBestenliste.setOnClickListener(view -> {
-
             openActivityBestenliste();
+        });
+
+        btnSpielen.setOnClickListener(view -> {
+            openActivitySpielen();
+        });
+
+        btnHilfe.setOnClickListener(view -> {
+
+            openActivityHilfe();
         });
     }
 
+    public void openActivitySpielen(){
+        Intent spielenView = new Intent(this, spielbildschirm.class);
+        startActivity(spielenView);
+    }
+
     protected void openActivityEinstellungen(){
-        Intent intent = new Intent(this, einstellungen.class);
-        startActivity(intent);
+        Intent einstellungsView = new Intent(this, einstellungen.class);
+        startActivity(einstellungsView);
 
     }
 
-
     protected void openActivityBestenliste(){
-        Intent intent = new Intent(this, bestenliste.class);
-        startActivity(intent);
+        Intent bestenlisteView = new Intent(this, bestenliste.class);
+        startActivity(bestenlisteView);
+    }
+
+    public void openActivityHilfe(){
+        Intent hilfeView = new Intent(this, hilfe.class);
+        startActivity(hilfeView);
     }
 
 }
