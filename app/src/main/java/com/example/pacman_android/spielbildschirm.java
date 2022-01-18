@@ -2,10 +2,14 @@ package com.example.pacman_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.myfirstapp.R;
@@ -27,6 +31,8 @@ public block[][] spielfeldarray;
 
 private int posX=0;
 private int posY=0;
+
+  public static Handler h;
 
   public void fillPlayfield()
   {
@@ -157,17 +163,24 @@ public void checkPos() {
         Button left = findViewById(R.id.leftb);
         Button right = findViewById(R.id.rightb);
         Button down = findViewById(R.id.downb);
+
+        ImageButton btnSpielmenue = (ImageButton) findViewById(R.id.btnSpielmenue);
+
+        btnSpielmenue.setOnClickListener(view -> {
+            openSpielmenueView();
+        });
+
         ImageView player = findViewById(R.id.player);
         player.bringToFront();
         up.setOnTouchListener(new View.OnTouchListener()
-    {public boolean onTouch(View v, MotionEvent event) {
-        ImageView player = findViewById(R.id.player);
-        player.setRotation(0);
-        direction = 0;
+        {public boolean onTouch(View v, MotionEvent event) {
+            ImageView player = findViewById(R.id.player);
+            player.setRotation(0);
+            direction = 0;
 
-        return true;
-    }
-    });
+            return true;
+        }
+        });
         right.setOnTouchListener(new View.OnTouchListener()
         {public boolean onTouch(View v, MotionEvent event) {
             ImageView player = findViewById(R.id.player);
@@ -193,6 +206,16 @@ public void checkPos() {
         }
         });
 
+        h = new Handler() {
+            public void handleMessage(Message msg) {
+                finish();
+            }
+        };
+    }
+
+    public void openSpielmenueView(){
+        Intent spielmenueView = new Intent(this, spielmenu.class);
+        startActivity(spielmenueView);
     }
 
     @Override
@@ -205,5 +228,6 @@ public void checkPos() {
         playfield1();
         check = true;
     }
-
 }
+
+

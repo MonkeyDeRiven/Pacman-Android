@@ -165,7 +165,7 @@
         app:srcCompat="@drawable/herz" />
 
     <ImageButton
-        android:id="@+id/imageButton6"
+        android:id="@+id/btnSpielmenue"
         android:layout_width="51dp"
         android:layout_height="41dp"
         android:backgroundTint="@color/yellow"
