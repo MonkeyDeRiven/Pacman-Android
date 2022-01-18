@@ -303,7 +303,7 @@
 
 
     <ImageButton
-        android:id="@+id/ibX"
+        android:id="@+id/btnExitBestenliste"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#171515"
