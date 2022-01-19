@@ -19,7 +19,7 @@ public class hauptbildschirm extends AppCompatActivity {
         setContentView(R.layout.hauptbildschirm);
         btnBestenliste = (Button)findViewById(R.id.btnBestenliste);
         btnEinstellungen = (Button) findViewById(R.id.btnEinsellungen);
-        btnHilfe = (Button) findViewById(R.id.btnHilfe);
+        btnHilfe = (Button) findViewById(R.id.btnHilfeSpielmenue);
         btnSpielen = (Button) findViewById(R.id.btnSpielen);
 
         btnEinstellungen.setOnClickListener(view ->{
@@ -40,7 +40,7 @@ public class hauptbildschirm extends AppCompatActivity {
     }
 
     public void openActivitySpielen(){
-        Intent spielenView = new Intent(this, spielbildschirm.class);
+        Intent spielenView = new Intent(this, GameActivity.class);
         startActivity(spielenView);
     }
 

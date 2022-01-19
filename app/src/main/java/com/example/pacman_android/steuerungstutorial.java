@@ -14,7 +14,7 @@ public class steuerungstutorial extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.steuerungstutorial);
 
-        ImageButton btnExit = (ImageButton) findViewById(R.id.btnExitSteuerungstutorial);
+        ImageButton btnExit = (ImageButton) findViewById(R.id.btnSteuerungstutorial);
 
         btnExit.setOnClickListener(view -> {
             finish();

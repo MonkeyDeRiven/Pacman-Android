@@ -1,7 +1,6 @@
 package com.example.pacman_android;
 
 import android.app.Activity;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,7 +12,7 @@ import com.example.myfirstapp.R;
 
 public class GameActivity extends Activity {
     private GameView g;
-    private Spielfeld s;
+
     private int score = 0;
     private TextView score_view;
     private TextView score_string;
@@ -21,8 +20,6 @@ public class GameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -40,6 +37,7 @@ public class GameActivity extends Activity {
 
         // **  Add two buttons and add listener ** //
         g = findViewById(R.id.surfaceView);
+
 
         //Button for LEFT controller
         ImageButton btnRight_L = findViewById(R.id.btnRight_L);
@@ -119,15 +117,18 @@ public class GameActivity extends Activity {
         g.spieler.direction=0;
     }
 
-    public void rotatePlayerDown() {
-        if (g.spieler.mundzu) {
+    public void rotatePlayerDown(){
+        if(g.spieler.mundzu){
             g.spieler.current = g.spieler.untenzu;
-        } else {
+        }
+        else{
             g.spieler.current = g.spieler.untenauf;
         }
-        g.spieler.direction = 2;
+        g.spieler.direction=2;
     }
-        public void update(double delta) {
+
+
+    public void update(double delta) {
 
         // Updates on UI-Elements (like all Views) have to be done by the main UI-thread
         // Hence:

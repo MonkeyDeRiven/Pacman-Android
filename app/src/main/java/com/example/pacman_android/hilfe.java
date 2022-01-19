@@ -19,9 +19,9 @@ public class hilfe extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hilfe);
 
-        ImageButton btnExit = (ImageButton)findViewById(R.id.btnExitHilfe);
+        ImageButton btnExit = (ImageButton) findViewById(R.id.btnExitHilfe);
 
-        Button btnSteuerung = (Button) findViewById(R.id.btnExitSteuerungstutorial);
+        Button btnSteuerung = (Button) findViewById(R.id.btnSteuerungstutorial);
         Button btnGeisterlexikon = (Button) findViewById(R.id.btnGeisterlexikon);
         Button btnFruechtelexikon = (Button) findViewById(R.id.btnFruechtelexikon);
 

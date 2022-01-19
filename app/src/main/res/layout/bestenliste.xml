@@ -136,7 +136,7 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/posOneName"
+        android:id="@+id/posTwoName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
@@ -166,7 +166,7 @@
         app:layout_constraintVertical_bias="0.789" />
 
     <TextView
-        android:id="@+id/posTwoName"
+        android:id="@+id/posOneName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
@@ -181,7 +181,7 @@
         app:layout_constraintVertical_bias="0.067" />
 
     <TextView
-        android:id="@+id/posThreeName"
+        android:id="@+id/posThreeScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -256,7 +256,7 @@
         app:layout_constraintVertical_bias="0.244" />
 
     <TextView
-        android:id="@+id/posThreeScore"
+        android:id="@+id/posThreeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
@@ -303,7 +303,7 @@
 
 
     <ImageButton
-        android:id="@+id/ibX"
+        android:id="@+id/btnExitBestenliste"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#171515"

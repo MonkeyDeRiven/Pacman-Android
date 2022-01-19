@@ -77,7 +77,7 @@
         android:textStyle="bold"/>
 
     <Button
-        android:id="@+id/btnHilfe"
+        android:id="@+id/btnHilfeSpielmenue"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#FFFF00"
