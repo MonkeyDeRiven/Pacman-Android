@@ -30,13 +30,10 @@ public class Spielfeld {
         hintergrund = bm;
         screenwidth = Resources.getSystem().getDisplayMetrics().widthPixels;
         screenheight = Resources.getSystem().getDisplayMetrics().heightPixels;
-
-
-
-
     }
-    public void draw(Canvas canvas) {
 
+
+    public void draw(Canvas canvas) {
         screenwidth = canvas.getWidth();
         screenheight = canvas.getHeight();
         breiteBlock= screenwidth/20;
@@ -45,12 +42,10 @@ public class Spielfeld {
         int left=0,right=breiteBlock,top=0,bottom=hoeheBlock;
         for(int a=0,b=0;b<anzahlBloeckeHoehe;a++,left+=breiteBlock,right+=breiteBlock)
         {Rect rect = new Rect();
-        rect.set(left,top,right,bottom);
+            rect.set(left,top,right,bottom);
             canvas.drawRect(rect,paint);
             spielfeldarray[a][b] = rect;
-        if(a==anzahlBloeckeBreite-1){a=-1;++b;left=-breiteBlock;right=0;top+=hoeheBlock;bottom+=hoeheBlock;}
+            if(a==anzahlBloeckeBreite-1){a=-1;++b;left=-breiteBlock;right=0;top+=hoeheBlock;bottom+=hoeheBlock;}
         }
-
-
     }
 }

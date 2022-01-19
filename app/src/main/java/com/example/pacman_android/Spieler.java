@@ -9,6 +9,8 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 
 import com.example.myfirstapp.R;
+import com.google.android.gms.maps.model.Circle;
+
 
 public class Spieler {
 
@@ -18,7 +20,7 @@ public class Spieler {
    public int direction=0;
    public int width=0;
    public int height=0;
-   Rect rect;
+
   public int screenWidth;
   public int screenHeight;
   boolean mundzu= false;
@@ -66,6 +68,7 @@ public class Spieler {
 
 
 
+
    }
 
    public void move()
@@ -95,28 +98,30 @@ public class Spieler {
       else if(direction==-1){};
 
 
+
    }
 
-   /*public void  checkCollision()
+   public void  checkCollision()
    {boolean check=false;
        for(int a=0,c=0;c<spielfeld.anzahlBloeckeHoehe;a++)
        {
-           if(spielfeld.spielfeldarray[a][c].intersect(rect))
-           {check=true;}
+           if(spielfeld.spielfeldarray[a][c].intersect(posX,posY,posX+width,posY+height))
+           {check=true;break;}
            if(a== spielfeld.anzahlBloeckeBreite-1){++c;a=-1;}
 
        }
        if(!check)direction=-1;
-
-   }*/
+   }
 
 
    public void draw(Canvas canvas) {
        canvas.drawBitmap(current, posX, posY, null);
-       move();
+
    }
 
    public void update(double lastFrameDur){
+       move();
+       checkCollision();
 
          }
 

@@ -16,7 +16,6 @@ import com.example.myfirstapp.R;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public Spieler spieler;
     public Spielfeld spielfeld;
-
     public GameThread thread;
 
     public GameView(Context context) {
@@ -79,16 +78,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-
         if (canvas != null) {
             spielfeld.draw(canvas);
             spieler.draw(canvas);
-
         }
+
     }
 
 
     public void restart(){
         thread = new GameThread(getHolder(), this);
     }
+
+
+
 }
