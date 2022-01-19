@@ -3,29 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/drawable/movebuttons.xml" value="0.1" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/activity_main.xml" value="0.10989583333333333" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/bestenliste.xml" value="0.10625" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/einstellungen.xml" value="0.10625" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/fruchlexikon.xml" value="0.1" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/geisterlexikon.xml" value="0.1" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/hauptbildschirm.xml" value="0.10625" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/hilfe.xml" value="0.10625" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/recycleviewrow.xml" value="0.1" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/spielbildschirm.xml" value="0.10625" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/spielmenu.xml" value="0.1" />
-        <entry key="..\:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/res/layout/steuerungstutorial.xml" value="0.10625" />
-        <entry key="..\:/Users/kaane/AndroidStudioProjects/pacman_android/app/src/main/res/layout/bestenliste.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/bestenliste.xml" value="0.11770833333333333" />
-        <entry key="app/src/main/res/layout/einstellungen.xml" value="0.12395833333333334" />
-        <entry key="app/src/main/res/layout/fruchlexikon.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/geisterlexikon.xml" value="0.12395833333333334" />
-        <entry key="app/src/main/res/layout/hauptbildschirm.xml" value="0.11770833333333333" />
-        <entry key="app/src/main/res/layout/hilfe.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/recycleviewrow.xml" value="0.12395833333333334" />
-        <entry key="app/src/main/res/layout/spielbildschirm.xml" value="0.12395833333333334" />
-        <entry key="app/src/main/res/layout/spielmenu.xml" value="0.12395833333333334" />
-        <entry key="app/src/main/res/layout/steuerungstutorial.xml" value="0.121875" />
+        <entry key="..\:/Users/baris/StudioProjects/pacman_android/app/src/main/res/layout/einstellungen.xml" value="0.21510416666666668" />
+        <entry key="..\:/Users/baris/StudioProjects/pacman_android/app/src/main/res/layout/hauptbildschirm.xml" value="0.21510416666666668" />
+        <entry key="..\:/Users/baris/StudioProjects/pacman_android/app/src/main/res/layout/hilfe.xml" value="0.21510416666666668" />
+        <entry key="..\:/Users/baris/StudioProjects/pacman_android/app/src/main/res/layout/spielbildschirm.xml" value="0.21510416666666668" />
+        <entry key="..\:/Users/baris/StudioProjects/pacman_android/app/src/main/res/layout/spielmenu.xml" value="0.25" />
+        <entry key="..\:/Users/baris/StudioProjects/pacman_android/app/src/main/res/layout/steuerungstutorial.xml" value="0.20520833333333333" />
       </map>
     </option>
   </component>
