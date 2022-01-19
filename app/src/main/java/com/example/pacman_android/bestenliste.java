@@ -1,6 +1,7 @@
 package com.example.pacman_android;
 
 import android.os.Bundle;
+import android.support.v4.app.INotificationSideChannel;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -9,7 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfirstapp.R;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class bestenliste extends AppCompatActivity {
     TextView posOneName;
@@ -28,9 +36,14 @@ public class bestenliste extends AppCompatActivity {
     class player{
         int score;
         String name;
+
+        player(String name, int score){
+            this.name = name;
+            this.score = score;
+        }
     }
 
-    private player[] bestenListe = new player[5];
+    ArrayList <player> arrBestenListe = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +70,82 @@ public class bestenliste extends AppCompatActivity {
         btnExit.setOnClickListener(view -> {
             finish();
         });
+
+        loadData();
+        sortArr();
+        setUpBestenliste();
     }
 
-    public void loadData(View v){
+    public void loadData(){
         FileInputStream fis = null;
 
-        //fis = openFileInput(filename);
+        String[] lineSplit;
 
+        try{
+            fis = openFileInput(filename);
+            InputStreamReader streamReader = new InputStreamReader(fis);
+            BufferedReader buffReader = new BufferedReader(streamReader);
+            String textLine;
+            String name;
+            int score;
+
+            while( (textLine = buffReader.readLine()) != null){
+                lineSplit = textLine.split(";");
+                name = lineSplit[0];
+                score = Integer.parseInt(lineSplit[1]);
+                player tmp = new player(name, score);
+                arrBestenListe.add(tmp);
+            }
+
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    void sortArr(){
+        Collections.sort(arrBestenListe, new Comparator<player>(){
+            public int compare(player p1, player p2){
+                return Integer.valueOf(p2.score).compareTo(p1.score);
+            }
+        });
+    }
+
+    void setUpBestenliste(){
+        int size  = arrBestenListe.size();
+
+        if(size >= 1) {
+            posOneName.setText(arrBestenListe.get(0).name);
+            String hilfsstring = String.valueOf(arrBestenListe.get(0).score);
+            posOneScore.setText(hilfsstring);
+        }
+
+        if(size >= 2) {
+            posTwoName.setText(arrBestenListe.get(1).name);
+            String hilfsstring = String.valueOf(arrBestenListe.get(1).score);
+            posTwoScore.setText(hilfsstring);
+        }
+
+        if(size >= 3) {
+            posThreeName.setText(arrBestenListe.get(2).name);
+            String hilfsstring = String.valueOf(arrBestenListe.get(2).score);
+            posThreeScore.setText(hilfsstring);
+        }
+
+        if(size >= 4) {
+            posFourName.setText(arrBestenListe.get(3).name);
+            String hilfsstring = String.valueOf(arrBestenListe.get(3).score);
+            posFourScore.setText(hilfsstring);
+        }
+
+        if(size >= 5) {
+            posFiveName.setText(arrBestenListe.get(4).name);
+            String hilfsstring = String.valueOf(arrBestenListe.get(4).score);
+            posFiveScore.setText(hilfsstring);
+        }
 
     }
 }
