@@ -10,22 +10,22 @@
 
     <TextView
         android:id="@+id/Steuerung"
-        android:layout_width="500dp"
-        android:layout_height="138dp"
-        android:fontFamily="@font/pacman"
+        android:layout_width="464dp"
+        android:layout_height="116dp"
 
+        android:fontFamily="@font/pacman"
         android:gravity="center"
         android:text="Steuerung"
         android:textAlignment="center"
         android:textColor="#FFFF00"
-        android:textSize="60sp"
+        android:textSize="55sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.054" />
 
     <TextView
         android:id="@+id/right"

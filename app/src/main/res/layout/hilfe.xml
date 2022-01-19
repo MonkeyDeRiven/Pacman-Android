@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/TextViewHilfe"
-        android:layout_width="410dp"
-        android:layout_height="86dp"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
         android:fontFamily="@font/pacman"
         android:scrollbarThumbHorizontal="@color/yellow"
         android:scrollbarThumbVertical="@color/yellow"
@@ -24,50 +24,56 @@
         android:textColor="#FFFF00"
         android:textColorHighlight="#FFFF00"
         android:textColorHint="#FFFF00"
-        android:textSize="70dp"
+        android:textSize="55dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/btnSteuerungstutorial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
         android:backgroundTint="#FFFF00"
         android:text="Steuerung"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.418" />
+        app:layout_constraintVertical_bias="0.4" />
 
     <Button
         android:id="@+id/btnFruechtelexikon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
         android:backgroundTint="#FFFF00"
         android:text="Früchtelexikon"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/TextViewHilfe"
-        app:layout_constraintVertical_bias="0.592" />
+        app:layout_constraintVertical_bias="0.55" />
 
     <Button
         android:id="@+id/btnGeisterlexikon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
         android:backgroundTint="#FFFF00"
         android:text="Geisterlexikon"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/TextViewHilfe"
-        app:layout_constraintVertical_bias="0.806"
+        app:layout_constraintVertical_bias="0.75"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
@@ -78,10 +84,10 @@
         android:tint="#FFFF00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.976"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.016"
+        app:layout_constraintVertical_bias="0.05"
         app:srcCompat="@android:drawable/ic_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
