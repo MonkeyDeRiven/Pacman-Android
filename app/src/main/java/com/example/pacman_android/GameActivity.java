@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.myfirstapp.R;
@@ -37,36 +38,93 @@ public class GameActivity extends Activity {
         // **  Add two buttons and add listener ** //
         g = findViewById(R.id.surfaceView);
 
-        Button rb = (Button) findViewById(R.id.rightbutton);
-        Button lb = (Button) findViewById(R.id.leftbutton);
-        Button ub = (Button) findViewById(R.id.upbutton);
-        Button bb = (Button) findViewById(R.id.downbutton);
-        rb.setOnClickListener(
-                view -> {
-                    if(g.spieler.mundzu)g.spieler.current = g.spieler.rechtsauf;
-                  else  g.spieler.current = g.spieler.rechtszu;
 
-                    g.spieler.direction=1;
+        //Button for LEFT controller
+        ImageButton btnRight_L = findViewById(R.id.btnRight_L);
+        ImageButton btnLeft_L = findViewById(R.id.btnLeft_L);
+        ImageButton btnUp_L =  findViewById(R.id.btnUp_L);
+        ImageButton btnDown_L = findViewById(R.id.btnDown_L);
 
-                });
-        lb.setOnClickListener(
-                view -> {
-                    if(g.spieler.mundzu)g.spieler.current = g.spieler.linksauf;
-                   else g.spieler.current = g.spieler.linkszu;
-                    g.spieler.direction=3;
-                });
-        ub.setOnClickListener(
-                view -> {
-                    if(g.spieler.mundzu)g.spieler.current = g.spieler.obenauf;
-                  else  g.spieler.current = g.spieler.obenzu;
-                    g.spieler.direction=0;
-                });
-        bb.setOnClickListener(
-                view -> {
-                    if(g.spieler.mundzu)g.spieler.current = g.spieler.untenauf;
-                    else g.spieler.current = g.spieler.untenzu;
-                    g.spieler.direction=2;
-                });
+        //Button for RIGHT controller
+        ImageButton btnRight_R = findViewById(R.id.btnRight_R);
+        ImageButton btnLeft_R = findViewById(R.id.btnLeft_R);
+        ImageButton btnUp_R = findViewById(R.id.btnUp_R);
+        ImageButton btnDown_R = findViewById(R.id.btnDown_R);
+
+        //OnClickListener for LEFT controller
+        btnRight_L.setOnClickListener(view -> {
+            rotatePlayerRight();
+        });
+
+        btnLeft_L.setOnClickListener(view -> {
+            rotatePlayerLeft();
+        });
+
+        btnUp_L.setOnClickListener(view -> {
+            rotatePlayerUp();
+        });
+
+        btnDown_L.setOnClickListener(view -> {
+            rotatePlayerDown();
+        });
+
+        //OnClickListener for RIGHT controller
+
+        btnRight_R.setOnClickListener(view -> {
+            rotatePlayerRight();
+        });
+
+        btnLeft_R.setOnClickListener(view -> {
+            rotatePlayerRight();
+        });
+
+        btnUp_R.setOnClickListener(view -> {
+            rotatePlayerUp();
+        });
+
+        btnDown_R.setOnClickListener(view -> {
+            rotatePlayerDown();
+        });
+    }
+
+    public void rotatePlayerRight(){
+        if(g.spieler.mundzu){
+            g.spieler.current = g.spieler.rechtsauf;
+        }
+        else{
+            g.spieler.current = g.spieler.rechtszu;
+        }
+        g.spieler.direction=1;
+    }
+
+    public void rotatePlayerLeft(){
+        if(g.spieler.mundzu){
+            g.spieler.current = g.spieler.linksauf;
+        }
+        else {
+            g.spieler.current = g.spieler.linkszu;
+        }
+        g.spieler.direction=3;
+    }
+
+    public void rotatePlayerUp(){
+        if(g.spieler.mundzu){
+            g.spieler.current = g.spieler.obenauf;
+        }
+        else{
+            g.spieler.current = g.spieler.obenzu;
+        }
+        g.spieler.direction=0;
+    }
+
+    public void rotatePlayerDown(){
+        if(g.spieler.mundzu){
+            g.spieler.current = g.spieler.untenzu;
+        }
+        else{
+            g.spieler.current = g.spieler.untenauf;
+        }
+        g.spieler.direction=2;
     }
 
 
