@@ -11,7 +11,7 @@
         android:supportsRtl="true"
 
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.pacman_android.hauptbildschirm"
+        <activity android:name="com.example.pacman_android.GameActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
