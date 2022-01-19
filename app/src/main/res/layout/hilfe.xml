@@ -45,7 +45,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.415" />
+        app:layout_constraintVertical_bias="0.4" />
 
     <Button
         android:id="@+id/btnFruechtelexikon"
@@ -59,7 +59,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/TextViewHilfe"
-        app:layout_constraintVertical_bias="0.575" />
+        app:layout_constraintVertical_bias="0.55" />
 
     <Button
         android:id="@+id/btnGeisterlexikon"
@@ -73,7 +73,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/TextViewHilfe"
-        app:layout_constraintVertical_bias="0.821"
+        app:layout_constraintVertical_bias="0.75"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
