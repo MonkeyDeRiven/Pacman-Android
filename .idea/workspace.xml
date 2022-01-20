@@ -9,9 +9,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="005347d4-8d25-4588-bf94-338b7127161a" name="Default Changelist" comment="">
+    <list default="true" id="005347d4-8d25-4588-bf94-338b7127161a" name="Default Changelist" comment="weitere Anpassungen bei einstellungen.xml spielmenu.xml und hilfe.xml">
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
@@ -27,9 +26,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/app/pacman_android.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/pacman_android.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/bestenliste.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/bestenliste.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/einstellungen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/einstellungen.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/hilfe.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hilfe.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/spielmenu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/spielmenu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fruchlexikon.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fruchlexikon.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/geisterlexikon.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/geisterlexikon.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/recycleviewrow.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/recycleviewrow.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/spielbildschirm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/spielbildschirm.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/steuerungstutorial.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/steuerungstutorial.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
@@ -134,7 +137,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="2626e8a9-496f-4f5a-82f8-469f0e1fd1cb" name="Default Changelist" comment="" />
+      <changelist id="005347d4-8d25-4588-bf94-338b7127161a" name="Default Changelist" comment="weitere Anpassungen bei einstellungen.xml spielmenu.xml und hilfe.xml" />
       <created>1642174690858</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />

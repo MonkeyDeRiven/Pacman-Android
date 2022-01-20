@@ -5,30 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#171515"
-    tools:context="com.example.pacman_android.geisterlexikon">
+    tools:context=".LexikonActivity">
 
 
     <ImageButton
         android:id="@+id/btnExitGeisterlexikon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="628dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="344dp"
 
         android:backgroundTint="#171515"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/recycleview"
-
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.05"
         app:srcCompat="@android:drawable/ic_delete"
-        app:tint="#FFFF00"
-        android:layout_marginLeft="628dp"
-        android:layout_marginRight="28dp" />
+        app:tint="#FFFF00" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleview"
@@ -39,18 +32,12 @@
         android:layout_marginEnd="-100dp"
         android:layout_marginBottom="20dp"
         android:background="#171515"
-        android:scrollbars="vertical"
-        android:fadeScrollbars="false"
-        android:scrollbarThumbVertical="@color/yellow"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="-100dp"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
