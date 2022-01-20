@@ -1,6 +1,7 @@
 package com.example.pacman_android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
@@ -172,6 +173,9 @@ public class GameActivity extends Activity {
         ImageButton btnUp_R = findViewById(R.id.btnUp_R);
         ImageButton btnDown_R = findViewById(R.id.btnDown_R);
 
+        //Pause Button
+        ImageButton btnPause = findViewById(R.id.btnPause);
+
         String controllerLayout = "left";
 
         try {
@@ -218,6 +222,16 @@ public class GameActivity extends Activity {
             btnUp_L.setVisibility(View.GONE);
             btnDown_L.setVisibility(View.GONE);
         }
+
+        //OnClickListener for pause button
+        btnPause.setOnClickListener(view -> {
+            openSpielmenueActivity();
+        });
+    }
+
+    public void openSpielmenueActivity(){
+        Intent spielmenueView = new Intent(this, spielmenu.class);
+        startActivity(spielmenueView);
     }
 
     public void update(double delta) {
