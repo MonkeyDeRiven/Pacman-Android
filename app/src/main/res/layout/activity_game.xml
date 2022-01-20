@@ -221,4 +221,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.005" />
 
+    <ImageButton
+        android:id="@+id/btnPause"
+        android:layout_width="42dp"
+        android:layout_height="38dp"
+        android:backgroundTint="#171515"
+        android:src="@android:drawable/ic_media_pause"
+        android:tint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomborder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.005" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
