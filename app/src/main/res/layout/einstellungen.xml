@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="554dp"
-        android:layout_height="72dp"
+        android:layout_height="60dp"
         android:fontFamily="@font/pacman"
         android:text="Einstellungen"
         android:textAlignment="center"

@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/txtBestenliste"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="480dp"
+        android:layout_height="60dp"
         android:ems="10"
         android:fontFamily="@font/pacman"
         android:inputType="textPersonName"
@@ -19,73 +19,13 @@
         android:textAlignment="center"
         android:textColor="#FFFF00"
         android:textColorHighlight="#CDDC39"
-        android:textSize="40sp"
+        android:textSize="55sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.043" />
-
-    <TextView
-        android:id="@+id/posOneRang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.177"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.068" />
-
-    <TextView
-        android:id="@+id/posTwoRang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.177"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.244" />
-
-    <TextView
-        android:id="@+id/posThreeRang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.177"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.421" />
-
-    <TextView
-        android:id="@+id/posFourRang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="4"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.177"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.601" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/txtRang"
@@ -94,14 +34,14 @@
         android:text="Rang"
         android:textAlignment="center"
         android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintHorizontal_bias="0.185"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtBestenliste"
-        app:layout_constraintVertical_bias="0.0"
-        android:textStyle="bold"/>
+        app:layout_constraintVertical_bias="0.092" />
 
     <TextView
         android:id="@+id/txtName"
@@ -110,14 +50,13 @@
         android:text="Spielername"
         android:textAlignment="center"
         android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtBestenliste"
-        app:layout_constraintVertical_bias="0.0"
-        android:textStyle="bold"/>
+        app:layout_constraintVertical_bias="0.092" />
 
     <TextView
         android:id="@+id/txtScore"
@@ -126,14 +65,14 @@
         android:text="Score"
         android:textAlignment="center"
         android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.822"
+        app:layout_constraintHorizontal_bias="0.818"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtBestenliste"
-        app:layout_constraintVertical_bias="0.0"
-        android:textStyle="bold"/>
+        app:layout_constraintVertical_bias="0.092" />
 
     <TextView
         android:id="@+id/posTwoName"
@@ -145,25 +84,70 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.242" />
+        app:layout_constraintVertical_bias="0.319" />
 
     <TextView
-        android:id="@+id/posFiveRang"
+        android:id="@+id/posTwoRang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5"
+        android:text="2"
         android:textAlignment="center"
         android:textColor="#FFFF00"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.177"
+        app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.789" />
+        app:layout_constraintVertical_bias="0.323" />
+
+    <TextView
+        android:id="@+id/posThreeRang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRang"
+        app:layout_constraintVertical_bias="0.496" />
+
+    <TextView
+        android:id="@+id/posFourRang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRang"
+        app:layout_constraintVertical_bias="0.676" />
+
+    <TextView
+        android:id="@+id/posOneRang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRang"
+        app:layout_constraintVertical_bias="0.146" />
 
     <TextView
         android:id="@+id/posOneName"
@@ -175,115 +159,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.067" />
-
-    <TextView
-        android:id="@+id/posThreeScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.815"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.421" />
-
-    <TextView
-        android:id="@+id/posFourName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.601" />
-
-    <TextView
-        android:id="@+id/posFiveName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.789" />
-
-    <TextView
-        android:id="@+id/posOneScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.815"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.067" />
-
-    <TextView
-        android:id="@+id/posTwoScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.815"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.244" />
-
-    <TextView
-        android:id="@+id/posThreeName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.419" />
-
-    <TextView
-        android:id="@+id/posFourScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.815"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.601" />
+        app:layout_constraintVertical_bias="0.142" />
 
     <TextView
         android:id="@+id/posFiveScore"
@@ -295,11 +174,130 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.815"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.789" />
+        app:layout_constraintVertical_bias="0.864" />
 
+    <TextView
+        android:id="@+id/posThreeScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtScore"
+        app:layout_constraintVertical_bias="0.496" />
+
+    <TextView
+        android:id="@+id/posFourName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtName"
+        app:layout_constraintVertical_bias="0.676" />
+
+    <TextView
+        android:id="@+id/posFiveName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtName"
+        app:layout_constraintVertical_bias="0.864" />
+
+    <TextView
+        android:id="@+id/posOneScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtScore"
+        app:layout_constraintVertical_bias="0.142" />
+
+    <TextView
+        android:id="@+id/posTwoScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtScore"
+        app:layout_constraintVertical_bias="0.323" />
+
+    <TextView
+        android:id="@+id/posThreeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtName"
+        app:layout_constraintVertical_bias="0.496" />
+
+    <TextView
+        android:id="@+id/posFourScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtScore"
+        app:layout_constraintVertical_bias="0.676" />
+
+    <TextView
+        android:id="@+id/posFiveRang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRang"
+        app:layout_constraintVertical_bias="0.864" />
 
 
     <ImageButton
@@ -309,10 +307,10 @@
         android:backgroundTint="#171515"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.976"
+        app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.016"
+        app:layout_constraintVertical_bias="0.05"
         app:srcCompat="@android:drawable/ic_delete"
         app:tint="@color/yellow" />
 
