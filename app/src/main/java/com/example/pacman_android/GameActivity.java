@@ -1,6 +1,15 @@
 package com.example.pacman_android;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -8,16 +17,33 @@ import android.os.Handler;
 import android.os.Message;
 import android.renderscript.ScriptGroup;
 import android.util.Log;
+
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.myfirstapp.R;
 
 import java.io.BufferedReader;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,24 +55,34 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class GameActivity extends Activity {
+public class GameActivity extends AppCompatActivity implements RankingDialog.RankingDialogListener {
     final String settingsFileName = "settings.txt";
 
-    private GameView g;
 
-    private int score = 0;
+    private GameView g;
+    private TextView pScore;
+    private String userNameDone;
+    int score;
+
     private TextView score_view;
     private TextView score_string;
 
     public static Handler h;
 
+
+    private static final String filename = "highscore.txt";
+    private ArrayList<bestenliste.player> arrBestenListe = new ArrayList<>();
+
+
+    @SuppressLint("ServiceCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        score = 0;
 
         // if you only need the surface view in full screen, you could also use this:
         // setContentView(new GameView(this));
@@ -75,6 +111,7 @@ public class GameActivity extends Activity {
         ImageButton btnLeft_R = findViewById(R.id.btnLeft_R);
         ImageButton btnUp_R = findViewById(R.id.btnUp_R);
         ImageButton btnDown_R = findViewById(R.id.btnDown_R);
+
 
         //OnClickListener for LEFT controller
         btnRight_L.setOnClickListener(view -> {
@@ -116,6 +153,9 @@ public class GameActivity extends Activity {
                 finish();
             }
         };
+
+
+
     }
 
     public void rotatePlayerRight(){
@@ -156,8 +196,8 @@ public class GameActivity extends Activity {
             g.spieler.current = g.spieler.untenauf;
         }
         g.spieler.direction=2;
+        gameEnd();
     }
-
 
     public void setControllerLayout() {
 
@@ -272,6 +312,105 @@ public class GameActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+
         super.onDestroy();
+    }
+
+    public void gameEnd(){
+        loadRanking();
+        addHighscore();
+
+    }
+
+    public void addHighscore(){
+        int size = arrBestenListe.size();
+        Boolean playerIsBetter = false;
+        score = 500;
+        for(int i = 0; i<size; i++){
+            if(score >= arrBestenListe.get(i).score) {
+                playerIsBetter = true;
+                break;
+            }
+        }
+
+        if(size == 0)
+            playerIsBetter = true;
+
+        if(playerIsBetter){
+            openDialog();
+
+        }
+    }
+
+    public void openDialog(){
+        RankingDialog rankingdialog = new RankingDialog();
+        rankingdialog.show(getSupportFragmentManager(), "Top5");
+    }
+
+    void saveFile(){
+        FileOutputStream fos = null;
+        String text = "";
+        String name;
+        String score;
+
+
+        int size = arrBestenListe.size();
+
+        for(int i = 0; i < size; i++){
+            name = arrBestenListe.get(i).name;
+            score = String.valueOf(arrBestenListe.get(i).score);
+            text = text + name + ";" + score + "\n";
+        }
+
+        try {
+            fos = openFileOutput(filename, MODE_PRIVATE);
+            fos.write(text.getBytes());
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void loadRanking(){
+        FileInputStream inputStream = null;
+
+        String[] lineSplit;
+
+        try{
+            inputStream = openFileInput(filename);
+            InputStreamReader streamReader = new InputStreamReader(inputStream);
+            BufferedReader buffReader = new BufferedReader(streamReader);
+            String textLine;
+            String name;
+            int score;
+            int counter = 0;
+
+            while( (textLine = buffReader.readLine()) != null) {
+                if (counter <= 4) {
+                    lineSplit = textLine.split(";");
+                    name = lineSplit[0];
+                    score = Integer.parseInt(lineSplit[1]);
+                    arrBestenListe.add(new bestenliste.player(name, score));
+                    counter++;
+
+                }
+            }
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getUserName(String username) {
+        userNameDone = username;
+        arrBestenListe.add(new bestenliste.player(userNameDone, score));
+        saveFile();
     }
 }
