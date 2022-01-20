@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#171515"
-    tools:context=".einstellungenActivity" >
+    tools:context="com.example.pacman_android.einstellungen" >
 
 
     <TextView
@@ -100,7 +100,7 @@
         app:tint="#FFFF00" />
 
     <Switch
-        android:id="@+id/switchRL"
+        android:id="@+id/swControllerLayout"
         android:layout_width="57dp"
         android:layout_height="33dp"
         android:backgroundTint="#FFFF00"
