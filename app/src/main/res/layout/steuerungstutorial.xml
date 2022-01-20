@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context="com.example.pacman_android.steuerungstutorial">
+    tools:context="com.example.pacman_android.steuerungstutorial"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="15dp">
 
     <TextView
         android:id="@+id/Steuerung"
@@ -26,74 +28,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1" />
 
-    <TextView
-        android:id="@+id/right"
-        android:layout_width="115dp"
-        android:layout_height="39dp"
-        android:fontFamily="sans-serif"
-        android:gravity="center_horizontal"
-        android:text="Rechts"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.704"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.645" />
-
-    <TextView
-        android:id="@+id/Unten"
-        android:layout_width="103dp"
-        android:layout_height="47dp"
-        android:fontFamily="sans-serif"
-        android:gravity="center_horizontal"
-        android:text="Unten"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.956" />
-
-    <TextView
-        android:id="@+id/Oben"
-        android:layout_width="94dp"
-        android:layout_height="40dp"
-        android:fontFamily="sans-serif"
-        android:gravity="center_horizontal"
-        android:text="Oben"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.401" />
-
-    <TextView
-        android:id="@+id/Links"
-        android:layout_width="94dp"
-        android:layout_height="40dp"
-        android:fontFamily="sans-serif"
-        android:gravity="center_horizontal"
-        android:text="Links"
-        android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.318"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.644" />
-
     <ImageButton
         android:id="@+id/btnSteuerungstutorial"
         android:layout_width="wrap_content"
@@ -107,4 +41,114 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05"
         app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/buttonUp"
+        android:layout_width="147dp"
+        android:layout_height="135dp"
+        android:rotation="87"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/steuerungsbutton"
+        tools:layout_editor_absoluteY="118dp" />
+
+    <TextView
+        android:id="@+id/right"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:text="Rechts"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.744"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.62" />
+
+    <TextView
+        android:id="@+id/Unten"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:text="Unten"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.93" />
+
+    <ImageView
+        android:id="@+id/buttonDown"
+        android:layout_width="154dp"
+        android:layout_height="133dp"
+        android:rotation="-91"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/steuerungsbutton"
+        tools:layout_editor_absoluteY="244dp" />
+
+    <ImageView
+        android:id="@+id/buttonLeft"
+        android:layout_width="137dp"
+        android:layout_height="124dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.641"
+        app:srcCompat="@drawable/steuerungsbutton"
+        tools:layout_editor_absoluteX="225dp" />
+
+    <TextView
+        android:id="@+id/Links"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:text="Links"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.258"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.62" />
+
+    <TextView
+        android:id="@+id/Oben"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:text="Oben"
+        android:textAlignment="center"
+        android:textColor="#FFFF00"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.279" />
+
+    <ImageView
+        android:id="@+id/buttonRight"
+        android:layout_width="145dp"
+        android:layout_height="127dp"
+        android:rotationY="-182"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.647"
+        app:srcCompat="@drawable/steuerungsbutton"
+        tools:layout_editor_absoluteX="362dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

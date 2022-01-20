@@ -23,17 +23,8 @@
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/app/pacman_android.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/pacman_android.app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/bestenliste.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/bestenliste.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/einstellungen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/einstellungen.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fruchlexikon.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fruchlexikon.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/geisterlexikon.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/geisterlexikon.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/recycleviewrow.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/recycleviewrow.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/spielbildschirm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/spielbildschirm.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/steuerungstutorial.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/steuerungstutorial.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/settings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/settings.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +41,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="workspace_baris" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -159,7 +150,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="d" />
-    <option name="LAST_COMMIT_MESSAGE" value="d" />
+    <MESSAGE value="Issue #1 weitere Screens angepasst" />
+    <option name="LAST_COMMIT_MESSAGE" value="Issue #1 weitere Screens angepasst" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
