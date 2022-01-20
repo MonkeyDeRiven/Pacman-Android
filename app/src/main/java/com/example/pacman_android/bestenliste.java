@@ -33,7 +33,7 @@ public class bestenliste extends AppCompatActivity {
 
     private static final String filename = "highscore.txt";
 
-    class player{
+    static class player{
         int score;
         String name;
 
@@ -102,7 +102,6 @@ public class bestenliste extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     void sortArr(){

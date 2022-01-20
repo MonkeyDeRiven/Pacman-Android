@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Hier Namen eingeben"
+        android:minHeight="48dp"
+        android:layout_below="@+id/txtHighscore"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:id="@+id/txtHighscore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sie sind unter den Top 5, tragen Sie ihren Namen ein"
+        android:textSize="20dp"/>
+
+</RelativeLayout>

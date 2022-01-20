@@ -7,9 +7,6 @@
     tools:context="com.example.pacman_android.spielbildschirm">
 
 
-    tools:context=".spielbildschirm">
-
-
     <ImageView
         android:id="@+id/player"
 
@@ -115,7 +112,7 @@
         android:layout_marginLeft="16dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtPScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Score: 42152"
