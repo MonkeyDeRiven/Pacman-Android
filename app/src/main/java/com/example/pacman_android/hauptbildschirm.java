@@ -40,7 +40,7 @@ public class hauptbildschirm extends AppCompatActivity {
     }
 
     public void openActivitySpielen(){
-        Intent spielenView = new Intent(this, spielbildschirm.class);
+        Intent spielenView = new Intent(this, GameActivity.class);
         startActivity(spielenView);
     }
 

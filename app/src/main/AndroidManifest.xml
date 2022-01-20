@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.example.pacman_android.spielbildschirm"
+        <activity android:name="com.example.pacman_android.GameActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
