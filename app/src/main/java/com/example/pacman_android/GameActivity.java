@@ -2,12 +2,22 @@ package com.example.pacman_android;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+
+import android.content.Intent;
+import android.media.Image;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.renderscript.ScriptGroup;
+import android.util.Log;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -24,6 +34,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.myfirstapp.R;
 
 import java.io.BufferedReader;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -32,7 +43,22 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
 public class GameActivity extends AppCompatActivity implements RankingDialog.RankingDialogListener {
+    final String settingsFileName = "settings.txt";
+
+
     private GameView g;
     private TextView pScore;
     private String userNameDone;
@@ -187,25 +213,30 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
         ImageButton btnUp_R = findViewById(R.id.btnUp_R);
         ImageButton btnDown_R = findViewById(R.id.btnDown_R);
 
-        //opens the settings file and provides a reader "settingsReader"
-        InputStream settings = getResources().openRawResource(R.raw.settings);
-        InputStreamReader inputReader = new InputStreamReader(settings);
-        BufferedReader settingsReader = new BufferedReader(inputReader);
+        //Pause Button
+        ImageButton btnPause = findViewById(R.id.btnPause);
 
-        String controller_layout = "left";
+        String controllerLayout = "left";
+
         try {
-            //Reads a line
-            controller_layout = settingsReader.readLine();
+            FileInputStream settingsOutput = openFileInput(settingsFileName);
+            InputStreamReader reader = new InputStreamReader(settingsOutput);
+            BufferedReader settingsReader = new BufferedReader(reader);
+
+            //reads line from settings.txt
+            controllerLayout = settingsReader.readLine();
 
             //Formats the String
-            controller_layout = controller_layout.substring(controller_layout.indexOf('=')+1);
-            controller_layout = controller_layout.trim();
+            controllerLayout = controllerLayout.substring(controllerLayout.indexOf('=')+1);
+            controllerLayout = controllerLayout.trim();
+            controllerLayout = controllerLayout.toLowerCase();
+
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("SETTINGS_ERROR" ,"Could not set controller layout, settings file may be corrupted");
         }
 
-        if(controller_layout.equals("left")){
-            //hide rigth controller
+        if(controllerLayout.equals("left")){
+            //hide right controller
             btnRight_R.setVisibility(View.GONE);
             btnLeft_R.setVisibility(View.GONE);
             btnUp_R.setVisibility(View.GONE);
@@ -218,7 +249,7 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
             btnDown_L.setVisibility(View.VISIBLE);
 
         }
-        else if(controller_layout.equals("right")){
+        else if(controllerLayout.equals("right")){
             //hide rigth controller
             btnRight_R.setVisibility(View.VISIBLE);
             btnLeft_R.setVisibility(View.VISIBLE);
@@ -231,6 +262,16 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
             btnUp_L.setVisibility(View.GONE);
             btnDown_L.setVisibility(View.GONE);
         }
+
+        //OnClickListener for pause button
+        btnPause.setOnClickListener(view -> {
+            openSpielmenueActivity();
+        });
+    }
+
+    public void openSpielmenueActivity(){
+        Intent spielmenueView = new Intent(this, spielmenu.class);
+        startActivity(spielmenueView);
     }
 
     public void update(double delta) {
