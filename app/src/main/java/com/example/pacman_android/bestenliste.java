@@ -93,8 +93,7 @@ public class bestenliste extends AppCompatActivity {
                 lineSplit = textLine.split(";");
                 name = lineSplit[0];
                 score = Integer.parseInt(lineSplit[1]);
-                player tmp = new player(name, score);
-                arrBestenListe.add(tmp);
+                arrBestenListe.add(new player(name, score));
             }
 
         }
@@ -107,11 +106,7 @@ public class bestenliste extends AppCompatActivity {
     }
 
     void sortArr(){
-        Collections.sort(arrBestenListe, new Comparator<player>(){
-            public int compare(player p1, player p2){
-                return Integer.valueOf(p2.score).compareTo(p1.score);
-            }
-        });
+        Collections.sort(arrBestenListe, (p1, p2) -> Integer.valueOf(p2.score).compareTo(p1.score));
     }
 
     void setUpBestenliste(){
@@ -146,6 +141,5 @@ public class bestenliste extends AppCompatActivity {
             String hilfsstring = String.valueOf(arrBestenListe.get(4).score);
             posFiveScore.setText(hilfsstring);
         }
-
     }
 }
