@@ -1,7 +1,11 @@
 package com.example.pacman_android;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -10,12 +14,19 @@ import android.widget.TextView;
 
 import com.example.myfirstapp.R;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class GameActivity extends Activity {
     private GameView g;
 
     private int score = 0;
     private TextView score_view;
     private TextView score_string;
+
+    public static Handler h;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +49,8 @@ public class GameActivity extends Activity {
         // **  Add two buttons and add listener ** //
         g = findViewById(R.id.surfaceView);
 
+        //moves the controller to one side, based on the settings.txt
+        setControllerLayout();
 
         //Button for LEFT controller
         ImageButton btnRight_L = findViewById(R.id.btnRight_L);
@@ -75,7 +88,7 @@ public class GameActivity extends Activity {
         });
 
         btnLeft_R.setOnClickListener(view -> {
-            rotatePlayerRight();
+            rotatePlayerLeft();
         });
 
         btnUp_R.setOnClickListener(view -> {
@@ -85,6 +98,12 @@ public class GameActivity extends Activity {
         btnDown_R.setOnClickListener(view -> {
             rotatePlayerDown();
         });
+
+        h = new Handler() {
+            public void handleMessage(Message msg) {
+                finish();
+            }
+        };
     }
 
     public void rotatePlayerRight(){
@@ -128,6 +147,66 @@ public class GameActivity extends Activity {
     }
 
 
+    public void setControllerLayout() {
+
+        //Button for LEFT controller
+        ImageButton btnRight_L = findViewById(R.id.btnRight_L);
+        ImageButton btnLeft_L = findViewById(R.id.btnLeft_L);
+        ImageButton btnUp_L =  findViewById(R.id.btnUp_L);
+        ImageButton btnDown_L = findViewById(R.id.btnDown_L);
+
+        //Button for RIGHT controller
+        ImageButton btnRight_R = findViewById(R.id.btnRight_R);
+        ImageButton btnLeft_R = findViewById(R.id.btnLeft_R);
+        ImageButton btnUp_R = findViewById(R.id.btnUp_R);
+        ImageButton btnDown_R = findViewById(R.id.btnDown_R);
+
+        //opens the settings file and provides a reader "settingsReader"
+        InputStream settings = getResources().openRawResource(R.raw.settings);
+        InputStreamReader inputReader = new InputStreamReader(settings);
+        BufferedReader settingsReader = new BufferedReader(inputReader);
+
+        String controller_layout = "left";
+        try {
+            //Reads a line
+            controller_layout = settingsReader.readLine();
+
+            //Formats the String
+            controller_layout = controller_layout.substring(controller_layout.indexOf('=')+1);
+            controller_layout = controller_layout.trim();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(controller_layout.equals("left")){
+            //hide rigth controller
+            btnRight_R.setVisibility(View.GONE);
+            btnLeft_R.setVisibility(View.GONE);
+            btnUp_R.setVisibility(View.GONE);
+            btnDown_R.setVisibility(View.GONE);
+
+            //show left controller
+            btnRight_L.setVisibility(View.VISIBLE);
+            btnLeft_L.setVisibility(View.VISIBLE);
+            btnUp_L.setVisibility(View.VISIBLE);
+            btnDown_L.setVisibility(View.VISIBLE);
+
+        }
+        else if(controller_layout.equals("right")){
+            //hide rigth controller
+            btnRight_R.setVisibility(View.VISIBLE);
+            btnLeft_R.setVisibility(View.VISIBLE);
+            btnUp_R.setVisibility(View.VISIBLE);
+            btnDown_R.setVisibility(View.VISIBLE);
+
+            //show left controller
+            btnRight_L.setVisibility(View.GONE);
+            btnLeft_L.setVisibility(View.GONE);
+            btnUp_L.setVisibility(View.GONE);
+            btnDown_L.setVisibility(View.GONE);
+        }
+    }
+
     public void update(double delta) {
 
         // Updates on UI-Elements (like all Views) have to be done by the main UI-thread
@@ -150,6 +229,7 @@ public class GameActivity extends Activity {
     protected void onResume() {
         super.onResume();
         g.restart();
+        setControllerLayout();
     }
 
     @Override
