@@ -52,8 +52,8 @@ public class spielbildschirm extends AppCompatActivity {
             double pacmanX_2 = pacman.getX() + pacman.getWidth();
             double pacmanY_2 = pacman.getY() + pacman.getHeight();
 
-            double pacmanCenterX = pacmanX_1 + pacman.getWidth() / 2;
-            double pacmanCenterY = pacmanY_1 + pacman.getHeight() / 2;
+            double pacmanCenterX = pacmanX_1 + (double)pacman.getWidth() / 2;
+            double pacmanCenterY = pacmanY_1 + (double)pacman.getHeight() / 2;
 
             int i = 0;
             int j = 0;
@@ -244,12 +244,12 @@ public class spielbildschirm extends AppCompatActivity {
                 newImageView.setX(xPosition);
                 newImageView.setY(yPosition);
                 xPosition += blockWidth;
+                gameField[i][j] = newBlock;
             }
             yPosition += blockHeight;
             xPosition = (int)(widthInaccuracyValue * arrayLength / 2);
         }
-        int o = 0;
-        o = o + o;
+        mapcreated = true;
     }
 }
 
