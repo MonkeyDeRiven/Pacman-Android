@@ -3,9 +3,11 @@ package com.example.pacman_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,111 +20,45 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class spielbildschirm extends AppCompatActivity {
-int breite = 0;
-int hoehe = 0;
-boolean check = false;
-
-public block[][] spielfeldarray;
-
-
-    private int direction = 0;
-    final int anzahlBloeckeBreite=20,anzahlBloeckeHoehe=15;
-
-
-private int posX=0;
-private int posY=0;
-
-  public static Handler h;
-
-  public void fillPlayfield()
-  {
-      spielfeldarray = new block[breite/anzahlBloeckeBreite][hoehe/anzahlBloeckeHoehe];
-      int breiteBlock = breite/anzahlBloeckeBreite,hoeheBlock=hoehe/anzahlBloeckeHoehe;
-    ImageView spielfeld = findViewById(R.id.playfield);
-
-      for(int a=0,b=0,x=(int)spielfeld.getX(),y=(int)spielfeld.getY();y<hoehe;a++,x+=breiteBlock)
-      {block value = new block();
-      value.x1 = x;
-      value.x2 = x+breiteBlock;
-      value.y1 = y;
-      value.y2 = y+hoeheBlock;
-      value.inhalt = 1;
-      spielfeldarray[a][b]  = value;
-
-          if(a==anzahlBloeckeBreite-1){++b;a=-1;y+=hoeheBlock;x=-breiteBlock;}
-      }
-  }
-
-  public void playfield1()
-  {
-      for(int a=0;a<anzahlBloeckeBreite;a++)
-      {
-          spielfeldarray[a][0].inhalt =0 ;
-      }
-      for(int a=0;a<anzahlBloeckeBreite;a++)
-      {
-          spielfeldarray[a][anzahlBloeckeHoehe-1].inhalt =0 ;
-      }
-  }
-
-
+int width = 0;
+int height = 0;
+public Rect []obstacles;
+ImageView player;
+public Rect rect;
+private int direction = 0;
+public static Handler h;
+boolean mapcreated=false;
 
     public void move ()
     {
-
+        if(mapcreated)checkCollision();
         ImageView player = findViewById(R.id.player);
-        if(direction == 0) player.setY(player.getY()-1);   //OBEN
-        else if(direction == 1) player.setX(player.getX()+1); //RECHTS
-        else if(direction == 2) player.setY(player.getY()+1); //UNTEN
-        else if(direction == 3) player.setX(player.getX()-1); //LINKS
+        if(direction == 0) player.setY(player.getY()-5);   //OBEN
+        else if(direction == 1) player.setX(player.getX()+5); //RECHTS
+        else if(direction == 2) player.setY(player.getY()+5); //UNTEN
+        else if(direction == 3) player.setX(player.getX()-5); //LINKS
         else if(direction == -1);                            //STEHEN BLEIBEN
     }
-public void checkPos() {
-
-    ImageView player = findViewById(R.id.player);
-    int x=(int)player.getX()+player.getWidth()/2;
-    int y = (int)player.getY()+player.getHeight()/2;
-    for(int a =0,b=0;b!=anzahlBloeckeHoehe;a++)
-    {
-        if(x>=spielfeldarray[a][b].x1&&x<=spielfeldarray[a][b].x2&&
-                y>=spielfeldarray[a][b].y1&&y<=spielfeldarray[a][b].y2)
-        {
-            posX = a;
-            posY = b;
-            break;
-        }
-
-            if(a==anzahlBloeckeBreite-1){++b;a=-1;}
-    }
-
-    }
-
-  public void checkCollision()
-  {
 
 
+        public void checkCollision ()
+        {player = findViewById(R.id.player);
 
-               if(direction == 0 && posY-1<0 || spielfeldarray[posX][posY-1].inhalt==0)direction = -1;//OBEN
+            for (int a = 0; a < obstacles.length; a++) {
+                if (obstacles[a].intersects((int)player.getX(),(int)player.getY(),(int)player.getX()+player.getWidth(),(int)player.getY()+(int)player.getHeight())) {
+                    if(direction==0)player.setY(player.getY()+5);
+                   else if(direction==1)player.setX(player.getX()-5);
+                   else if(direction==2)player.setY(player.getY()-5);
+                    else if(direction==3)player.setX(player.getX()+5);
 
-             else  if(direction == 1 &&  posX>=anzahlBloeckeBreite|| spielfeldarray[posX+1][posY].inhalt==0)direction = -1;//RECHTS
-            //RECHTS
-             else if(direction == 2 &&  posY>=anzahlBloeckeHoehe|| spielfeldarray[posX][posY+1].inhalt==0)direction = -1;//UNTEN
-               //UNTEN
-            else   if(direction == 3 &&  posX-1<0 || spielfeldarray[posX-1][posY].inhalt==0)direction = -1;}//LINKS
+                    direction = -1;
 
-
-
-
-
-
-
-
-
-
+                }
+            }
+   }
 
 
     protected void onResume() {
-     ImageView player = findViewById(R.id.player);
       super.onResume();
         Timer timer;
            {
@@ -132,25 +68,18 @@ public void checkPos() {
                     spielbildschirm.this.runOnUiThread(new Runnable() {
                         public void run() {
 
-                            if(check)checkPos();
-                            if(check)checkCollision();
-
-                            move();
-
+move();
                         }
                     });
                 }
-            }, 0, 5);
+            }, 0, 20);
         }
-
-
-
-
-
   }
 
-
-
+    protected void onPause() {
+        super.onPause();
+        direction = -1;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,11 +87,13 @@ public void checkPos() {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.spielbildschirm);
-
+        player = findViewById(R.id.player);
         Button up = findViewById(R.id.upb);
         Button left = findViewById(R.id.leftb);
         Button right = findViewById(R.id.rightb);
         Button down = findViewById(R.id.downb);
+        player.bringToFront();
+
 
         ImageButton btnSpielmenue = (ImageButton) findViewById(R.id.btnSpielmenue);
 
@@ -170,48 +101,45 @@ public void checkPos() {
             openSpielmenueView();
         });
 
-        ImageView player = findViewById(R.id.player);
-        player.bringToFront();
-        up.setOnTouchListener(new View.OnTouchListener()
-        {public boolean onTouch(View v, MotionEvent event) {
-            ImageView player = findViewById(R.id.player);
-            player.setRotation(0);
-            direction = 0;
+        up.setOnClickListener(view ->{
+       onUpMove();
+        })  ;
+        down.setOnClickListener(view ->{
+            onDownMove();
+        })  ;
 
-            return true;
-        }
-        });
-        right.setOnTouchListener(new View.OnTouchListener()
-        {public boolean onTouch(View v, MotionEvent event) {
-            ImageView player = findViewById(R.id.player);
-            player.setRotation(90);
-            direction = 1;
-            return true;
-        }
-        });
-        down.setOnTouchListener(new View.OnTouchListener()
-        {public boolean onTouch(View v, MotionEvent event) {
-            ImageView player = findViewById(R.id.player);
-            player.setRotation(180);
-            direction = 2;
-            return true;
-        }
-        });
-        left.setOnTouchListener(new View.OnTouchListener()
-        {public boolean onTouch(View v, MotionEvent event) {
-            ImageView player = findViewById(R.id.player);
-            player.setRotation(-90);
-            direction = 3;
-            return true;
-        }
-        });
+        right.setOnClickListener(view ->{
+            onRightMove();
+        })  ;
 
-        h = new Handler() {
+     left.setOnClickListener(view ->{
+        onLeftMove();;
+    })  ;
+
+
+    h = new Handler() {
             public void handleMessage(Message msg) {
                 finish();
             }
         };
     }
+
+    public void onUpMove(){
+    player.setRotation(0);
+        direction = 0;}
+
+        public void onLeftMove(){
+            player.setRotation(-90);
+            direction = 3;
+        }
+        public void onDownMove(){
+            player.setRotation(180);
+            direction = 2;
+        }
+        public void onRightMove(){
+            player.setRotation(90);
+            direction = 1;
+        }
 
     public void openSpielmenueView(){
         Intent spielmenueView = new Intent(this, spielmenu.class);
@@ -221,13 +149,41 @@ public void checkPos() {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        ImageView spielfeld = findViewById(R.id.playfield);
-        breite = spielfeld.getWidth();
-        hoehe = spielfeld.getHeight();
-        fillPlayfield();
-        playfield1();
-        check = true;
+        ImageView obstacle1 = findViewById(R.id.obstacle1);
+        ImageView obstacle2 = findViewById(R.id.obstacle2);
+        ImageView obstacle3 = findViewById(R.id.obstacle3);
+        ImageView obstacle4 = findViewById(R.id.obstacle4);
+        ImageView obstacle5 = findViewById(R.id.obstacle5);
+
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+         height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
+        obstacles = new Rect[5];
+        rect = new Rect();
+        obstacle1.getHitRect(rect);
+        obstacles[0] = rect;
+        rect = new Rect();
+        obstacle2.getHitRect(rect);
+        obstacles[1] = rect;                //INITIALISIERUNG DER HINDERNISSE
+        rect = new Rect();                  //RECT "ERZEUGT" EIN UNSICHTBARES QUADRAT UM DIE OBSTACLES,
+                                            //DAMIT KANN MIT DER INTERSECT FUNKTION ÜBERPRÜFT WERDEN
+                                            //OB DER SPIELER DAGEGEN LÄUFT
+        obstacle3.getHitRect(rect);
+        obstacles[2] = rect;
+        rect = new Rect();
+        obstacle4.getHitRect(rect);
+        obstacles[3] = rect;
+        rect = new Rect();
+        obstacle5.getHitRect(rect);
+        obstacles[4] = rect;
+        mapcreated = true;
+
+
     }
 }
+
+
 
 

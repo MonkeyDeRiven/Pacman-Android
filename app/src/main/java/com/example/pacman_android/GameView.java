@@ -74,6 +74,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         spieler.update(lastFrameDur);
 
+
+
     }
 
     @Override
@@ -81,7 +83,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
 
         if (canvas != null) {
-            spielfeld.draw(canvas);
             spieler.draw(canvas);
 
         }

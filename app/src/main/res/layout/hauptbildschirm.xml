@@ -8,7 +8,7 @@
     tools:context="com.example.pacman_android.hauptbildschirm">
 
     <TextView
-        android:id="@+id/txtPacMan"
+        android:id="@+id/titel"
         android:layout_width="430dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/pacman"
