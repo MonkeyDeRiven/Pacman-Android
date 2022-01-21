@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="005347d4-8d25-4588-bf94-338b7127161a" name="Default Changelist" comment="Scrollindikator">
+    <list default="true" id="005347d4-8d25-4588-bf94-338b7127161a" name="Default Changelist" comment="aaaa">
       <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_transition_transition_1_0_0_aar.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_material_material_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pacman_mundauf_rechts.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.bin" afterDir="false" />
@@ -27,29 +26,12 @@
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/app/pacman_android.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/pacman_android.app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_01_2022_17_00__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_01_2022_17_00__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_01_2022_19_23__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_01_2022_19_23__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_20_01_2022_16_59__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_20_01_2022_16_59__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_20_01_2022_17_06__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_20_01_2022_17_06__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_20_01_2022_17_10__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_20_01_2022_17_10__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_20_01_2022_17_11__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_20_01_2022_17_11__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_20_01_2022_17_14__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_20_01_2022_17_14__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_19_01_2022_19_24__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_19_01_2022_19_24__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_01_2022_16_57__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_01_2022_16_57__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/GameView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/Spieler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/Spieler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/Spielfeld.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/Spielfeld.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/block.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/hauptbildschirm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/hauptbildschirm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielbildschirm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielbildschirm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielmenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielmenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/pacman_mundauf_oben.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pacman_mundauf_oben.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/hilfe.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hilfe.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/spielbildschirm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/spielbildschirm.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
@@ -160,6 +142,14 @@
       <option name="presentableId" value="Default" />
       <updated>1642174690858</updated>
     </task>
+    <task id="LOCAL-00001" summary="aaaa">
+      <created>1642759120435</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1642759120436</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -177,7 +167,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="d" />
     <MESSAGE value="Issue #1 weitere Screens angepasst" />
-    <option name="LAST_COMMIT_MESSAGE" value="Issue #1 weitere Screens angepasst" />
+    <MESSAGE value="aaaa" />
+    <option name="LAST_COMMIT_MESSAGE" value="aaaa" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -154,13 +154,16 @@ move();
         ImageView obstacle3 = findViewById(R.id.obstacle3);
         ImageView obstacle4 = findViewById(R.id.obstacle4);
         ImageView obstacle5 = findViewById(R.id.obstacle5);
+        ImageView obstacle6 = findViewById(R.id.obstacle6);
+        ImageView obstacle7 = findViewById(R.id.obstacle7);
+
 
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
          height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
-        obstacles = new Rect[5];
+        obstacles = new Rect[7];
         rect = new Rect();
         obstacle1.getHitRect(rect);
         obstacles[0] = rect;
@@ -178,9 +181,11 @@ move();
         rect = new Rect();
         obstacle5.getHitRect(rect);
         obstacles[4] = rect;
+        obstacle6.getHitRect(rect);
+        obstacles[5] = rect;
+        obstacle7.getHitRect(rect);
+        obstacles[6] = rect;
         mapcreated = true;
-
-
     }
 }
 
