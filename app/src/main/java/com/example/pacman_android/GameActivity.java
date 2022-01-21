@@ -53,6 +53,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class GameActivity extends AppCompatActivity implements RankingDialog.RankingDialogListener {
@@ -348,6 +349,8 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
     }
 
     void saveFile(){
+        Collections.sort(arrBestenListe, (p1, p2) -> Integer.valueOf(p2.score).compareTo(p1.score));
+
         FileOutputStream fos = null;
         String text = "";
         String name;
@@ -410,6 +413,8 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
     @Override
     public void getUserName(String username) {
         userNameDone = username;
+        if(userNameDone.equals(""))
+            userNameDone = "empty";
         arrBestenListe.add(new bestenliste.player(userNameDone, score));
         saveFile();
     }
