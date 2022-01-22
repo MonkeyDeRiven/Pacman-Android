@@ -22,7 +22,7 @@
         android:textColor="#FFFF00"
         android:textColorHighlight="#FFFF00"
         android:textColorHint="#FFFF00"
-        android:textSize="70sp"
+        android:textSize="65sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
