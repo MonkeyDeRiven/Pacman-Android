@@ -3,6 +3,7 @@ package com.example.pacman_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -13,6 +14,7 @@ public class hauptbildschirm extends AppCompatActivity {
     private Button btnHilfe;
     private Button btnEinstellungen;
     private Button btnSpielen;
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,9 @@ public class hauptbildschirm extends AppCompatActivity {
         btnEinstellungen = (Button) findViewById(R.id.btnEinsellungen);
         btnHilfe = (Button) findViewById(R.id.btnHilfeSpielmenue);
         btnSpielen = (Button) findViewById(R.id.btnSpielen);
+
+         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.app_src_main_res_raw_pacman_song);
+
 
         btnEinstellungen.setOnClickListener(view ->{
             openActivityEinstellungen();
@@ -60,4 +65,21 @@ public class hauptbildschirm extends AppCompatActivity {
         startActivity(hilfeView);
     }
 
+    protected void onResume() {
+        super.onResume();
+        mediaPlayer.start();
+
+    }
+
+
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.stop();
+        mediaPlayer.release();
+
+    }
+
 }
+
+
+

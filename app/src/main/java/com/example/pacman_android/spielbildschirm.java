@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import java.util.Random;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -52,15 +54,32 @@ boolean mapcreated=false,win=false,lose=false;
         else if(direction == -1);                            //STEHEN BLEIBEN
     }
 
+    public void checkCollisionGhost()
+    {geist1 = findViewById(R.id.geist1);
+
+        for (int a = 0; a < obstacles.length; a++) {
+            if (obstacles[a].intersects((int)geist1.getX(),(int)geist1.getY(),(int)geist1.getX()+geist1.getWidth(),(int)geist1.getY()+(int)geist1.getHeight())) {
+                if(direction1==0){geist1.setY(geist1.getY()+5);break;}
+                else if(direction1==1){geist1.setX(geist1.getX()-5);break;}
+                else if(direction1==2){geist1.setY(geist1.getY()-5);break;}
+                else if(direction1==3){geist1.setX(geist1.getX()+5);break;}
+            }
+            }
+    }
+
+
+
+
+
+
     public void ghostmove ()
     {
-        if(mapcreated)checkCollision();
+
         geist1 = findViewById(R.id.geist1);
         if(direction1 == 0) geist1.setY(geist1.getY()-5);   //OBEN
         else if(direction1 == 1) geist1.setX(geist1.getX()+5); //RECHTS
         else if(direction1 == 2) geist1.setY(geist1.getY()+5); //UNTEN
         else if(direction1 == 3) geist1.setX(geist1.getX()-5); //LINKS
-
     }
 
 
@@ -148,145 +167,285 @@ boolean mapcreated=false,win=false,lose=false;
        if(checkGeist&&checkPlayer)break;
        if(a==breiteAnzahl-1){a=-1;++b;}
    }
-   score.setText(""+arrPosPx+" "+arrPosPy);
+
    }
    public void pathing()
    {Vector <position> pfade = new Vector<>();
        position start= new position();
            position ziel = new position();
            geist1 =findViewById(R.id.geist1);
+          int x1=(int)geist1.getX()+(int)(geist1.getWidth()/2),x2=(int)geist1.getX()+(int)(geist1.getWidth()/2),y1=(int)geist1.getY()+(int)(geist1.getHeight()/2),y2=(int)geist1.getY()+(geist1.getHeight()/2);
+           // int x1=(int)geist1.getX(),x2=(int)geist1.getX()+(int)geist1.getWidth(),y1=(int)geist1.getY(),y2=(int)geist1.getY()+(int)geist1.getHeight();
            ziel.xArray = arrPosPx;ziel.yArray=arrPosPy;
            start.xArray = arrPosGx;start.yArray=arrPosGy;
+           start.x1=x1;start.x2=x2;start.y1=y1;start.y2=y2;
+           start.visited[start.xArray][start.yArray]=true;
            int iterator=0;
            pfade.add(start);
-           while(true)
-           {int least=1000;
-              /* for(int a=0;a<pfade.size();a++)
-               {int value=pfade.elementAt(a).x%ziel.x+pfade.elementAt(a).y%ziel.y;
-                if(value<least){least=value;iterator=a;}
-               }*/
+           int attempts =0;
 
 
-               if(pfade.elementAt(iterator).xArray>ziel.xArray&&pfade.elementAt(iterator).links)  //LINKS
-               { position abbild = new position();
-                 abbild.links=false;
-                 abbild.rechts=pfade.elementAt(iterator).rechts;
-                   abbild.unten=pfade.elementAt(iterator).unten;
-                   abbild.oben=pfade.elementAt(iterator).oben;
+
+           while(pfade.size()!=0)
+           {int least=1000;boolean walked=false;
+
+
+          try{ for(int a=0;a<pfade.size();a++)
+               {int value1=0,value2=0,value=0;
+                       value1=pfade.elementAt(a).xArray-ziel.xArray;
+                      value2=pfade.elementAt(a).yArray-ziel.yArray;
+               if(value1<0)value1 = -value1;
+               if(value2<0)value2 = -value2;
+               value = value1+value2;
+                if(value<least){least=value;iterator=a;}}
+
+               }
+          catch(Exception e){};
+
+               if(pfade.elementAt(iterator).xArray>ziel.xArray&&!pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray-1][pfade.elementAt(iterator).yArray])  //LINKS
+               { walked=true;
+                   position abbild = new position();
                  abbild.xArray=pfade.elementAt(iterator).xArray;
                  abbild.yArray=pfade.elementAt(iterator).yArray;
                  abbild.pfad = pfade.elementAt(iterator).pfad;
+                 abbild.x1= x1;abbild.x2=x2;abbild.y1=y1;abbild.y2=y2;
+                   abbild.visited  =pfade.elementAt(iterator).visited;
+                 abbild.visited[pfade.elementAt(iterator).xArray-1][pfade.elementAt(iterator).yArray]= true;
 
                  pfade.add(abbild);
 
-                 pfade.elementAt(iterator).rechts=false;
-                 pfade.elementAt(iterator).links=true;
-                   pfade.elementAt(iterator).oben=true;
-                   pfade.elementAt(iterator).unten=true;
+                pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray]=true;
                  pfade.elementAt(iterator).xArray -=1;
+                 pfade.elementAt(iterator).x1-=width/geist1.getWidth(); pfade.elementAt(iterator).x2-=width/geist1.getWidth();
                  pfade.elementAt(iterator).pfad.add(3);
                  if(pfade.elementAt(iterator).xArray==ziel.xArray && pfade.elementAt(iterator).yArray==ziel.yArray){direction1=pfade.elementAt(iterator).pfad.elementAt(0);break;}
-                   for(int a=0;a<obstacles.length;a++)
+                 /*  for(int a=0;a<obstacles.length;a++)
                    {
-                       if(obstacles[a].intersects(pfade.elementAt(iterator).x,pfade.elementAt(iterator).y,pfade.elementAt(iterator).x+geist1.getWidth(),pfade.elementAt(iterator).y+geist1.getHeight()))
+                       if(obstacles[a].intersects(pfade.elementAt(iterator).x1,pfade.elementAt(iterator).y1,pfade.elementAt(iterator).x2,pfade.elementAt(iterator).y2))
                        {
-                           pfade.remove(pfade.elementAt(iterator));break;
+                           pfade.remove(iterator);break;
                        }
-                   }
+                   }*/
                }
 
-               else if(pfade.elementAt(iterator).xArray<ziel.xArray&&pfade.elementAt(iterator).rechts)  //RECHTS
-               { position abbild = new position();
-                   abbild.links=pfade.elementAt(iterator).links;
-                   abbild.rechts=false;
-                   abbild.unten=pfade.elementAt(iterator).unten;
-                   abbild.oben=pfade.elementAt(iterator).oben;
+               else  if(pfade.elementAt(iterator).yArray<ziel.yArray&&!pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray+1])  //UNTEN
+               { walked=true;
+                   position abbild = new position();
                    abbild.xArray=pfade.elementAt(iterator).xArray;
                    abbild.yArray=pfade.elementAt(iterator).yArray;
                    abbild.pfad = pfade.elementAt(iterator).pfad;
+                   abbild.x1= x1;abbild.x2=x2;abbild.y1=y1;abbild.y2=y2;
+                   abbild.visited  =pfade.elementAt(iterator).visited;
+                   abbild.visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray+1]= true;
 
                    pfade.add(abbild);
 
-                   pfade.elementAt(iterator).rechts=true;
-                   pfade.elementAt(iterator).links=false;
-                   pfade.elementAt(iterator).oben=true;
-                   pfade.elementAt(iterator).unten=true;
-                   pfade.elementAt(iterator).xArray +=1;
-                   pfade.elementAt(iterator).pfad.add(1);
-                   if(pfade.elementAt(iterator).xArray==ziel.xArray && pfade.elementAt(iterator).yArray==ziel.yArray){direction1=pfade.elementAt(iterator).pfad.elementAt(0);break;}
-                   for(int a=0;a<obstacles.length;a++)
-                   {
-                       if(obstacles[a].intersects(pfade.elementAt(iterator).x,pfade.elementAt(iterator).y,pfade.elementAt(iterator).x+geist1.getWidth(),pfade.elementAt(iterator).y+geist1.getHeight()))
-                       {
-                           pfade.remove(pfade.elementAt(iterator));break;
-                       }
-                   }
-               }
-
-              else  if(pfade.elementAt(iterator).yArray<ziel.yArray&&pfade.elementAt(iterator).unten)  //UNTEN
-               { position abbild = new position();
-                   abbild.links=pfade.elementAt(iterator).links;
-                   abbild.rechts=pfade.elementAt(iterator).rechts;
-                   abbild.unten=false;
-                   abbild.oben=pfade.elementAt(iterator).oben;
-                   abbild.xArray=pfade.elementAt(iterator).xArray;
-                   abbild.yArray=pfade.elementAt(iterator).yArray;
-                   abbild.pfad = pfade.elementAt(iterator).pfad;
-
-                   pfade.add(abbild);
-
-                   pfade.elementAt(iterator).rechts=true;
-                   pfade.elementAt(iterator).links=true;
-                   pfade.elementAt(iterator).oben=false;
-                   pfade.elementAt(iterator).unten=true;
+                   pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray]=true;
                    pfade.elementAt(iterator).yArray +=1;
+                   pfade.elementAt(iterator).y1+=height/geist1.getHeight(); pfade.elementAt(iterator).y2+=height/geist1.getHeight();
                    pfade.elementAt(iterator).pfad.add(2);
                    if(pfade.elementAt(iterator).xArray==ziel.xArray && pfade.elementAt(iterator).yArray==ziel.yArray){direction1=pfade.elementAt(iterator).pfad.elementAt(0);break;}
-                   for(int a=0;a<obstacles.length;a++)
+                  /* for(int a=0;a<obstacles.length;a++)
                    {
-                       if(obstacles[a].intersects(pfade.elementAt(iterator).x,pfade.elementAt(iterator).y,pfade.elementAt(iterator).x+geist1.getWidth(),pfade.elementAt(iterator).y+geist1.getHeight()))
+                       if(obstacles[a].intersects(pfade.elementAt(iterator).x1,pfade.elementAt(iterator).y1,pfade.elementAt(iterator).x2,pfade.elementAt(iterator).y2))
                        {
-                           pfade.remove(pfade.elementAt(iterator));break;
+                           pfade.remove(iterator);break;
                        }
-                   }
+                   }*/
                }
 
-               else if(pfade.elementAt(iterator).yArray>ziel.yArray&&pfade.elementAt(iterator).oben)  //OBEN
-               { position abbild = new position();
-                   abbild.links=pfade.elementAt(iterator).links;
-                   abbild.rechts=pfade.elementAt(iterator).rechts;
-                   abbild.unten=pfade.elementAt(iterator).unten;
-                   abbild.oben=false;
+               else if(pfade.elementAt(iterator).xArray<ziel.xArray&&!pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray+1][pfade.elementAt(iterator).yArray])  //RECHTS
+               { walked=true;
+                   position abbild = new position();
+
                    abbild.xArray=pfade.elementAt(iterator).xArray;
                    abbild.yArray=pfade.elementAt(iterator).yArray;
                    abbild.pfad = pfade.elementAt(iterator).pfad;
+                   abbild.x1= x1;abbild.x2=x2;abbild.y1=y1;abbild.y2=y2;
+
+                           abbild.visited  =pfade.elementAt(iterator).visited;
+
+                   abbild.visited[pfade.elementAt(iterator).xArray+1][pfade.elementAt(iterator).yArray]= true;
 
                    pfade.add(abbild);
 
-                   pfade.elementAt(iterator).rechts=true;
-                   pfade.elementAt(iterator).links=true;
-                   pfade.elementAt(iterator).oben=true;
-                   pfade.elementAt(iterator).unten=false;
-                   pfade.elementAt(iterator).yArray -=1;
-                   pfade.elementAt(iterator).pfad.add(0);
+
+                   pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray]=true;
+                   pfade.elementAt(iterator).xArray +=1;
+                   pfade.elementAt(iterator).x1+=width/geist1.getWidth(); pfade.elementAt(iterator).x2+=width/geist1.getWidth();
+                   pfade.elementAt(iterator).pfad.add(1);
                    if(pfade.elementAt(iterator).xArray==ziel.xArray && pfade.elementAt(iterator).yArray==ziel.yArray){direction1=pfade.elementAt(iterator).pfad.elementAt(0);break;}
-                    for(int a=0;a<obstacles.length;a++)
-                    {
-                        if(obstacles[a].intersects(pfade.elementAt(iterator).x,pfade.elementAt(iterator).y,pfade.elementAt(iterator).x+geist1.getWidth(),pfade.elementAt(iterator).y+geist1.getHeight()))
-                        {
-                            pfade.remove(pfade.elementAt(iterator));break;
-                        }
-                    }
+               /*    for(int a=0;a<obstacles.length;a++)
+                   {
+                       if(obstacles[a].intersects(pfade.elementAt(iterator).x1,pfade.elementAt(iterator).y1,pfade.elementAt(iterator).x2,pfade.elementAt(iterator).y2))
+                       {
+                           pfade.remove(iterator);break;
+                       }
+                   }*/
                }
 
-if(iterator==pfade.size()-1)iterator=-1;
-iterator++;
+
+
+               else if(pfade.elementAt(iterator).yArray>ziel.yArray&&!pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray-1])  //OBEN
+               { walked=true;
+                   position abbild = new position();
+
+                   abbild.xArray=pfade.elementAt(iterator).xArray;
+                   abbild.yArray=pfade.elementAt(iterator).yArray;
+                   abbild.pfad = pfade.elementAt(iterator).pfad;
+                   abbild.x1= x1;abbild.x2=x2;abbild.y1=y1;abbild.y2=y2;
+                   abbild.visited  =pfade.elementAt(iterator).visited;
+                   abbild.visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray-1]= true;
+
+                   pfade.add(abbild);
+
+                   pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray]=true;
+                   pfade.elementAt(iterator).yArray -=1;
+                   pfade.elementAt(iterator).y1-=height/geist1.getHeight(); pfade.elementAt(iterator).y2-=height/geist1.getHeight();
+                   pfade.elementAt(iterator).pfad.add(0);
+                   if(pfade.elementAt(iterator).xArray==ziel.xArray && pfade.elementAt(iterator).yArray==ziel.yArray){direction1=pfade.elementAt(iterator).pfad.elementAt(0);break;}
+                 /*  for(int a=0;a<obstacles.length;a++)
+                    {
+                        if(obstacles[a].intersects(pfade.elementAt(iterator).x1,pfade.elementAt(iterator).y1,pfade.elementAt(iterator).x2,pfade.elementAt(iterator).y2))
+                        {
+                            pfade.remove(iterator);break;
+                        }
+                    }*/
+
+
+               }
+
+
+
+               if(!walked)
+               {
+                   if(!pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray-1][pfade.elementAt(iterator).yArray])
+                   {
+                       position abbild = new position();
+                       abbild.xArray=pfade.elementAt(iterator).xArray;
+                       abbild.yArray=pfade.elementAt(iterator).yArray;
+                       abbild.pfad = pfade.elementAt(iterator).pfad;
+                       abbild.x1= x1;abbild.x2=x2;abbild.y1=y1;abbild.y2=y2;
+                       abbild.visited  =pfade.elementAt(iterator).visited;
+                       abbild.visited[pfade.elementAt(iterator).xArray-1][pfade.elementAt(iterator).yArray]= true;
+
+                       pfade.add(abbild);
+
+                       pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray]=true;
+                       pfade.elementAt(iterator).xArray -=1;
+                       pfade.elementAt(iterator).x1-=width/geist1.getWidth(); pfade.elementAt(iterator).x2-=width/geist1.getWidth();
+                       pfade.elementAt(iterator).pfad.add(3);
+                       if(pfade.elementAt(iterator).xArray==ziel.xArray && pfade.elementAt(iterator).yArray==ziel.yArray){direction1=pfade.elementAt(iterator).pfad.elementAt(0);break;}
+                    /*  for(int a=0;a<obstacles.length;a++)
+                       {
+                           if(obstacles[a].intersects(pfade.elementAt(iterator).x1,pfade.elementAt(iterator).y1,pfade.elementAt(iterator).x2,pfade.elementAt(iterator).y2))
+                           {
+                               pfade.remove(iterator);break;
+                           }
+                       }*/
+                   }
+
+                 else  if(!pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray+1][pfade.elementAt(iterator).yArray])
+                   {
+                       position abbild = new position();
+                       abbild.xArray=pfade.elementAt(iterator).xArray;
+                       abbild.yArray=pfade.elementAt(iterator).yArray;
+                       abbild.pfad = pfade.elementAt(iterator).pfad;
+                       abbild.x1= x1;abbild.x2=x2;abbild.y1=y1;abbild.y2=y2;
+                       abbild.visited  =pfade.elementAt(iterator).visited;
+                       abbild.visited[pfade.elementAt(iterator).xArray+1][pfade.elementAt(iterator).yArray]= true;
+
+                       pfade.add(abbild);
+
+
+                       pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray]=true;
+                       pfade.elementAt(iterator).xArray +=1;
+                       pfade.elementAt(iterator).x1+=width/geist1.getWidth(); pfade.elementAt(iterator).x2+=width/geist1.getWidth();
+                       pfade.elementAt(iterator).pfad.add(1);
+                       if(pfade.elementAt(iterator).xArray==ziel.xArray && pfade.elementAt(iterator).yArray==ziel.yArray){direction1=pfade.elementAt(iterator).pfad.elementAt(0);break;}
+                    /* for(int a=0;a<obstacles.length;a++)
+                       {
+                           if(obstacles[a].intersects(pfade.elementAt(iterator).x1,pfade.elementAt(iterator).y1,pfade.elementAt(iterator).x2,pfade.elementAt(iterator).y2))
+                           {
+                               pfade.remove(iterator);break;
+                           }
+                       }*/
+                   }
+
+                 else  if(!pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray-1])
+                   {
+                       position abbild = new position();
+
+                       abbild.xArray=pfade.elementAt(iterator).xArray;
+                       abbild.yArray=pfade.elementAt(iterator).yArray;
+                       abbild.pfad = pfade.elementAt(iterator).pfad;
+                       abbild.x1= x1;abbild.x2=x2;abbild.y1=y1;abbild.y2=y2;
+                       abbild.visited  =pfade.elementAt(iterator).visited;
+                       abbild.visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray-1]= true;
+
+                       pfade.add(abbild);
+
+
+                       pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray]=true;
+                       pfade.elementAt(iterator).yArray -=1;
+                       pfade.elementAt(iterator).y1-=height/geist1.getHeight(); pfade.elementAt(iterator).y2-=height/geist1.getHeight();
+                       pfade.elementAt(iterator).pfad.add(0);
+                       if(pfade.elementAt(iterator).xArray==ziel.xArray && pfade.elementAt(iterator).yArray==ziel.yArray){direction1=pfade.elementAt(iterator).pfad.elementAt(0);break;}
+                    /*  for(int a=0;a<obstacles.length;a++)
+                       {
+                           if(obstacles[a].intersects(pfade.elementAt(iterator).x1,pfade.elementAt(iterator).y1,pfade.elementAt(iterator).x2,pfade.elementAt(iterator).y2))
+                           {
+                               pfade.remove(iterator);break;
+                           }*/
+                       /*}*/
+
+
+                   }
+                 else  if(!pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray+1])
+                   {
+                       position abbild = new position();
+
+                       abbild.xArray=pfade.elementAt(iterator).xArray;
+                       abbild.yArray=pfade.elementAt(iterator).yArray;
+                       abbild.pfad = pfade.elementAt(iterator).pfad;
+                       abbild.x1= x1;abbild.x2=x2;abbild.y1=y1;abbild.y2=y2;
+                       abbild.visited  =pfade.elementAt(iterator).visited;
+                       abbild.visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray+1]= true;
+
+                       pfade.add(abbild);
+
+                       pfade.elementAt(iterator).visited[pfade.elementAt(iterator).xArray][pfade.elementAt(iterator).yArray]=true;
+                       pfade.elementAt(iterator).yArray +=1;
+                       pfade.elementAt(iterator).y1+=height/geist1.getHeight(); pfade.elementAt(iterator).y2+=height/geist1.getHeight();
+                       pfade.elementAt(iterator).pfad.add(2);
+                       if(pfade.elementAt(iterator).xArray==ziel.xArray && pfade.elementAt(iterator).yArray==ziel.yArray){direction1=pfade.elementAt(iterator).pfad.elementAt(0);break;}
+                   /*   for(int a=0;a<obstacles.length;a++)
+                       {
+                           if(obstacles[a].intersects(pfade.elementAt(iterator).x1,pfade.elementAt(iterator).y1,pfade.elementAt(iterator).x2,pfade.elementAt(iterator).y2))
+                           {
+                               pfade.remove(iterator);break;
+                           }
+                       }*/
+                   }
+               //  else{pfade.remove(iterator);}
+
+
 
            }
+               //if(iterator==pfade.size()-1)iterator=-1;
+               //++iterator;
 
 
 
    }
+
+
+
+   }
+
+
+
+
 
 
     protected void onResume() {
@@ -537,12 +696,25 @@ iterator++;
                             checkDots();
                             checkGhostTouch();
                             checkPos();
-                            pathing();
                             if(win) direction=-1;
                             if(lose) {onPause();} }
                     });
                 }
             }, 0, 40);
+        }
+
+        Timer timer4;
+        {
+            timer4 = new Timer();
+            timer4.scheduleAtFixedRate(new TimerTask() {
+                public void run() { // wird periodisch im Timer thread aufgerufen
+                    spielbildschirm.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            pathing();
+                     }
+                    });
+                }
+            }, 0, 50);
         }
 
 

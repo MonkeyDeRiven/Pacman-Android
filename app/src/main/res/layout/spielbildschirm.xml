@@ -15,10 +15,10 @@
         android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintHorizontal_bias="0.691"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.43" />
+        app:layout_constraintVertical_bias="0.67" />
 
     <Button
         android:id="@+id/rightb"
@@ -185,8 +185,8 @@
 
     <ImageView
         android:id="@+id/obstacle5"
-        android:layout_width="12dp"
-        android:layout_height="130dp"
+        android:layout_width="23dp"
+        android:layout_height="131dp"
         android:background="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -197,20 +197,20 @@
 
     <ImageView
         android:id="@+id/obstacle10"
-        android:layout_width="12dp"
-        android:layout_height="183dp"
+        android:layout_width="13dp"
+        android:layout_height="165dp"
         android:background="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.364" />
+        app:layout_constraintVertical_bias="0.386" />
 
     <ImageView
         android:id="@+id/obstacle13"
-        android:layout_width="12dp"
-        android:layout_height="183dp"
+        android:layout_width="13dp"
+        android:layout_height="165dp"
         android:background="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -221,44 +221,44 @@
 
     <ImageView
         android:id="@+id/obstacle11"
-        android:layout_width="153dp"
-        android:layout_height="12dp"
+        android:layout_width="135dp"
+        android:layout_height="15dp"
         android:background="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.096"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.208" />
+        app:layout_constraintVertical_bias="0.238" />
 
     <ImageView
         android:id="@+id/obstacle12"
-        android:layout_width="153dp"
-        android:layout_height="12dp"
+        android:layout_width="135dp"
+        android:layout_height="15dp"
         android:background="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.887"
+        app:layout_constraintHorizontal_bias="0.889"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.208" />
+        app:layout_constraintVertical_bias="0.227" />
 
     <ImageView
         android:id="@+id/obstacle7"
-        android:layout_width="190dp"
-        android:layout_height="15dp"
+        android:layout_width="199dp"
+        android:layout_height="14dp"
         android:background="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.456"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.583" />
+        app:layout_constraintVertical_bias="0.586" />
 
     <ImageView
         android:id="@+id/obstacle6"
-        android:layout_width="12dp"
-        android:layout_height="129dp"
+        android:layout_width="23dp"
+        android:layout_height="131dp"
         android:background="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -269,8 +269,8 @@
 
     <ImageView
         android:id="@+id/obstacle8"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:background="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -281,8 +281,8 @@
 
     <ImageView
         android:id="@+id/obstacle9"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:background="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -346,10 +346,10 @@
         android:background="#00BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.296"
+        app:layout_constraintHorizontal_bias="0.281"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.585" />
+        app:layout_constraintVertical_bias="0.455" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

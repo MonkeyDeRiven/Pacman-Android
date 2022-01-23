@@ -40,7 +40,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         thread = new GameThread(getHolder(), this);
         setFocusable(true);
         spielfeld = new Spielfeld(BitmapFactory.decodeResource(getResources(), R.drawable.spielfelda));
-        spieler = new Spieler(BitmapFactory.decodeResource(getResources(), R.drawable.pacman_mundauf_oben),BitmapFactory.decodeResource(getResources(), R.drawable.pacman_mundzu_oben),spielfeld);
+//        spieler = new Spieler(BitmapFactory.decodeResource(getResources(), R.drawable.pacman_mundauf_oben),BitmapFactory.decodeResource(getResources(), R.drawable.pacman_mundzu_oben),spielfeld);
 
     }
 

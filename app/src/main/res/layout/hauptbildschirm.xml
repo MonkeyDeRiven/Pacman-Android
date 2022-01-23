@@ -27,22 +27,28 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.12" />
+        app:layout_constraintVertical_bias="0.12"
+        android:gravity="center_horizontal" />
 
     <Button
         android:id="@+id/btnEinsellungen"
         android:layout_width="150dp"
         android:layout_height="55dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
         android:backgroundTint="#FFFF00"
         android:text="Einstellungen"
+
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-
+        app:layout_constraintEnd_toStartOf="@+id/btnHilfeSpielmenue"
+        app:layout_constraintStart_toEndOf="@+id/btnBestenliste"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.792"
-        tools:layout_editor_absoluteX="291dp" />
+        app:layout_constraintVertical_bias="0.792" />
 
     <Button
         android:id="@+id/btnBestenliste"
