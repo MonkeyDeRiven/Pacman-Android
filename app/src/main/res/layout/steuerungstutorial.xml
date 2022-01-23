@@ -47,15 +47,20 @@
         android:layout_width="147dp"
         android:layout_height="135dp"
         android:rotation="87"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDown"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/steuerungsbutton"
-        tools:layout_editor_absoluteY="118dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/steuerungsbutton" />
 
     <TextView
         android:id="@+id/right"
         android:layout_width="100dp"
         android:layout_height="39dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginRight="140dp"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
         android:text="Rechts"
@@ -64,10 +69,8 @@
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.744"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
+        app:layout_constraintVertical_bias="0.586" />
 
     <TextView
         android:id="@+id/Unten"
@@ -88,29 +91,34 @@
 
     <ImageView
         android:id="@+id/buttonDown"
-        android:layout_width="154dp"
-        android:layout_height="133dp"
+        android:layout_width="145dp"
+        android:layout_height="138dp"
+        android:layout_marginBottom="32dp"
         android:rotation="-91"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/steuerungsbutton"
-        tools:layout_editor_absoluteY="244dp" />
+        app:srcCompat="@drawable/steuerungsbutton" />
 
     <ImageView
         android:id="@+id/buttonLeft"
-        android:layout_width="137dp"
-        android:layout_height="124dp"
+        android:layout_width="130dp"
+        android:layout_height="116dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.392"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641"
-        app:srcCompat="@drawable/steuerungsbutton"
-        tools:layout_editor_absoluteX="225dp" />
+        app:layout_constraintVertical_bias="0.62"
+        app:srcCompat="@drawable/steuerungsbutton" />
 
     <TextView
         android:id="@+id/Links"
         android:layout_width="100dp"
         android:layout_height="39dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginLeft="152dp"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
         android:text="Links"
@@ -118,37 +126,38 @@
         android:textColor="#FFFF00"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.258"
+        app:layout_constraintEnd_toStartOf="@+id/right"
+        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
+        app:layout_constraintVertical_bias="0.586" />
 
     <TextView
         android:id="@+id/Oben"
         android:layout_width="100dp"
         android:layout_height="39dp"
+        android:layout_marginTop="104dp"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
         android:text="Oben"
         android:textAlignment="center"
         android:textColor="#FFFF00"
         android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/Unten"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279" />
+        app:layout_constraintVertical_bias="0.014" />
 
     <ImageView
         android:id="@+id/buttonRight"
-        android:layout_width="145dp"
-        android:layout_height="127dp"
+        android:layout_width="134dp"
+        android:layout_height="121dp"
         android:rotationY="-182"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647"
+        app:layout_constraintVertical_bias="0.631"
         app:srcCompat="@drawable/steuerungsbutton"
-        tools:layout_editor_absoluteX="362dp" />
+        tools:layout_editor_absoluteX="366dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
