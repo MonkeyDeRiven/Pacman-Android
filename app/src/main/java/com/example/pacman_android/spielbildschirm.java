@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,8 @@ import android.widget.RelativeLayout;
 
 import com.example.myfirstapp.R;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,7 +32,8 @@ public class spielbildschirm extends AppCompatActivity {
     int width = 0;
     int height = 0;
     public block[][] gameField = new block[arrayHeight][arrayLength];
-    ImageView pacman;
+    Spieler pacman;
+    Ghost redGhost;
     private int direction = 1;
     public static Handler h;
     boolean mapcreated=false;
@@ -38,15 +42,14 @@ public class spielbildschirm extends AppCompatActivity {
     {
         if(mapcreated) {
             checkCollision();
-            if (direction == 0) pacman.setY(pacman.getY() - 5);   //OBEN
-            else if (direction == 1) pacman.setX(pacman.getX() + 5); //RECHTS
-            else if (direction == 2) pacman.setY(pacman.getY() + 5); //UNTEN
-            else if (direction == 3) pacman.setX(pacman.getX() - 5); //LINKS
+            if (direction == 0) pacman.getEntity().setY(pacman.getEntity().getY() - 3);   //OBEN
+            else if (direction == 1) pacman.getEntity().setX(pacman.getEntity().getX() + 3); //RECHTS
+            else if (direction == 2) pacman.getEntity().setY(pacman.getEntity().getY() + 3); //UNTEN
+            else if (direction == 3) pacman.getEntity().setX(pacman.getEntity().getX() - 3); //LINKS
             else if (direction == -1) ;                            //STEHEN BLEIBEN
         }
     }
-
-        public void checkCollision () {
+    public void checkCollision () {
 /*
             pacman = findViewById(R.id.player);
 
@@ -97,37 +100,18 @@ public class spielbildschirm extends AppCompatActivity {
 
  */
 
+        for (int a = 0; a < arrayLength; a++) {
+            for(int j = 0; j < arrayHeight; j++) {
+                if (gameField[j][a].getIsWall() == true && gameField[j][a].getCollisionArea().intersects((int) pacman.getEntity().getX(), (int) pacman.getEntity().getY(), (int) pacman.getEntity().getX() + pacman.getWidth(), (int) pacman.getEntity().getY() + (int) pacman.getHeight())) {
+                    if (direction == 0) pacman.getEntity().setY(pacman.getEntity().getY() + 3);
+                    else if (direction == 1) pacman.getEntity().setX(pacman.getEntity().getX() - 3);
+                    else if (direction == 2) pacman.getEntity().setY(pacman.getEntity().getY() - 3);
+                    else if (direction == 3) pacman.getEntity().setX(pacman.getEntity().getX() + 3);
 
-            for (int a = 0; a < arrayLength; a++) {
-                for(int j = 0; j < arrayHeight; j++) {
-                    if (gameField[j][a].getIsWall() == true && gameField[j][a].getCollisionArea().intersects((int) pacman.getX(), (int) pacman.getY(), (int) pacman.getX() + pacman.getWidth(), (int) pacman.getY() + (int) pacman.getHeight())) {
-                        if (direction == 0) pacman.setY(pacman.getY() + 5);
-                        else if (direction == 1) pacman.setX(pacman.getX() - 5);
-                        else if (direction == 2) pacman.setY(pacman.getY() - 5);
-                        else if (direction == 3) pacman.setX(pacman.getX() + 5);
-
-                        direction = -1;
-                    }
+                    direction = -1;
                 }
             }
-
-
-        /*
-            for (int a = 0; a < arrayLength; a++) {
-                for(int j = 0; j < arrayHeight; j++) {
-                    if (gameField[j][a].intersects(pacman)){
-                        if (direction == 0) pacman.setY(pacman.getY() + 5);
-                        else if (direction == 1) pacman.setX(pacman.getX() - 5);
-                        else if (direction == 2) pacman.setY(pacman.getY() - 5);
-                        else if (direction == 3) pacman.setX(pacman.getX() + 5);
-                        direction = -1;
-                        break;
-                    }
-
-                }
-            }
-
-             */
+        }
    }
 
 
@@ -139,7 +123,12 @@ public class spielbildschirm extends AppCompatActivity {
             timer.scheduleAtFixedRate(new TimerTask() {
                 public void run() { // wird periodisch im Timer thread aufgerufen
                     spielbildschirm.this.runOnUiThread(new Runnable() {
+                        int counter = 0;
                         public void run() {
+                            if(mapcreated){
+                                redGhost.setPath(generateShortestPath());
+                                counter++;
+                            }
                             move();
                         }
                     });
@@ -194,19 +183,19 @@ public class spielbildschirm extends AppCompatActivity {
     }
 
     public void onUpMove(){
-    pacman.setRotation(0);
+    pacman.getEntity().setRotation(0);
         direction = 0;}
 
         public void onLeftMove(){
-            pacman.setRotation(-90);
+            pacman.getEntity().setRotation(-90);
             direction = 3;
         }
         public void onDownMove(){
-            pacman.setRotation(180);
+            pacman.getEntity().setRotation(180);
             direction = 2;
         }
         public void onRightMove(){
-            pacman.setRotation(90);
+            pacman.getEntity().setRotation(90);
             direction = 1;
         }
 
@@ -222,91 +211,245 @@ public class spielbildschirm extends AppCompatActivity {
 
         RelativeLayout gameDisplay = findViewById(R.id.spielScreen);
 
-        int screenWidth = gameDisplay.getWidth();
-        int screenHeight = gameDisplay.getHeight();
+        if(mapcreated == false) {
+            int screenWidth = gameDisplay.getWidth();
+            int screenHeight = gameDisplay.getHeight();
 
-        System.out.println(screenWidth);
-        System.out.println(screenHeight);
+            double blockWidthAccurate = (double) screenWidth / arrayLength;
+            double blockHeightAccurate = (double) screenHeight / arrayHeight;
 
-        double blockWidthAccurate = (double)screenWidth / arrayLength;
-        double blockHeightAccurate = (double)screenHeight / arrayHeight;
+            int blockWidth = (int) (blockWidthAccurate);
+            int blockHeight = (int) (blockHeightAccurate);
 
-        int blockWidth = (int)(blockWidthAccurate);
-        int blockHeight = (int)(blockHeightAccurate);
+            double heightInaccuracyValue = (double) blockHeightAccurate - blockHeight;
+            double widthInaccuracyValue = (double) blockWidthAccurate - blockWidth;
 
-        double heightInaccuracyValue = (double)blockHeightAccurate - blockHeight;
-        double widthInaccuracyValue = (double)blockWidthAccurate - blockWidth;
+            int xPosition = (int) (widthInaccuracyValue * arrayLength / 2);
+            int yPosition = (int) (heightInaccuracyValue * arrayHeight / 2);
 
-        int xPosition = (int)(widthInaccuracyValue * arrayLength / 2);
-        int yPosition = (int)(heightInaccuracyValue * arrayHeight / 2);
+            ImageView newImageView;
+            block newBlock = null;
+            Rect newRect;
 
-        ImageView newImageView;
-        block newBlock = null;
-        Rect newRect;
+            int startXpacman = 0;
+            int startYpacman = 0;
 
-        int startX = 0;
-        int startY = 0;
+            int startXredGhost = 0;
+            int startYredGhost = 0;
 
+            RelativeLayout.LayoutParams layoutParams;
+
+            for (int i = 0; i < arrayHeight; i++) {
+                for (int j = 0; j < arrayLength; j++) {
+
+                    newImageView = new ImageView(this);
+                    newRect = new Rect();
+
+                    if (level1[i][j] == 0) {
+                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundColor(Color.WHITE);
+                    }
+                    if (level1[i][j] >= 1) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundColor(Color.BLACK);
+                    }
+
+                    if (i == 9 && j == 19) {
+                        startXpacman = xPosition;
+                        startYpacman = yPosition;
+                    }
+
+                    if(i == 5 && j == 17){
+                        startXredGhost = xPosition;
+                        startYredGhost = yPosition;
+                    }
+
+                    //new layout for the imageview
+                    gameDisplay.addView(newImageView);
+                    layoutParams = new RelativeLayout.LayoutParams(blockWidth, blockHeight);
+
+                    newImageView.setLayoutParams(layoutParams);
+                    newImageView.setX(xPosition);
+                    newImageView.setY(yPosition);
+                    newImageView.getHitRect(newRect);
+                    newRect.set(xPosition, yPosition, xPosition + blockWidth, yPosition + blockHeight);
+                    xPosition += blockWidth;
+                    gameField[i][j] = newBlock;
+                }
+                yPosition += blockHeight;
+                xPosition = (int) (widthInaccuracyValue * arrayLength / 2);
+            }
+
+            //Entity size defines the height and width of our player/ghosts
+            int entitySize = 0;
+
+            //Sets the entity size to 90% of the smaller edge
+            if(blockHeight > blockWidth){
+                entitySize = (int)(blockWidth * 0.9);
+            }
+            else{
+                entitySize = (int)(blockHeight * 0.9);
+            }
+
+            //pacman gets created
+            newImageView = new ImageView(this);
+            newImageView.setBackgroundColor(Color.YELLOW);
+            gameDisplay.addView(newImageView);
+
+            //scales pacman
+            layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
+            newImageView.setLayoutParams(layoutParams);
+
+            //sets pacmans starting position
+            newImageView.setY(startYpacman);
+            newImageView.setX(startXpacman);
+
+            pacman = new Spieler(newImageView, entitySize);
+
+            //Adds all Nodes to the Graph and sets their neighbours
+            initializeGraph();
+            setGraphNeighbours();
+
+            //Red Ghost gets created
+            newImageView = new ImageView(this);
+            newImageView.setBackground(getDrawable(R.drawable.rotergeist_rechts));
+            gameDisplay.addView(newImageView);
+            newImageView.setLayoutParams(layoutParams);
+            newImageView.setY(startYredGhost);
+            newImageView.setX(startXredGhost);
+
+            redGhost = new Ghost(newImageView, entitySize);
+            redGhost.getEntity();
+            mapcreated = true;
+        }
+    }
+
+    public void moveGhostRandom(){
+
+    }
+
+    public void moveRedGhost(){
+
+    }
+
+
+    //Dijkstra
+    public pathLinkedList generateShortestPath(){
+        GraphNode start = findEntitysNode(redGhost.x + redGhost.getWidth()/2, redGhost.y + redGhost.getHeight()/2);
+        GraphNode destination = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
+
+        ArrayList<GraphNode> que = new ArrayList<GraphNode>();
+
+        GraphNode currentNode = start;
+
+        //visits the first node
+        currentNode.setCost(0);
+        currentNode.setPrev(null);
+        currentNode.setIsVisited(true);
+        que.add(start);
+
+        while(currentNode != destination){
+            for(int i = 0; i < currentNode.getNeighbourListSize(); i++){
+                if(currentNode.getNeighbour(i).getIsVisisted() == false) {
+                    //Neighbours of current get pushed into que
+                    que.add(currentNode.getNeighbour(i));
+                    //Neighbours cost and previous gets set
+                    currentNode.getNeighbour(i).setCost(currentNode.getCost() + 1);
+                    currentNode.getNeighbour(i).setPrev(currentNode);
+                }
+            }
+            //Current gets removed from que
+            que.remove(0);
+            currentNode.setIsVisited(true);
+            //current gets next node from que
+            currentNode = que.get(0);
+        }
+
+        pathLinkedList route = new pathLinkedList();
+        waypoint newWaypoint;
+        waypoint prevWaypoint = null;
+        while(currentNode.getPrev() != null){
+            newWaypoint = new waypoint(currentNode);
+            if(currentNode == destination){
+                newWaypoint.setNext(null);
+            }
+            else {
+                newWaypoint.setNext(prevWaypoint);
+            }
+            route.addWaypoint(newWaypoint);
+            prevWaypoint = newWaypoint;
+            currentNode = currentNode.getPrev();
+        }
+        resetGraph();
+        return route;
+    }
+
+    public void resetGraph(){
+        for(int i = 0; i < graph.size(); i++){
+            graph.get(i).setIsVisited(false);
+        }
+    }
+
+    public void initializeGraph(){
+        GraphNode newNode;
         for(int i = 0; i < arrayHeight; i++){
             for(int j = 0; j < arrayLength; j++){
-
-                newImageView = new ImageView(this);
-
-                newRect = new Rect();
-                /*
-                if(i == 0 || i == arrayHeight-1 || j == 0 || j == arrayLength-1){
-                    newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                    newImageView.setBackgroundColor(Color.BLACK);
+                if(gameField[i][j].getIsWall()){
+                    continue;
                 }
-                else{
-                    newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                    newImageView.setBackgroundColor(Color.WHITE);
-                }
-                 */
-
-                if(level1[i][j] == 0){
-                    newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                    newImageView.setBackgroundColor(Color.WHITE);
-                }
-                if(level1[i][j] >= 1){
-                    newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                    newImageView.setBackgroundColor(Color.BLACK);
-                }
-
-                if(i == 9 && j == 18){
-                    startX = xPosition;
-                    startY = yPosition;
-                }
-
-                //new layout for the imageview
-                gameDisplay.addView(newImageView);
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(blockWidth, blockHeight);
-
-                newImageView.setLayoutParams(layoutParams);
-                newImageView.setX(xPosition);
-                newImageView.setY(yPosition);
-                newImageView.getHitRect(newRect);
-                newRect.set(xPosition, yPosition, xPosition + blockWidth, yPosition + blockHeight);
-                xPosition += blockWidth;
-                gameField[i][j] = newBlock;
+                newNode = new GraphNode(gameField[i][j]);
+                graph.add(newNode);
             }
-            yPosition += blockHeight;
-            xPosition = (int)(widthInaccuracyValue * arrayLength / 2);
         }
-        newImageView = new ImageView(this);
-        newImageView.setBackgroundColor(Color.YELLOW);
-        gameDisplay.addView(newImageView);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams((int)(blockHeight * 0.9), (int)(blockHeight * 0.9));
-        newImageView.setLayoutParams(layoutParams);
-        newImageView.setY(startY);
-        newImageView.setX(startX);
-        pacman = newImageView;
-        mapcreated = true;
     }
 
-    private void InitializeGraph(){
+    public void setGraphNeighbours(){
+        for(int i = 0; i < arrayHeight; i++){
+            for(int j = 0; j < arrayLength; j++){
+                if(gameField[i][j].getIsWall()){
+                    continue;
+                }
+                GraphNode currentNode = findGraphNode(gameField[i][j]);
 
+                if(i > 0 && gameField[i-1][j].getIsWall() == false){
+                    currentNode.addNeighbour(findGraphNode(gameField[i-1][j]));
+                }
+                if(i < arrayHeight-1 && gameField[i+1][j].getIsWall() == false){
+                    currentNode.addNeighbour(findGraphNode(gameField[i+1][j]));
+                }
+                if(j > 0 && gameField[i][j-1].getIsWall() == false){
+                    currentNode.addNeighbour(findGraphNode(gameField[i][j-1]));
+                }
+                if(j < arrayLength-1 && gameField[i][j+1].getIsWall() == false){
+                    currentNode.addNeighbour(findGraphNode(gameField[i][j+1]));
+                }
+            }
+        }
     }
+
+    public GraphNode findEntitysNode(int entityCenterX, int entityCenterY){
+        for(int i = 0; i < arrayHeight; i++){
+            for(int j = 0; j < arrayLength; j++){
+                if(gameField[i][j].containsPoint(entityCenterX, entityCenterY) && gameField[i][j].getIsWall() == false){
+                    return findGraphNode(gameField[i][j]);
+                }
+            }
+        }
+        return null;
+    }
+
+    public GraphNode findGraphNode(block field){
+        for(int i = 0; i < graph.size(); i++){
+            if(graph.get(i).getField() == field){
+                return graph.get(i);
+            }
+        }
+        return null;
+    }
+
+
+
+
 
     private int[][] level1 = new int[][]{
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -322,6 +465,8 @@ public class spielbildschirm extends AppCompatActivity {
                         {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
                       };
+
+    private ArrayList<GraphNode> graph = new ArrayList<GraphNode>();
 }
 
 

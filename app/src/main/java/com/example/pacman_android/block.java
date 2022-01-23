@@ -50,20 +50,10 @@ public class block {
         return width;
     }
 
-    public boolean intersects(ImageView player){
-        if(player.getX() + player.getWidth() > x && player.getX() + player.getWidth() < x + width){
-            if(player.getY() + player.getHeight() > y && player.getY() + player.getHeight() < y + height){
-                return true;
-            }
-            if(player.getY() < y + height && player.getY() > y){
-                return true;
-            }
-        }
-        if(player.getX() < x + width && player.getX() > x){
-            if(player.getY() + player.getHeight() > y && player.getY() + player.getHeight() < y + height){
-                return true;
-            }
-            if(player.getY() < y + height && player.getY() > y){
+    public boolean containsPoint(int x, int y){
+
+        if(x >= this.x && x <= this.x + this.width){
+            if(y >= this.y && y <= this.y + this.height){
                 return true;
             }
         }
