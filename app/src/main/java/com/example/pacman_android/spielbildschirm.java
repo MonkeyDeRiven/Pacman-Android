@@ -30,6 +30,9 @@ public class spielbildschirm extends AppCompatActivity {
     final int arrayLength = 40; //80
     final int arrayHeight = 12; //24
 
+    public int arraypositionx=0,arraypositiony=0;
+    public int cookiesEaten=0,cookieMenge=0;
+
     int width = 0;
     int height = 0;
     public block[][] gameField = new block[arrayHeight][arrayLength];
@@ -40,7 +43,9 @@ public class spielbildschirm extends AppCompatActivity {
 
     public void moveEntity(ImageView entity, int direction)
     {
+
         if(mapcreated) {
+            checkDots();
             if (direction == 0) entity.setY(entity.getY() - 3);   //OBEN
             else if (direction == 1) entity.setX(entity.getX() + 3); //RECHTS
             else if (direction == 2) entity.setY(entity.getY() + 3); //UNTEN
@@ -98,6 +103,17 @@ public class spielbildschirm extends AppCompatActivity {
                     break;
                 }
             }
+            arraypositiony = i;arraypositionx=j;
+   }
+
+   public void checkDots()
+   {
+       if(!gameField[arraypositiony][arraypositionx].getIsWall()&&!gameField[arraypositiony][arraypositionx].isVisited())
+       {
+           gameField[arraypositiony][arraypositionx].image.setBackgroundColor(Color.parseColor("#a4c639"));
+           gameField[arraypositiony][arraypositionx].setVisited(true);
+           ++cookiesEaten;
+       }
    }
 
    public void fixCollisionPosition(){
@@ -247,7 +263,7 @@ public class spielbildschirm extends AppCompatActivity {
 
                     if (level1[i][j] == 0) {
                         newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.WHITE);
+                        newImageView.setBackgroundColor(Color.WHITE);++cookieMenge;
                     }
                     if (level1[i][j] >= 1) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
