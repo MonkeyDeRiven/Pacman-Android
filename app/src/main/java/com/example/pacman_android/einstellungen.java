@@ -26,7 +26,7 @@ public class einstellungen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.einstellungen);
-
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setCurrentControllerLayout();
         setSwSwitch();
 
@@ -67,7 +67,10 @@ public class einstellungen extends AppCompatActivity {
             controllerLayout = controllerLayoutLine;
         }
     }
-
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
 
     //Initialises controller switch based on settings.txt
     public void setSwSwitch(){

@@ -11,7 +11,7 @@
         android:supportsRtl="true"
 
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.pacman_android.skinliste"
+        <activity android:name="com.example.pacman_android.hauptbildschirm"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.pacman_android.hauptbildschirm"
+        <activity android:name="com.example.pacman_android.skinliste"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

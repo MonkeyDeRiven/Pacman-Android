@@ -94,7 +94,7 @@
         android:id="@+id/Exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/black"
+        android:background="@android:color/holo_red_dark"
         android:tint="#FFFF00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.393"
-        android:src="@drawable/pacmangelbauf" />
+    />
 
     <ImageView
         android:id="@+id/blaubild"
@@ -128,7 +128,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.581"
-        android:src="@drawable/mundaufblau" />
+      />
 
     <ImageView
         android:id="@+id/grunbild"
@@ -140,7 +140,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.765"
-        android:src="@drawable/grunmundauf" />
+       />
 
     <ImageView
         android:id="@+id/rotbild"
@@ -152,7 +152,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.969"
-        android:src="@drawable/rotmundauf"/>
+    />
 
     <TextView
         android:id="@+id/gelbtext"
@@ -160,6 +160,7 @@
         android:layout_height="51dp"
         android:text="Der stinknormale Pacman für stinknormale Spieler..."
         android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.358"
@@ -173,6 +174,7 @@
         android:layout_height="53dp"
         android:text="Gangster Gary mäht alles nieder was vor ihm liegt."
         android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.359"
@@ -186,6 +188,7 @@
         android:layout_height="53dp"
         android:text="Sad Salad will eigentlich garnicht hier sein, denn er sucht seinen Teddybär."
         android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.359"
@@ -199,6 +202,7 @@
         android:layout_height="53dp"
         android:text="Angry Arnold ist wütend, weil einer der Geister seinen Kuchen geklaut hat."
         android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.359"
