@@ -247,12 +247,97 @@ public class spielbildschirm extends AppCompatActivity {
 
                     if (level1[i][j] == 0) {
                         newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.WHITE);
-                    }
-                    if (level1[i][j] >= 1) {
-                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
                         newImageView.setBackgroundColor(Color.BLACK);
                     }
+                    if (level1[i][j] == 1) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_inner_top_left));
+                    }
+                    if (level1[i][j] == 2) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_inner_top));
+                    }
+                    if (level1[i][j] == 3) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_inner_top_right));
+                    }
+                    if (level1[i][j] == 4) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_left));
+                    }
+                    if (level1[i][j] == 5) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_inner_bottom_left));
+                    }
+                    if (level1[i][j] == 6) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_inner_bottom));
+                    }
+                    if (level1[i][j] == 7) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_right));
+                    }
+                    if (level1[i][j] == 8) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_inner_bottom_right));
+                    }
+                    if (level1[i][j] == 9) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_right));
+                    }
+                    if (level1[i][j] == 10) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_block_left));
+                    }
+                    if (level1[i][j] == 11) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_block_middle));
+                    }
+                    if (level1[i][j] == 12) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_block_right));
+                    }
+                    if (level1[i][j] == 13) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_top_right));
+                    }
+                    if (level1[i][j] == 14) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_upper_end));
+                    }
+                    if (level1[i][j] == 15) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_left_right));
+                    }
+                    if (level1[i][j] == 16) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_top));
+                    }
+                    if (level1[i][j] == 17) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_lower_end));
+                    }
+                    if (level1[i][j] == 18) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_bottom_left));
+                    }
+                    if (level1[i][j] == 19) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_bottom));
+                    }
+                    if (level1[i][j] == 20) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_bottom_right));
+                    }
+                    if (level1[i][j] == 21) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_top_left));
+                    }
+                    if (level1[i][j] == 22) {
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackground(getDrawable(R.drawable.wall_outer_top_right));
+                    }
+
 
                     if (i == 9 && j == 19) {
                         startXpacman = xPosition;
@@ -494,19 +579,19 @@ public class spielbildschirm extends AppCompatActivity {
 
 
     private int[][] level1 = new int[][]{
-                        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
-                        {1,0,1,1,1,0,1,0,1,0,1,1,0,0,0,0,1,1,0,1,1,1,1,0,1,1,0,0,0,1,0,1,0,1,1,1,0,1,0,1},
-                        {1,0,0,0,1,0,1,0,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,0,1,0,0,0,1,0,1},
-                        {1,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1},
-                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,0,1},
-                        {1,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,1},
-                        {1,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,1,0,1,1,0,1,1,0,1},
-                        {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,1,0,1},
-                        {1,0,1,1,0,0,0,0,1,1,1,1,1,0,0,0,1,1,0,0,0,1,0,1,0,1,0,1,1,1,0,1,0,1,1,0,1,1,0,1},
-                        {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-                      };
+            {0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},
+            {9 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,4},
+            {9 ,0 ,10,11,13,0 ,14,0 ,14,0 ,21,16,16,22,0 ,0 ,10,12,0 ,10,11,11,12,0 ,21,22,0 ,0 ,0 ,14,0 ,14,0 ,21,11,12,0 ,14,0 ,4},
+            {9 ,0 ,0 ,0 ,15,0 ,15,0 ,15,0 ,4 ,0 ,0 ,0,22 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,6 ,11,22,0 ,5 ,11,8 ,0 ,15,0 ,0 ,0 ,15,0 ,4},
+            {9 ,0 ,10,11,8 ,0 ,17,0 ,17,0 ,5 ,6 ,6 ,6 ,8 ,0 ,14,0 ,0 ,0 ,14,0 ,14,0 ,0 ,0 ,0 ,15,0 ,0 ,0 ,0 ,0 ,15,0 ,14,0 ,15,0 ,4},
+            {9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,0 ,0 ,15,0 ,4 ,22,0 ,14,0 ,15,0 ,10,11,22,0 ,15,0 ,17,0 ,17,0 ,4},
+            {9 ,0 ,21,22,0 ,21,22,0 ,21,16,16,22,0 ,21,22,0 ,5 ,11,11,11,8 ,0 ,5 ,8 ,0 ,15,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,0 ,4},
+            {9 ,0 ,5 ,8 ,0 ,4 ,9 ,0 ,5 ,6 ,6 ,8 ,0 ,5 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,5 ,11,22,0 ,15,0 ,5 ,12,0 ,21,22,0 ,4},
+            {9 ,0 ,0 ,0 ,0 ,5 ,8 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,17,0 ,21,16,12,0 ,10,22,0 ,14,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,4 ,9 ,0 ,4},
+            {9 ,0 ,10,12,0 ,0 ,0 ,0 ,10,11,11,11,12,0 ,0 ,0 ,5 ,8 ,0 ,0 ,0 ,17,0 ,17,0 ,17,0 ,10,11,8 ,0 ,17,0 ,10,12,0 ,5 ,8 ,0 ,4},
+            {9 ,19,19,19,19,21,13,19,19,19,19,19,19,19,19,19,19,19,19,14,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,4},
+            {0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0}
+    };
 
     private ArrayList<GraphNode> graph = new ArrayList<GraphNode>();
 }
