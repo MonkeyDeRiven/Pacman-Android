@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Entity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -34,30 +35,26 @@ public class spielbildschirm extends AppCompatActivity {
     public block[][] gameField = new block[arrayHeight][arrayLength];
     Spieler pacman;
     Ghost redGhost;
-    private int direction = 1;
     public static Handler h;
     boolean mapcreated=false;
 
-    public void move ()
+    public void moveEntity(ImageView entity, int direction)
     {
         if(mapcreated) {
-            checkCollision();
-            if (direction == 0) pacman.getEntity().setY(pacman.getEntity().getY() - 3);   //OBEN
-            else if (direction == 1) pacman.getEntity().setX(pacman.getEntity().getX() + 3); //RECHTS
-            else if (direction == 2) pacman.getEntity().setY(pacman.getEntity().getY() + 3); //UNTEN
-            else if (direction == 3) pacman.getEntity().setX(pacman.getEntity().getX() - 3); //LINKS
+            if (direction == 0) entity.setY(entity.getY() - 3);   //OBEN
+            else if (direction == 1) entity.setX(entity.getX() + 3); //RECHTS
+            else if (direction == 2) entity.setY(entity.getY() + 3); //UNTEN
+            else if (direction == 3) entity.setX(entity.getX() - 3); //LINKS
             else if (direction == -1) ;                            //STEHEN BLEIBEN
         }
     }
     public void checkCollision () {
-/*
-            pacman = findViewById(R.id.player);
 
-            double pacmanX_1 = pacman.getX();
-            double pacmanY_1 = pacman.getY();
+            double pacmanX_1 = pacman.x;
+            double pacmanY_1 = pacman.y;
 
-            double pacmanX_2 = pacman.getX() + pacman.getWidth();
-            double pacmanY_2 = pacman.getY() + pacman.getHeight();
+            double pacmanX_2 = pacman.x + pacman.getWidth();
+            double pacmanY_2 = pacman.y + pacman.getHeight();
 
             double pacmanCenterX = pacmanX_1 + (double)pacman.getWidth() / 2;
             double pacmanCenterY = pacmanY_1 + (double)pacman.getHeight() / 2;
@@ -74,46 +71,44 @@ public class spielbildschirm extends AppCompatActivity {
                     continue;
                 }
                 else{
-                    if(i == 19 || gameField[i+1][j].getIsWall()){
-                        if(i == 19 || gameField[i+1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            direction = -1;
+                    if(gameField[i+1][j].getIsWall()){
+                        if(gameField[i+1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
+                            fixCollisionPosition();
+                            pacman.setDirection(-1);
                         }
                     }
                     if(gameField[i-1][j].getIsWall()){
                         if(gameField[i-1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            direction = -1;
+                            fixCollisionPosition();
+                            pacman.setDirection(-1);
                         }
                     }
                     if(gameField[i][j+1].getIsWall()){
                         if(gameField[i][j+1].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            direction = -1;
+                            fixCollisionPosition();
+                            pacman.setDirection(-1);
                         }
                     }
                     if(gameField[i][j-1].getIsWall()){
                         if(gameField[i][j-1].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            direction = -1;
+                            fixCollisionPosition();
+                            pacman.setDirection(-1);
                         }
                     }
                     break;
                 }
             }
-
- */
-
-        for (int a = 0; a < arrayLength; a++) {
-            for(int j = 0; j < arrayHeight; j++) {
-                if (gameField[j][a].getIsWall() == true && gameField[j][a].getCollisionArea().intersects((int) pacman.getEntity().getX(), (int) pacman.getEntity().getY(), (int) pacman.getEntity().getX() + pacman.getWidth(), (int) pacman.getEntity().getY() + (int) pacman.getHeight())) {
-                    if (direction == 0) pacman.getEntity().setY(pacman.getEntity().getY() + 3);
-                    else if (direction == 1) pacman.getEntity().setX(pacman.getEntity().getX() - 3);
-                    else if (direction == 2) pacman.getEntity().setY(pacman.getEntity().getY() - 3);
-                    else if (direction == 3) pacman.getEntity().setX(pacman.getEntity().getX() + 3);
-
-                    direction = -1;
-                }
-            }
-        }
    }
 
+   public void fixCollisionPosition(){
+       if (pacman.getDirection() == 0) pacman.getEntity().setY(pacman.getEntity().getY() + 3);
+       else if (pacman.getDirection() == 1) pacman.getEntity().setX(pacman.getEntity().getX() - 3);
+       else if (pacman.getDirection() == 2) pacman.getEntity().setY(pacman.getEntity().getY() - 3);
+       else if (pacman.getDirection() == 3) pacman.getEntity().setX(pacman.getEntity().getX() + 3);
+
+       pacman.updateCoordinates();
+
+    }
 
     protected void onResume() {
       super.onResume();
@@ -123,13 +118,17 @@ public class spielbildschirm extends AppCompatActivity {
             timer.scheduleAtFixedRate(new TimerTask() {
                 public void run() { // wird periodisch im Timer thread aufgerufen
                     spielbildschirm.this.runOnUiThread(new Runnable() {
-                        int counter = 0;
                         public void run() {
                             if(mapcreated){
-                                redGhost.setPath(generateShortestPath());
-                                counter++;
+                                //Pacman gets moved first
+                                moveEntity(pacman.getEntity(), pacman.getDirection());
+                                pacman.updateCoordinates();
+                                //Red Ghost gets moved
+                                setRedGhostDirection();
+                                moveEntity(redGhost.getEntity(), redGhost.getDirection());
+                                redGhost.updateCoordinates();
+                                checkCollision();
                             }
-                            move();
                         }
                     });
                 }
@@ -139,7 +138,8 @@ public class spielbildschirm extends AppCompatActivity {
 
     protected void onPause() {
         super.onPause();
-        direction = -1;
+        pacman.setDirection(-1);
+        redGhost.setDirection(-1);
     }
 
     @Override
@@ -183,21 +183,21 @@ public class spielbildschirm extends AppCompatActivity {
     }
 
     public void onUpMove(){
-    pacman.getEntity().setRotation(0);
-        direction = 0;}
-
-        public void onLeftMove(){
-            pacman.getEntity().setRotation(-90);
-            direction = 3;
-        }
-        public void onDownMove(){
-            pacman.getEntity().setRotation(180);
-            direction = 2;
-        }
-        public void onRightMove(){
-            pacman.getEntity().setRotation(90);
-            direction = 1;
-        }
+        pacman.getEntity().setRotation(0);
+        pacman.setDirection(0);
+    }
+    public void onLeftMove(){
+        pacman.getEntity().setRotation(-90);
+        pacman.setDirection(3);
+    }
+    public void onDownMove() {
+        pacman.getEntity().setRotation(180);
+        pacman.setDirection(2);
+    }
+    public void onRightMove(){
+        pacman.getEntity().setRotation(90);
+        pacman.setDirection(1);
+    }
 
     public void openSpielmenueView(){
         Intent spielmenueView = new Intent(this, spielmenu.class);
@@ -313,7 +313,9 @@ public class spielbildschirm extends AppCompatActivity {
             //Red Ghost gets created
             newImageView = new ImageView(this);
             newImageView.setBackground(getDrawable(R.drawable.rotergeist_rechts));
+            newImageView.setBackgroundColor(Color.BLUE);
             gameDisplay.addView(newImageView);
+            layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
             newImageView.setY(startYredGhost);
             newImageView.setX(startXredGhost);
@@ -328,10 +330,47 @@ public class spielbildschirm extends AppCompatActivity {
 
     }
 
-    public void moveRedGhost(){
+    public void setRedGhostDirection(){
+        //Initialises path if not existent
+        if(redGhost.path == null){
+            redGhost.path = generateShortestPath();
+            redGhost.setDirection(findDirection(redGhost));
+        }
 
+        //gets the next waypoint from path *Path.getFirst = current location*
+        waypoint dest = redGhost.path.getSecond();
+
+        if(redGhost.reachedNextWaypoint(dest)){
+            redGhost.path = generateShortestPath();
+            redGhost.setDirection(findDirection(redGhost));
+        }
     }
 
+    public int findDirection(Ghost ghost){
+        int startX = ghost.path.getFirst().getNode().getField().getX();
+        int startY = ghost.path.getFirst().getNode().getField().getY();
+
+        int destX = ghost.path.getSecond().getNode().getField().getX();
+        int destY = ghost.path.getSecond().getNode().getField().getY();
+
+        if(startX - destX > 0){
+            //left
+            return 3;
+        }
+        else if(startX - destX < 0){
+            //right
+            return 1;
+        }
+        else if(startY - destY > 0){
+            //up
+            return 0;
+        }
+        else if(startY - destY < 0){
+            //down
+            return 2;
+        }
+        return -1;
+    }
 
     //Dijkstra
     public pathLinkedList generateShortestPath(){
@@ -368,6 +407,7 @@ public class spielbildschirm extends AppCompatActivity {
         pathLinkedList route = new pathLinkedList();
         waypoint newWaypoint;
         waypoint prevWaypoint = null;
+
         while(currentNode.getPrev() != null){
             newWaypoint = new waypoint(currentNode);
             if(currentNode == destination){
@@ -380,6 +420,11 @@ public class spielbildschirm extends AppCompatActivity {
             prevWaypoint = newWaypoint;
             currentNode = currentNode.getPrev();
         }
+
+        newWaypoint = new waypoint(currentNode);
+        newWaypoint.setNext(prevWaypoint);
+        route.addWaypoint(newWaypoint);
+
         resetGraph();
         return route;
     }
@@ -446,9 +491,6 @@ public class spielbildschirm extends AppCompatActivity {
         }
         return null;
     }
-
-
-
 
 
     private int[][] level1 = new int[][]{
