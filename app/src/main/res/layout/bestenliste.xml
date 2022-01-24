@@ -25,7 +25,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.1"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/txtRang"
@@ -41,7 +42,8 @@
         app:layout_constraintHorizontal_bias="0.185"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtBestenliste"
-        app:layout_constraintVertical_bias="0.092" />
+        app:layout_constraintVertical_bias="0.092"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/txtName"
@@ -56,7 +58,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtBestenliste"
-        app:layout_constraintVertical_bias="0.092" />
+        app:layout_constraintVertical_bias="0.092"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/txtScore"
@@ -72,7 +75,8 @@
         app:layout_constraintHorizontal_bias="0.818"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtBestenliste"
-        app:layout_constraintVertical_bias="0.092" />
+        app:layout_constraintVertical_bias="0.092"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posTwoName"
@@ -87,7 +91,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.319" />
+        app:layout_constraintVertical_bias="0.319"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posTwoRang"
@@ -102,7 +107,8 @@
         app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.323" />
+        app:layout_constraintVertical_bias="0.323"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posThreeRang"
@@ -117,7 +123,8 @@
         app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.496" />
+        app:layout_constraintVertical_bias="0.496"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posFourRang"
@@ -132,7 +139,8 @@
         app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.676" />
+        app:layout_constraintVertical_bias="0.676"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posOneRang"
@@ -147,7 +155,8 @@
         app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.146" />
+        app:layout_constraintVertical_bias="0.146"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posOneName"
@@ -162,7 +171,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.142" />
+        app:layout_constraintVertical_bias="0.142"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posFiveScore"
@@ -177,7 +187,8 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.864" />
+        app:layout_constraintVertical_bias="0.864"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posThreeScore"
@@ -192,7 +203,8 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.496" />
+        app:layout_constraintVertical_bias="0.496"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posFourName"
@@ -207,7 +219,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.676" />
+        app:layout_constraintVertical_bias="0.676"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posFiveName"
@@ -222,7 +235,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.864" />
+        app:layout_constraintVertical_bias="0.864"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posOneScore"
@@ -237,7 +251,8 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.142" />
+        app:layout_constraintVertical_bias="0.142"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posTwoScore"
@@ -252,7 +267,8 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.323" />
+        app:layout_constraintVertical_bias="0.323"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posThreeName"
@@ -267,7 +283,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.496" />
+        app:layout_constraintVertical_bias="0.496"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posFourScore"
@@ -282,7 +299,8 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.676" />
+        app:layout_constraintVertical_bias="0.676"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/posFiveRang"
@@ -297,14 +315,15 @@
         app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.864" />
+        app:layout_constraintVertical_bias="0.864"
+        android:gravity="center_horizontal" />
 
 
     <ImageButton
         android:id="@+id/btnExitBestenliste"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#171515"
+        android:background="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.955"

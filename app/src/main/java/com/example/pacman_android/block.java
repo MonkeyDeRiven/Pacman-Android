@@ -13,8 +13,13 @@ public class block {
     private int x;
     private int y;
 
-    private ImageView image;
+
+
+
+    public ImageView image;
     private Rect collisionArea = new Rect();
+
+    private boolean visited = false;
 
     public block(boolean isWall, int height, int width, int x, int y, ImageView image, Rect collisionArea){
         this.isWall = isWall;
@@ -49,6 +54,14 @@ public class block {
     public int getWidth(){
         return width;
     }
+
+    public boolean isVisited() { return visited; }
+
+    public ImageView getImage() { return image; }
+
+    public void setImage(ImageView image) { this.image = image; }
+
+    public void setVisited(boolean visited) { this.visited = visited; }
 
     public boolean containsPoint(int x, int y){
 

@@ -9,20 +9,21 @@
 
     <TextView
         android:id="@+id/titel"
-        android:layout_width="430dp"
-        android:layout_height="wrap_content"
+        android:layout_width="458dp"
+        android:layout_height="68dp"
         android:fontFamily="@font/pacman"
+        android:gravity="center_horizontal"
         android:shadowColor="#ff9e9e9e"
         android:shadowDx="4"
         android:shadowDy="4"
         android:shadowRadius="10"
-        android:text="Pac_Man"
+        android:text="Pa _Man"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#FFFF00"
         android:textColorHighlight="#FFFF00"
         android:textColorHint="#FFFF00"
-        android:textSize="70sp"
+        android:textSize="65sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -31,50 +32,54 @@
 
     <Button
         android:id="@+id/btnEinsellungen"
-        android:layout_width="150dp"
+        android:layout_width="135dp"
         android:layout_height="55dp"
-        android:backgroundTint="#FFFF00"
+        android:background="@color/yellow"
+
+        android:shadowColor="#000000"
         android:text="Einstellungen"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.792" />
 
     <Button
         android:id="@+id/btnBestenliste"
-        android:layout_width="140dp"
+        android:layout_width="135dp"
         android:layout_height="55dp"
+        android:background="@color/yellow"
         android:backgroundTint="#FFFF00"
+        android:shadowColor="#000000"
         android:text="Bestenliste"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.255"
+        app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.792" />
 
     <Button
         android:id="@+id/btnHilfeSpielmenue"
-        android:layout_width="140dp"
+        android:layout_width="135dp"
         android:layout_height="55dp"
+        android:background="@color/yellow"
         android:backgroundTint="#FFFF00"
         android:onClick="openActivityHilfe"
+        android:shadowColor="#000000"
         android:text="Hilfe"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.746"
+        app:layout_constraintHorizontal_bias="0.771"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.792" />
@@ -83,7 +88,7 @@
         android:id="@+id/btnSpielen"
         android:layout_width="430dp"
         android:layout_height="80dp"
-        android:backgroundTint="#FFFF00"
+        android:background="#0EFF00"
         android:onClick="openActivitySpielen"
         android:text="Spielen"
         android:textColor="@color/black"
@@ -95,5 +100,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.498" />
+
+    <ImageButton
+        android:id="@+id/skinauswahl"
+        android:layout_width="78dp"
+        android:layout_height="60dp"
+        android:background="@drawable/wardrobe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.952"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.139" />
+
+    <ImageView
+        android:id="@+id/pacmananimated"
+        android:layout_width="64dp"
+        android:layout_height="66dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.43"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.124" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

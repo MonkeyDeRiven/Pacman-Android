@@ -4,15 +4,19 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Entity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,6 +25,11 @@ import android.widget.RelativeLayout;
 
 import com.example.myfirstapp.R;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -30,8 +39,11 @@ public class spielbildschirm extends AppCompatActivity {
     final int arrayLength = 40; //80
     final int arrayHeight = 12; //24
 
-    int width = 0;
-    int height = 0;
+    public int arraypositionx=0,arraypositiony=0;
+    public int cookiesEaten=0,cookieMenge=0;
+    public int skinauswahl=0;
+    MediaPlayer mediaPlayer;
+
     public block[][] gameField = new block[arrayHeight][arrayLength];
     Spieler pacman;
     Ghost redGhost;
@@ -40,7 +52,9 @@ public class spielbildschirm extends AppCompatActivity {
 
     public void moveEntity(ImageView entity, int direction)
     {
+
         if(mapcreated) {
+            checkDots();
             if (direction == 0) entity.setY(entity.getY() - 3);   //OBEN
             else if (direction == 1) entity.setX(entity.getX() + 3); //RECHTS
             else if (direction == 2) entity.setY(entity.getY() + 3); //UNTEN
@@ -98,6 +112,22 @@ public class spielbildschirm extends AppCompatActivity {
                     break;
                 }
             }
+            arraypositiony = i;arraypositionx=j;
+   }
+
+   public void checkDots()
+   {
+       if(!gameField[arraypositiony][arraypositionx].getIsWall()&&!gameField[arraypositiony][arraypositionx].isVisited())
+       {
+           gameField[arraypositiony][arraypositionx].image.setBackgroundColor(Color.parseColor("#a4c639"));
+           gameField[arraypositiony][arraypositionx].setVisited(true);
+           ++cookiesEaten;
+       }
+   }
+
+   public void checkWin()
+   {
+       if(cookiesEaten==cookieMenge) finish();
    }
 
    public void fixCollisionPosition(){
@@ -112,6 +142,7 @@ public class spielbildschirm extends AppCompatActivity {
 
     protected void onResume() {
       super.onResume();
+      mediaPlayer.create(this,R.raw.pacmansong);
         Timer timer;
            {
             timer = new Timer();
@@ -120,6 +151,7 @@ public class spielbildschirm extends AppCompatActivity {
                     spielbildschirm.this.runOnUiThread(new Runnable() {
                         public void run() {
                             if(mapcreated){
+                               checkWin();
                                 //Pacman gets moved first
                                 moveEntity(pacman.getEntity(), pacman.getDirection());
                                 pacman.updateCoordinates();
@@ -140,6 +172,7 @@ public class spielbildschirm extends AppCompatActivity {
         super.onPause();
         pacman.setDirection(-1);
         redGhost.setDirection(-1);
+        mediaPlayer.stop();
     }
 
     @Override
@@ -183,19 +216,31 @@ public class spielbildschirm extends AppCompatActivity {
     }
 
     public void onUpMove(){
-        pacman.getEntity().setRotation(0);
+        pacman.getEntity().setScaleX(1);
+     if(pacman.getDirection() == 1){pacman.getEntity().setRotation(-90);};
+     if(pacman.getDirection()== 2){pacman.getEntity().setRotation(180);};
+     if(pacman.getDirection()== 3){pacman.getEntity().setRotation(90);};
         pacman.setDirection(0);
     }
     public void onLeftMove(){
-        pacman.getEntity().setRotation(-90);
+        pacman.getEntity().setScaleX(1);
+        if(pacman.getDirection() == 1){pacman.getEntity().setScaleX(-1);};
+        if(pacman.getDirection()== 2){pacman.getEntity().setRotation(90);};
+        if(pacman.getDirection()== 0){pacman.getEntity().setRotation(-90);};
         pacman.setDirection(3);
     }
     public void onDownMove() {
-        pacman.getEntity().setRotation(180);
+        pacman.getEntity().setScaleX(1);
+        if(pacman.getDirection() == 1){pacman.getEntity().setRotation(90);};
+        if(pacman.getDirection()== 3){pacman.getEntity().setRotation(-90);};
+        if(pacman.getDirection()== 0){pacman.getEntity().setRotation(180);};
         pacman.setDirection(2);
     }
     public void onRightMove(){
-        pacman.getEntity().setRotation(90);
+        pacman.getEntity().setScaleX(1);
+        if(pacman.getDirection() == 2){pacman.getEntity().setRotation(-90);};
+        if(pacman.getDirection()== 3){pacman.getEntity().setScaleX(1);};
+        if(pacman.getDirection()== 0){pacman.getEntity().setRotation(90);};
         pacman.setDirection(1);
     }
 
@@ -247,11 +292,11 @@ public class spielbildschirm extends AppCompatActivity {
 
                     if (level1[i][j] == 0) {
                         newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.WHITE);
+                        newImageView.setBackgroundResource(R.drawable.pfad);++cookieMenge;
                     }
                     if (level1[i][j] >= 1) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.BLACK);
+                        newImageView.setBackgroundResource(R.drawable.wand);newBlock.setVisited(true);
                     }
 
                     if (i == 9 && j == 19) {
@@ -293,8 +338,17 @@ public class spielbildschirm extends AppCompatActivity {
 
             //pacman gets created
             newImageView = new ImageView(this);
-            newImageView.setBackgroundColor(Color.YELLOW);
+            skinauswahl = Integer.valueOf(readFromFile(this));
+            AnimationDrawable pacmanskin = new AnimationDrawable();
+            if(skinauswahl==0)newImageView.setBackgroundResource(R.drawable.pacmanmovementgelb);
+            if(skinauswahl==1)newImageView.setBackgroundResource(R.drawable.pacmanmovementblau);
+            if(skinauswahl==2)newImageView.setBackgroundResource(R.drawable.pacmanmovementgrun);
+            if(skinauswahl==3)newImageView.setBackgroundResource(R.drawable.pacmanmovementrot);
+            pacmanskin =(AnimationDrawable) newImageView.getBackground();
+            pacmanskin.start();
             gameDisplay.addView(newImageView);
+
+
 
             //scales pacman
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
@@ -509,6 +563,36 @@ public class spielbildschirm extends AppCompatActivity {
                       };
 
     private ArrayList<GraphNode> graph = new ArrayList<GraphNode>();
+
+    private String readFromFile(Context context) {
+
+        String ret = "";
+
+        try {
+            try (InputStream inputStream = context.openFileInput("selectPacman.txt")) {
+
+                if (inputStream != null) {
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    String receiveString = "";
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    while ((receiveString = bufferedReader.readLine()) != null) {
+                        stringBuilder.append("\n").append(receiveString);
+                    }
+
+                    inputStream.close();
+                    ret = stringBuilder.toString();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return String.valueOf(ret.charAt(1));
+    }
 }
 
 
