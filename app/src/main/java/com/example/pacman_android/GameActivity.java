@@ -95,7 +95,7 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
 
 
         // **  Add two buttons and add listener ** //
-        g = findViewById(R.id.surfaceView);
+        //g = findViewById(R.id.surfaceView);
 
         //moves the controller to one side, based on the settings.txt
         setControllerLayout();
@@ -112,7 +112,7 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
         ImageButton btnUp_R = findViewById(R.id.btnUp_R);
         ImageButton btnDown_R = findViewById(R.id.btnDown_R);
 
-
+        /*
         //OnClickListener for LEFT controller
         btnRight_L.setOnClickListener(view -> {
             rotatePlayerRight();
@@ -153,11 +153,11 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
                 finish();
             }
         };
-
+       */
 
 
     }
-
+/*
     public void rotatePlayerRight(){
         if(g.spieler.mundzu){
             g.spieler.current = g.spieler.rechtsauf;
@@ -198,6 +198,8 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
         g.spieler.direction=2;
         gameEnd();
     }
+
+ */
 
     public void setControllerLayout() {
 
@@ -295,14 +297,14 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
     @Override
     protected void onResume() {
         super.onResume();
-        g.restart();
+        //g.restart();
         setControllerLayout();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        g.thread.setRunning(false);
+        //g.thread.setRunning(false);
     }
 
     @Override
