@@ -49,6 +49,7 @@ public class bestenliste extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bestenliste);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
         posOneName = (TextView) findViewById(R.id.posOneName);
         posOneScore = (TextView) findViewById(R.id.posOneScore);
@@ -103,7 +104,10 @@ public class bestenliste extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
     void sortArr(){
         Collections.sort(arrBestenListe, (p1, p2) -> Integer.valueOf(p2.score).compareTo(p1.score));
     }

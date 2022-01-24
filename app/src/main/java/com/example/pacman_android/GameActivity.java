@@ -67,11 +67,10 @@ public class GameActivity extends AppCompatActivity implements RankingDialog.Ran
 
     private TextView score_view;
     private TextView score_string;
-
+    private static final String filename = "highscore.txt";
     public static Handler h;
 
 
-    private static final String filename = "highscore.txt";
     private ArrayList<bestenliste.player> arrBestenListe = new ArrayList<>();
 
 

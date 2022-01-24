@@ -22,6 +22,7 @@ public class fruchtlexikon extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fruchlexikon);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         RecyclerView rv= findViewById(R.id.recycleview);
 
         MyAdapter myAdapter = new MyAdapter(this,s1,s2,images);
@@ -34,6 +35,10 @@ public class fruchtlexikon extends AppCompatActivity {
             finish();
         });
 
+    }
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 }
 

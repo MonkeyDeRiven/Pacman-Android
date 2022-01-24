@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.Button;
 
@@ -13,12 +15,12 @@ import com.example.myfirstapp.R;
 
 
 public class hilfe extends AppCompatActivity {
-
+Animation shake;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hilfe);
-
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         ImageButton btnExit = (ImageButton) findViewById(R.id.btnExitHilfe);
 
         Button btnSteuerung = (Button) findViewById(R.id.btnSteuerungstutorial);
@@ -30,18 +32,46 @@ public class hilfe extends AppCompatActivity {
         });
 
         btnSteuerung.setOnClickListener(view -> {
-            Intent openActivitySteuerung = new Intent(this, steuerungstutorial.class);
-            startActivity(openActivitySteuerung);
+           Intent i = new Intent(this,steuerungstutorial.class);
+            animate(btnSteuerung,i);
         });
 
         btnGeisterlexikon.setOnClickListener(view -> {
-            Intent openActivityGeisterlexikon = new Intent(this, geisterlexikon.class);
-            startActivity(openActivityGeisterlexikon);
+            Intent i = new Intent(this,geisterlexikon.class);
+            animate(btnGeisterlexikon,i);
         });
 
         btnFruechtelexikon.setOnClickListener(view -> {
-            Intent openActivityFruechtelexikon = new Intent(this, fruchtlexikon.class);
-            startActivity(openActivityFruechtelexikon);
+            Intent i = new Intent(this,fruchtlexikon.class);
+            animate(btnFruechtelexikon,i);
         });
+    }
+
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+
+    public void animate(Button button,Intent intentt)
+    {
+        shake= AnimationUtils.loadAnimation(this, R.anim.shake);
+        shake.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                startActivity(intentt);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        button.startAnimation(shake);
     }
 }

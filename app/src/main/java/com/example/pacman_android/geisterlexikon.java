@@ -23,6 +23,7 @@ int images[] = {R.drawable.rotergeist_rechts,R.drawable.pinkergeist_rechts,R.dra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.geisterlexikon);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         RecyclerView rv= findViewById(R.id.recycleview);
 
         MyAdapter myAdapter = new MyAdapter(this,s1,s2,images);
@@ -36,5 +37,9 @@ int images[] = {R.drawable.rotergeist_rechts,R.drawable.pinkergeist_rechts,R.dra
         });
 
 
+    }
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 }
