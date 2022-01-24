@@ -13,7 +13,9 @@ import android.widget.ImageView;
 import com.example.myfirstapp.R;
 
 public class Spieler {
-    private ImageView entity;
+
+
+    public ImageView entity;
 
     private int width;
     private int height;
@@ -21,14 +23,20 @@ public class Spieler {
     public int y;
     public int x;
 
+    private int direction;
+
     public Spieler(ImageView entity, int size){
+
         this.entity = entity;
         this.width = size;
         this.height = size;
 
         this.x = (int)entity.getX();
         this.y = (int)entity.getY();
+        this.direction = -1;
     }
+
+
 
     public ImageView getEntity(){
         return entity;
@@ -40,5 +48,18 @@ public class Spieler {
 
     public int getHeight(){
         return height;
+    }
+
+    public int getDirection(){
+        return direction;
+    }
+
+    public void setDirection(int newDirection){
+        direction = newDirection;
+    }
+
+    public void updateCoordinates(){
+        x = (int)entity.getX();
+        y = (int)entity.getY();
     }
 }

@@ -14,9 +14,28 @@ public class pathLinkedList {
         root = root.getPrev();
     }
 
-    public waypoint popStart(){
-        waypoint toPop = root;
+    public waypoint getFirst(){
+        return root;
+    }
+
+    public waypoint getSecond(){
+        return root.getNext();
+    }
+
+    public void removeFirst(){
+        if(end == root){
+            root = null;
+            end = null;
+            return;
+        }
         root = root.getNext();
-        return toPop;
+        root.setPrev(null);
+    }
+
+    public boolean isEmpty(){
+        if(root == null){
+            return true;
+        }
+        return false;
     }
 }
