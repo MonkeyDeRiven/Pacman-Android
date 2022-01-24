@@ -2,6 +2,8 @@ package com.example.pacman_android;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,7 +30,8 @@ import java.util.Vector;
 
 
 public class spielbildschirm extends AppCompatActivity implements RankingDialog.RankingDialogListener {
-int width = 0, height = 0,points=0,arrPosGx=0,arrPosGy=0,arrPosPx=0,arrPosPy=0;
+MediaPlayer Mediaplayer;
+    int width = 0, height = 0,points=0,arrPosGx=0,arrPosGy=0,arrPosPx=0,arrPosPy=0;
 double playerAcc=0.75;
 private static final String filename = "highscore.txt";
 public Rect []obstacles;
@@ -36,6 +39,7 @@ ImageView player,geist1;
 public ArrayList<bestenliste.player> arrBestenListe;
 TextView score;
 dot[] dots;
+boolean mundauf=false;
 public arrayElement[][] spielfeld;
 public Rect rect;
 private int direction = 0,direction1=0;
@@ -47,11 +51,12 @@ boolean mapcreated=false,win=false,lose=false;
         checkCollision();
       player = findViewById(R.id.player);
       double accValue = 5*playerAcc;
-        if(direction == 0) player.setY(player.getY()-(int)accValue);   //OBEN
-        else if(direction == 1) player.setX(player.getX()+(int)accValue); //RECHTS
-        else if(direction == 2) player.setY(player.getY()+(int)accValue); //UNTEN
-        else if(direction == 3) player.setX(player.getX()-(int)accValue); //LINKS
-        else if(direction == -1);                            //STEHEN BLEIBEN
+        if(direction == 0) {player.setY(player.getY()-(int)accValue);} //OBEN
+        else if(direction == 1) {player.setX(player.getX()+(int)accValue);;} //RECHTS
+        else if(direction == 2) {player.setY(player.getY()+(int)accValue); }//UNTEN
+        else if(direction == 3) {player.setX(player.getX()-(int)accValue); }//LINKS
+        else if(direction == -1);
+        //STEHEN BLEIBEN
     }
 
     public void checkCollisionGhost()
@@ -444,7 +449,10 @@ boolean mapcreated=false,win=false,lose=false;
    }
 
 
-
+public void animate()
+{
+    if(!mundauf){player.setImageResource(R.drawable.mundaufblau); mundauf=true;}  else {mundauf=false;player.setImageResource(R.drawable.mundzublau);}
+}
 
 
 
@@ -465,7 +473,9 @@ boolean mapcreated=false,win=false,lose=false;
 
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.spielbildschirm);
+        Mediaplayer = MediaPlayer.create(getApplicationContext(), R.raw.app_src_main_res_raw_tetris_song);
         player = findViewById(R.id.player);
         Button up = findViewById(R.id.upb);
         Button left = findViewById(R.id.leftb);
@@ -563,19 +573,19 @@ boolean mapcreated=false,win=false,lose=false;
     }
 
     public void onUpMove(){
-    player.setRotation(0);
+
         direction = 0;}
 
         public void onLeftMove(){
-            player.setRotation(-90);
+
             direction = 3;
         }
         public void onDownMove(){
-            player.setRotation(180);
+            player.setRotation(90);
             direction = 2;
         }
         public void onRightMove(){
-            player.setRotation(90);
+            player.setRotation(0);
             direction = 1;
         }
 
@@ -711,11 +721,13 @@ boolean mapcreated=false,win=false,lose=false;
                     spielbildschirm.this.runOnUiThread(new Runnable() {
                         public void run() {
                             pathing();
+                            animate();
                      }
                     });
                 }
             }, 0, 50);
         }
+
 
 
         createArray();

@@ -3,6 +3,7 @@ package com.example.pacman_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.Button;
@@ -28,18 +29,22 @@ public class hauptbildschirm extends AppCompatActivity {
 
 
         btnEinstellungen.setOnClickListener(view ->{
+          btnEinstellungen.setBackgroundColor(Color.GREEN);
             openActivityEinstellungen();
         });
 
         btnBestenliste.setOnClickListener(view -> {
+            btnBestenliste.setBackgroundColor(Color.GREEN);
             openActivityBestenliste();
         });
 
         btnSpielen.setOnClickListener(view -> {
+            btnSpielen.setBackgroundColor(Color.GREEN);
             openActivitySpielen();
         });
 
         btnHilfe.setOnClickListener(view -> {
+            btnHilfe.setBackgroundColor(Color.GREEN);
             openActivityHilfe();
         });
     }
@@ -47,6 +52,7 @@ public class hauptbildschirm extends AppCompatActivity {
     public void openActivitySpielen(){
         Intent spielenView = new Intent(this, spielbildschirm.class);
         startActivity(spielenView);
+        mediaPlayer.stop();
     }
 
     protected void openActivityEinstellungen(){
