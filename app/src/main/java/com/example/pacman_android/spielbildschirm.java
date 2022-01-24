@@ -18,17 +18,37 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.myfirstapp.R;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class spielbildschirm extends AppCompatActivity {
+public class spielbildschirm extends AppCompatActivity implements RankingDialog.RankingDialogListener {
     final int arrayLength = 40; //80
     final int arrayHeight = 12; //24
+
+    private static final String filename = "highscore.txt";
+    private ArrayList<bestenliste.player> arrBestenListe = new ArrayList<>();
+    TextView txtScore;
+    int score = 0;
+    String userNameDone = "";
+    Boolean intersectsWithGhost = false;
+
+    int counter = 0;
+
 
     int width = 0;
     int height = 0;
@@ -37,6 +57,10 @@ public class spielbildschirm extends AppCompatActivity {
     Ghost redGhost;
     public static Handler h;
     boolean mapcreated=false;
+    public GameActivity gameActivity = new GameActivity();
+
+    ReentrantLock l = new ReentrantLock();
+
 
     public void moveEntity(ImageView entity, int direction)
     {
@@ -113,21 +137,31 @@ public class spielbildschirm extends AppCompatActivity {
     protected void onResume() {
       super.onResume();
         Timer timer;
+
            {
             timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
-                public void run() { // wird periodisch im Timer thread aufgerufen
+                synchronized public void run() { // wird periodisch im Timer thread aufgerufen
                     spielbildschirm.this.runOnUiThread(new Runnable() {
-                        public void run() {
-                            if(mapcreated){
-                                //Pacman gets moved first
-                                moveEntity(pacman.getEntity(), pacman.getDirection());
-                                pacman.updateCoordinates();
-                                //Red Ghost gets moved
-                                setRedGhostDirection();
-                                moveEntity(redGhost.getEntity(), redGhost.getDirection());
-                                redGhost.updateCoordinates();
-                                checkCollision();
+                        synchronized public void run() {
+                            if (mapcreated) {
+                                intersectsWithGhost = pacmanIntersectsWithGhost(redGhost);
+                                if (intersectsWithGhost) {
+                                        counter += 1;
+                                        if(counter == 1)
+                                        onPause();
+
+                                }
+                                    //Pacman gets moved first
+                                else {
+                                    moveEntity(pacman.getEntity(), pacman.getDirection());
+                                    pacman.updateCoordinates();
+                                    //Red Ghost gets moved
+                                    setRedGhostDirection();
+                                    moveEntity(redGhost.getEntity(), redGhost.getDirection());
+                                    redGhost.updateCoordinates();
+                                    checkCollision();
+                                }
                             }
                         }
                     });
@@ -135,11 +169,19 @@ public class spielbildschirm extends AppCompatActivity {
             }, 0, 20);
         }
   }
-
-    protected void onPause() {
+Boolean gameEndDone = false;
+    synchronized protected void onPause() {
         super.onPause();
         pacman.setDirection(-1);
         redGhost.setDirection(-1);
+        if(intersectsWithGhost){
+            gameEnd();
+
+        }
+
+
+
+
     }
 
     @Override
@@ -180,6 +222,8 @@ public class spielbildschirm extends AppCompatActivity {
                 finish();
             }
         };
+
+    txtScore = (TextView) findViewById(R.id.txtScoree);
     }
 
     public void onUpMove(){
@@ -493,6 +537,23 @@ public class spielbildschirm extends AppCompatActivity {
     }
 
 
+    synchronized public boolean pacmanIntersectsWithGhost(Ghost ghost){
+        GraphNode mNodeGhost = findEntitysNode(ghost.x + ghost.getWidth()/2, ghost.y + ghost.getHeight()/2);
+        GraphNode mNodePacman = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
+
+        if(mNodePacman == mNodeGhost)
+            intersectsWithGhost = true;
+
+        return intersectsWithGhost;
+
+    }
+
+
+
+
+
+
+
     private int[][] level1 = new int[][]{
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                         {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
@@ -509,6 +570,115 @@ public class spielbildschirm extends AppCompatActivity {
                       };
 
     private ArrayList<GraphNode> graph = new ArrayList<GraphNode>();
+
+    // ==================== Bestenliste Funktionen ====================
+
+    synchronized public void gameEnd(){
+        loadRanking();
+        addHighscore();
+    }
+
+    public void addHighscore(){
+        int size = arrBestenListe.size();
+        Boolean playerIsBetter = false;
+        score = 501;
+        for(int i = 0; i<size; i++){
+            if(score >= arrBestenListe.get(i).score) {
+                playerIsBetter = true;
+                break;
+            }
+        }
+
+        if(size == 0)
+            playerIsBetter = true;
+
+        if(playerIsBetter){
+            openDialog();
+
+        }
+    }
+
+    public void openDialog(){
+        RankingDialog rankingdialog = new RankingDialog();
+        rankingdialog.show(getSupportFragmentManager(), "Top5");
+    }
+
+    void saveFile(){
+        Collections.sort(arrBestenListe, (p1, p2) -> Integer.valueOf(p2.score).compareTo(p1.score));
+
+        FileOutputStream fos = null;
+        String text = "";
+        String name;
+        String score;
+
+
+        int size = arrBestenListe.size();
+
+        for(int i = 0; i < size; i++){
+            name = arrBestenListe.get(i).name;
+            score = String.valueOf(arrBestenListe.get(i).score);
+            text = text + name + ";" + score + "\n";
+        }
+
+        try {
+            fos = openFileOutput(filename, MODE_PRIVATE);
+            fos.write(text.getBytes());
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void loadRanking(){
+        FileInputStream inputStream = null;
+
+        String[] lineSplit;
+
+        try{
+            inputStream = openFileInput(filename);
+            InputStreamReader streamReader = new InputStreamReader(inputStream);
+            BufferedReader buffReader = new BufferedReader(streamReader);
+            String textLine;
+            String name;
+            int score;
+            int counter = 0;
+
+            while( (textLine = buffReader.readLine()) != null) {
+                if (counter <= 4) {
+                    lineSplit = textLine.split(";");
+                    name = lineSplit[0];
+                    score = Integer.parseInt(lineSplit[1]);
+                    arrBestenListe.add(new bestenliste.player(name, score));
+                    counter++;
+
+                }
+            }
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getUserName(String username) {
+        userNameDone = username;
+        if(userNameDone.equals(""))
+            userNameDone = "empty";
+        arrBestenListe.add(new bestenliste.player(userNameDone, score));
+        saveFile();
+        gameEndDone = true;
+
+        if(gameEndDone) {
+            Intent newIntent = new Intent(this, hauptbildschirm.class);
+            startActivity(newIntent);
+        }
+    }
 }
 
 
