@@ -1,18 +1,62 @@
 package com.example.pacman_android;
 
-public class block {
+import android.graphics.Rect;
+import android.media.Image;
+import android.widget.ImageView;
 
-    block()
-    {
-        inhalt = 0;
-        x1 = 0;
-        y1= 0;
-        y2=0;
-        x2=0;
+public class block {
+    private boolean isWall;
+
+    private int height;
+    private int width;
+
+    private int x;
+    private int y;
+
+    private ImageView image;
+    private Rect collisionArea = new Rect();
+
+    public block(boolean isWall, int height, int width, int x, int y, ImageView image, Rect collisionArea){
+        this.isWall = isWall;
+        this.height = height;
+        this.width = width;
+        this.x = x;
+        this.y = y;
+        this.image = image;
+        this.collisionArea = collisionArea;
     }
-   int inhalt;
-     int x1;
-     int x2;
-     int y1;
-     int y2;
+
+    public boolean getIsWall(){
+        return isWall;
+    }
+
+    public Rect getCollisionArea(){
+        return collisionArea;
+    }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public boolean containsPoint(int x, int y){
+
+        if(x >= this.x && x <= this.x + this.width){
+            if(y >= this.y && y <= this.y + this.height){
+                return true;
+            }
+        }
+        return false;
+    }
 }
