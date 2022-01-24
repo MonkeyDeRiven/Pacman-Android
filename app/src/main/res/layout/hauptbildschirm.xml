@@ -105,7 +105,7 @@
         android:id="@+id/skinauswahl"
         android:layout_width="78dp"
         android:layout_height="60dp"
-        android:background="@drawable/wardrobe"
+        android:background="@drawable/ananas"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.952"

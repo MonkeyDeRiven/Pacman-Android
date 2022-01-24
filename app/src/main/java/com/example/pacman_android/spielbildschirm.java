@@ -43,6 +43,9 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     private static final String filename = "highscore.txt";
     private ArrayList<bestenliste.player> arrBestenListe = new ArrayList<>();
     TextView txtScore;
+    ImageView herz1;
+    ImageView herz2;
+    ImageView herz3;
     int score = 0;
     String userNameDone = "";
     Boolean intersectsWithGhost = false;
@@ -175,12 +178,23 @@ Boolean gameEndDone = false;
         pacman.setDirection(-1);
         redGhost.setDirection(-1);
         if(intersectsWithGhost){
+
+            pacman.life -= 1;
+            if(pacman.life == 0)
             gameEnd();
+            else{
+                if(pacman.life == 1){
+                    herz2.setVisibility(herz2.INVISIBLE);
+                    //moveGhostsToStartPos();
+                }
+                if(pacman.life == 2){
+                    herz3.setVisibility(herz3.INVISIBLE);
+                    //moveGhostsToStartPos();
+                }
+
+            }
 
         }
-
-
-
 
     }
 
@@ -224,6 +238,9 @@ Boolean gameEndDone = false;
         };
 
     txtScore = (TextView) findViewById(R.id.txtScoree);
+    herz1 = (ImageView) findViewById(R.id.herz1);
+    herz2 = (ImageView) findViewById(R.id.herz4);
+    herz3 = (ImageView) findViewById(R.id.herz5);
     }
 
     public void onUpMove(){
@@ -594,7 +611,6 @@ Boolean gameEndDone = false;
 
         if(playerIsBetter){
             openDialog();
-
         }
     }
 
