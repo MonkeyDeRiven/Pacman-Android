@@ -251,7 +251,7 @@ public class spielbildschirm extends AppCompatActivity {
                     }
                     if (level1[i][j] >= 1) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.BLACK);
+                        newImageView.setBackgroundColor(Color.BLACK);newBlock.setVisited(true);
                     }
 
                     if (i == 9 && j == 19) {
