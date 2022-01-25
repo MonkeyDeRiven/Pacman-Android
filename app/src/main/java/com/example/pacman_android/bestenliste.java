@@ -72,8 +72,7 @@ public class bestenliste extends AppCompatActivity {
         btnExit.setOnClickListener(view -> {
             finish();
         });
-        //saveFile(); //CLEAR RANKING
-
+        //saveFile(); CLEAR RANKING
         loadData();
         sortArr();
         setUpBestenliste();
@@ -92,7 +91,7 @@ public class bestenliste extends AppCompatActivity {
             String name;
             int score;
 
-            while( (textLine = buffReader.readLine()) != null){
+            while((textLine = buffReader.readLine()) != null){
                 lineSplit = textLine.split(";");
                 name = lineSplit[0];
                 score = Integer.parseInt(lineSplit[1]);
