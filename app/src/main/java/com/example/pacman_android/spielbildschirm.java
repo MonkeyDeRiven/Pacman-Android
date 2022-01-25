@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -50,6 +51,31 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     String userNameDone = "";
     Boolean intersectsWithGhost = false;
 
+    public GraphNode startingBlockRedGhost = null;
+
+
+
+
+  /*  public GraphNode findEntitysNode(int entityCenterX, int entityCenterY){
+        for(int i = 0; i < arrayHeight; i++){
+            for(int j = 0; j < arrayLength; j++){
+                if(gameField[i][j].containsPoint(entityCenterX, entityCenterY) && gameField[i][j].getIsWall() == false){
+                    return findGraphNode(gameField[i][j]);
+                }
+            }
+        }
+        return null;
+    }
+
+    public GraphNode findGraphNode(block field){
+        for(int i = 0; i < graph.size(); i++){
+            if(graph.get(i).getField() == field){
+                return graph.get(i);
+            }
+        }
+        return null;
+    }
+*/
     int counter = 0;
 
 
@@ -152,7 +178,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                                 if (intersectsWithGhost) {
                                         counter += 1;
                                         if(counter == 1)
-                                        onPause();
+                                        onHitWithGhost();
 
                                 }
                                     //Pacman gets moved first
@@ -160,7 +186,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                                     moveEntity(pacman.getEntity(), pacman.getDirection());
                                     pacman.updateCoordinates();
                                     //Red Ghost gets moved
-                                    setRedGhostDirection();
+                                    setRedGhostDirection(new GraphNode(null), true);
                                     moveEntity(redGhost.getEntity(), redGhost.getDirection());
                                     redGhost.updateCoordinates();
                                     checkCollision();
@@ -177,24 +203,6 @@ Boolean gameEndDone = false;
         super.onPause();
         pacman.setDirection(-1);
         redGhost.setDirection(-1);
-        if(intersectsWithGhost){
-
-            pacman.life -= 1;
-            if(pacman.life == 0)
-            gameEnd();
-            else{
-                if(pacman.life == 1){
-                    herz2.setVisibility(herz2.INVISIBLE);
-                    //moveGhostsToStartPos();
-                }
-                if(pacman.life == 2){
-                    herz3.setVisibility(herz3.INVISIBLE);
-                    //moveGhostsToStartPos();
-                }
-
-            }
-
-        }
 
     }
 
@@ -241,6 +249,8 @@ Boolean gameEndDone = false;
     herz1 = (ImageView) findViewById(R.id.herz1);
     herz2 = (ImageView) findViewById(R.id.herz4);
     herz3 = (ImageView) findViewById(R.id.herz5);
+
+
     }
 
     public void onUpMove(){
@@ -384,6 +394,8 @@ Boolean gameEndDone = false;
             redGhost = new Ghost(newImageView, entitySize);
             redGhost.getEntity();
             mapcreated = true;
+
+            startingBlockRedGhost = findGraphNode(gameField[5][17]);
         }
     }
 
@@ -391,10 +403,10 @@ Boolean gameEndDone = false;
 
     }
 
-    public void setRedGhostDirection(){
+    public void setRedGhostDirection(GraphNode destination, boolean goToPacman){
         //Initialises path if not existent
         if(redGhost.path == null){
-            redGhost.path = generateShortestPath();
+            redGhost.path = generateShortestPath(destination, goToPacman);
             redGhost.setDirection(findDirection(redGhost));
         }
 
@@ -402,7 +414,7 @@ Boolean gameEndDone = false;
         waypoint dest = redGhost.path.getSecond();
 
         if(redGhost.reachedNextWaypoint(dest)){
-            redGhost.path = generateShortestPath();
+            redGhost.path = generateShortestPath(destination, goToPacman);
             redGhost.setDirection(findDirection(redGhost));
         }
     }
@@ -434,10 +446,11 @@ Boolean gameEndDone = false;
     }
 
     //Dijkstra
-    public pathLinkedList generateShortestPath(){
+    public pathLinkedList generateShortestPath(GraphNode dest, boolean goToPacman){
+        GraphNode destination = null;
         GraphNode start = findEntitysNode(redGhost.x + redGhost.getWidth()/2, redGhost.y + redGhost.getHeight()/2);
-        GraphNode destination = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
-
+        if(goToPacman)destination = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
+        else destination = dest;
         ArrayList<GraphNode> que = new ArrayList<GraphNode>();
 
         GraphNode currentNode = start;
@@ -565,6 +578,16 @@ Boolean gameEndDone = false;
 
     }
 
+    public boolean ghostIsInStartingPos(Ghost ghost, GraphNode start){
+        GraphNode mNodeGhost = findEntitysNode(ghost.x + ghost.getWidth()/2, ghost.y + ghost.getHeight()/2);
+
+        if(mNodeGhost == start){
+            return true;
+        }
+        else
+            return false;
+    }
+
 
 
 
@@ -587,6 +610,47 @@ Boolean gameEndDone = false;
                       };
 
     private ArrayList<GraphNode> graph = new ArrayList<GraphNode>();
+
+
+
+
+    void moveRedGhostToStartPos(){
+        redGhost.path = null;
+        while(!ghostIsInStartingPos(redGhost, startingBlockRedGhost)) {
+            setRedGhostDirection(startingBlockRedGhost, false);
+            moveEntity(redGhost.getEntity(), redGhost.getDirection());
+            redGhost.updateCoordinates();
+            checkCollision();
+
+        }
+    }
+
+
+    void onHitWithGhost(){
+        counter = 0;
+        pacman.setDirection(-1);
+        redGhost.setDirection(-1);
+        if(intersectsWithGhost){
+
+            pacman.life -= 1;
+            if(pacman.life == 0)
+                gameEnd();
+            else{
+                if(pacman.life == 1){
+                    herz2.setVisibility(herz2.INVISIBLE);
+                    moveRedGhostToStartPos();
+                }
+                if(pacman.life == 2){
+                    herz3.setVisibility(herz3.INVISIBLE);
+                    moveRedGhostToStartPos();
+                }
+
+            }
+            intersectsWithGhost = false;
+            //onResume();
+
+        }
+    }
 
     // ==================== Bestenliste Funktionen ====================
 
