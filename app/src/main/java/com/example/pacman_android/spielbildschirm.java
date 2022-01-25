@@ -56,26 +56,6 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
 
 
-  /*  public GraphNode findEntitysNode(int entityCenterX, int entityCenterY){
-        for(int i = 0; i < arrayHeight; i++){
-            for(int j = 0; j < arrayLength; j++){
-                if(gameField[i][j].containsPoint(entityCenterX, entityCenterY) && gameField[i][j].getIsWall() == false){
-                    return findGraphNode(gameField[i][j]);
-                }
-            }
-        }
-        return null;
-    }
-
-    public GraphNode findGraphNode(block field){
-        for(int i = 0; i < graph.size(); i++){
-            if(graph.get(i).getField() == field){
-                return graph.get(i);
-            }
-        }
-        return null;
-    }
-*/
     int counter = 0;
 
 
