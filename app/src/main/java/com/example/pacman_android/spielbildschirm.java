@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.locks.ReentrantLock;
@@ -59,6 +60,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     public GraphNode startingBlockRedGhost = null;
     public block startingBlockPacman = null;
+    public block startingBlockBlueGhost = null;
 
     int counter = 0;
     int skinauswahl = 0;
@@ -66,6 +68,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     public block[][] gameField = new block[arrayHeight][arrayLength];
     Spieler pacman;
     Ghost redGhost;
+    Ghost blueGhost;
     public static Handler h;
     boolean mapcreated=false;
     public GameActivity gameActivity = new GameActivity();
@@ -253,6 +256,12 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                                     setGhostDirection(new GraphNode(null), true);
                                     moveEntity(redGhost.getEntity(), redGhost.getDirection());
                                     redGhost.updateCoordinates();
+
+                                    //Blue Ghost gets moved
+                                    setBlueGhostDirection();
+                                    moveEntity(blueGhost.getEntity(), blueGhost.getDirection());
+                                    blueGhost.updateCoordinates();
+
                                     checkCollision();
                                     survivedmilliseconds+=20;
                                     updateTimeGone();
@@ -454,6 +463,10 @@ Boolean gameEndDone = false;
                         startingBlockPacman = newBlock;
                     }
 
+                    if (i == 9 && j == 19) {
+                        startingBlockBlueGhost = newBlock;
+                    }
+
                     if(i == 5 && j == 17){
                         startXredGhost = xPosition;
                         startYredGhost = yPosition;
@@ -516,7 +529,6 @@ Boolean gameEndDone = false;
             //Red Ghost gets created
             newImageView = new ImageView(this);
             newImageView.setBackground(getDrawable(R.drawable.rotergeist_rechts));
-            newImageView.setBackgroundColor(Color.BLUE);
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
@@ -524,15 +536,81 @@ Boolean gameEndDone = false;
             newImageView.setX(startXredGhost);
 
             redGhost = new Ghost(newImageView, entitySize);
-            redGhost.getEntity();
+
+            //Blue Ghost gets created
+            newImageView = new ImageView(this);
+            newImageView.setBackground(getDrawable(R.drawable.blauergeist_rechts));
+            gameDisplay.addView(newImageView);
+            layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
+            newImageView.setLayoutParams(layoutParams);
+            newImageView.setY(startingBlockBlueGhost.getY());
+            newImageView.setX(startingBlockBlueGhost.getX());
+
+            blueGhost = new Ghost(newImageView, entitySize);
             mapcreated = true;
 
             startingBlockRedGhost = findGraphNode(gameField[5][17]);
         }
     }
 
-    public void moveGhostRandom(){
+    public void setRandomPath(Ghost ghost){
+        int ghostCenterX = (int)ghost.getEntity().getX() + ghost.getEntity().getWidth()/2;
+        int ghostCenterY = (int)ghost.getEntity().getY() + ghost.getEntity().getHeight()/2;
 
+        pathLinkedList path = new pathLinkedList();
+        waypoint newStop;
+
+        GraphNode currentNode = findEntitysNode(ghostCenterX, ghostCenterY);
+        newStop = new waypoint(currentNode);
+        path.addWaypointEnd(newStop);
+
+        Random r1 = new Random();
+
+        int index = r1.nextInt(currentNode.getNeighbourListSize());
+        currentNode = currentNode.getNeighbour(index);
+        newStop = new waypoint(currentNode);
+        path.addWaypointEnd(newStop);
+
+        index = r1.nextInt(currentNode.getNeighbourListSize());
+        currentNode = currentNode.getNeighbour(index);
+        while(currentNode == path.getFirst().getNode()){
+            index = r1.nextInt(currentNode.getNeighbourListSize());
+            currentNode = currentNode.getPrev().getNeighbour(index);
+        }
+        newStop = new waypoint(currentNode);
+        path.addWaypointEnd(newStop);
+
+        ghost.path = path;
+    }
+
+    public void setBlueGhostDirection(){
+        if(blueGhost.path == null){
+            setRandomPath(blueGhost);
+            blueGhost.setDirection(findDirection(blueGhost));
+        }
+
+        waypoint dest = blueGhost.path.getSecond();
+
+        if(blueGhost.reachedNextWaypoint(dest)){
+            waypoint nextStop = null;
+            blueGhost.path.removeFirst();
+            if(blueGhost.path.getSecond().getNode().getNeighbourListSize() == 1){
+                nextStop = new waypoint(blueGhost.path.getFirst().getNode());
+            }
+            else {
+                Random r1 = new Random();
+                int index;
+
+                GraphNode nextNode = blueGhost.path.getFirst().getNode();
+                while(nextNode == blueGhost.path.getFirst().getNode()){
+                    index = r1.nextInt(blueGhost.path.getSecond().getNode().getNeighbourListSize());
+                    nextNode = blueGhost.path.getSecond().getNode().getNeighbour(index);
+                }
+                nextStop = new waypoint(nextNode);
+            }
+            blueGhost.path.addWaypointEnd(nextStop);
+            blueGhost.setDirection(findDirection(blueGhost));
+        }
     }
 
     public void setGhostDirection(GraphNode destination, boolean goToPacman){
@@ -704,7 +782,7 @@ Boolean gameEndDone = false;
         GraphNode mNodePacman = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
 
         if(mNodePacman == mNodeGhost)
-            intersectsWithRedGhost = true;
+            return true;
 
         return intersectsWithRedGhost;
 
