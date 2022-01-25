@@ -2,33 +2,52 @@ package com.example.pacman_android;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Entity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.myfirstapp.R;
 
-import java.lang.reflect.Array;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class spielbildschirm extends AppCompatActivity {
+public class spielbildschirm extends AppCompatActivity implements RankingDialog.RankingDialogListener {
     final int arrayLength = 40; //80
     final int arrayHeight = 12; //24
+
+    private static final String filename = "highscore.txt";
+    private ArrayList<bestenliste.player> arrBestenListe = new ArrayList<>();
+    TextView txtScore;
+    ImageView herz1;
+    ImageView herz2;
+    ImageView herz3;
+    int score = 0;
+    String userNameDone = "";
+    Boolean intersectsWithGhost = false;
+
+    public GraphNode startingBlockRedGhost = null;
+
+    int counter = 0;
+
 
     int width = 0;
     int height = 0;
@@ -37,6 +56,10 @@ public class spielbildschirm extends AppCompatActivity {
     Ghost redGhost;
     public static Handler h;
     boolean mapcreated=false;
+    public GameActivity gameActivity = new GameActivity();
+
+    ReentrantLock l = new ReentrantLock();
+
 
     public void moveEntity(ImageView entity, int direction)
     {
@@ -113,21 +136,29 @@ public class spielbildschirm extends AppCompatActivity {
     protected void onResume() {
       super.onResume();
         Timer timer;
+
            {
             timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
-                public void run() { // wird periodisch im Timer thread aufgerufen
+                synchronized public void run() { // wird periodisch im Timer thread aufgerufen
                     spielbildschirm.this.runOnUiThread(new Runnable() {
-                        public void run() {
-                            if(mapcreated){
-                                //Pacman gets moved first
-                                moveEntity(pacman.getEntity(), pacman.getDirection());
-                                pacman.updateCoordinates();
-                                //Red Ghost gets moved
-                                setRedGhostDirection();
-                                moveEntity(redGhost.getEntity(), redGhost.getDirection());
-                                redGhost.updateCoordinates();
-                                checkCollision();
+                        synchronized public void run() {
+                            if (mapcreated) {
+                                intersectsWithGhost = pacmanIntersectsWithGhost(redGhost);
+                                if (intersectsWithGhost) {
+                                        counter += 1;
+                                        if(counter == 1)
+                                        onHitWithGhost();
+                                }
+                                else {//Pacman gets moved first
+                                    moveEntity(pacman.getEntity(), pacman.getDirection());
+                                    pacman.updateCoordinates();
+                                    //Red Ghost gets moved
+                                    setGhostDirection(new GraphNode(null), true);
+                                    moveEntity(redGhost.getEntity(), redGhost.getDirection());
+                                    redGhost.updateCoordinates();
+                                    checkCollision();
+                                }
                             }
                         }
                     });
@@ -135,11 +166,12 @@ public class spielbildschirm extends AppCompatActivity {
             }, 0, 20);
         }
   }
-
-    protected void onPause() {
+Boolean gameEndDone = false;
+    synchronized protected void onPause() {
         super.onPause();
         pacman.setDirection(-1);
         redGhost.setDirection(-1);
+
     }
 
     @Override
@@ -180,6 +212,13 @@ public class spielbildschirm extends AppCompatActivity {
                 finish();
             }
         };
+
+    txtScore = (TextView) findViewById(R.id.txtScoree);
+    herz1 = (ImageView) findViewById(R.id.herz1);
+    herz2 = (ImageView) findViewById(R.id.herz4);
+    herz3 = (ImageView) findViewById(R.id.herz5);
+
+
     }
 
     public void onUpMove(){
@@ -323,6 +362,8 @@ public class spielbildschirm extends AppCompatActivity {
             redGhost = new Ghost(newImageView, entitySize);
             redGhost.getEntity();
             mapcreated = true;
+
+            startingBlockRedGhost = findGraphNode(gameField[5][17]);
         }
     }
 
@@ -330,10 +371,10 @@ public class spielbildschirm extends AppCompatActivity {
 
     }
 
-    public void setRedGhostDirection(){
+    public void setGhostDirection(GraphNode destination, boolean goToPacman){
         //Initialises path if not existent
         if(redGhost.path == null){
-            redGhost.path = generateShortestPath();
+            redGhost.path = generateShortestPath(destination, goToPacman, redGhost);
             redGhost.setDirection(findDirection(redGhost));
         }
 
@@ -341,7 +382,7 @@ public class spielbildschirm extends AppCompatActivity {
         waypoint dest = redGhost.path.getSecond();
 
         if(redGhost.reachedNextWaypoint(dest)){
-            redGhost.path = generateShortestPath();
+            redGhost.path = generateShortestPath(destination, goToPacman, redGhost);
             redGhost.setDirection(findDirection(redGhost));
         }
     }
@@ -373,10 +414,11 @@ public class spielbildschirm extends AppCompatActivity {
     }
 
     //Dijkstra
-    public pathLinkedList generateShortestPath(){
-        GraphNode start = findEntitysNode(redGhost.x + redGhost.getWidth()/2, redGhost.y + redGhost.getHeight()/2);
-        GraphNode destination = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
-
+    public pathLinkedList generateShortestPath(GraphNode dest, boolean goToPacman, Ghost ghost){
+        GraphNode destination = null;
+        GraphNode start = findEntitysNode(ghost.x + ghost.getWidth()/2, redGhost.y + redGhost.getHeight()/2);
+        if(goToPacman)destination = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
+        else destination = dest;
         ArrayList<GraphNode> que = new ArrayList<GraphNode>();
 
         GraphNode currentNode = start;
@@ -493,6 +535,27 @@ public class spielbildschirm extends AppCompatActivity {
     }
 
 
+    synchronized public boolean pacmanIntersectsWithGhost(Ghost ghost){
+        GraphNode mNodeGhost = findEntitysNode(ghost.x + ghost.getWidth()/2, ghost.y + ghost.getHeight()/2);
+        GraphNode mNodePacman = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
+
+        if(mNodePacman == mNodeGhost)
+            intersectsWithGhost = true;
+
+        return intersectsWithGhost;
+
+    }
+
+    public boolean ghostIsInStartingPos(Ghost ghost, GraphNode start){
+        GraphNode mNodeGhost = findEntitysNode(ghost.x + ghost.getWidth()/2, ghost.y + ghost.getHeight()/2);
+
+        if(mNodeGhost == start){
+            return true;
+        }
+        else
+            return false;
+    }
+
     private int[][] level1 = new int[][]{
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                         {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
@@ -509,6 +572,156 @@ public class spielbildschirm extends AppCompatActivity {
                       };
 
     private ArrayList<GraphNode> graph = new ArrayList<GraphNode>();
+
+
+
+
+    void moveGhostToStartPos(Ghost ghost, GraphNode startingBlockGhost){
+        ghost.path = null;
+        while(!ghostIsInStartingPos(ghost, startingBlockGhost)) {
+            setGhostDirection(startingBlockGhost, false);
+            moveEntity(ghost.getEntity(), ghost.getDirection());
+            ghost.updateCoordinates();
+            checkCollision();
+
+        }
+    }
+
+
+    void onHitWithGhost(){
+        counter = 0;
+        pacman.setDirection(-1);
+        redGhost.setDirection(-1);
+        if(intersectsWithGhost){
+
+            pacman.life -= 1;
+            if(pacman.life == 0)
+                gameEnd();
+            else{
+                if(pacman.life == 1){
+                    herz2.setVisibility(herz2.INVISIBLE);
+                    moveGhostToStartPos(redGhost, startingBlockRedGhost);
+                }
+                if(pacman.life == 2){
+                    herz3.setVisibility(herz3.INVISIBLE);
+                    moveGhostToStartPos(redGhost, startingBlockRedGhost);
+                }
+
+            }
+            intersectsWithGhost = false;
+            //onResume();
+
+        }
+    }
+
+    // ==================== Bestenliste Funktionen ====================
+
+    synchronized public void gameEnd(){
+        loadRanking();
+        addHighscore();
+    }
+
+    public void addHighscore(){
+        int size = arrBestenListe.size();
+        Boolean playerIsBetter = false;
+        score = 501;
+        for(int i = 0; i<size; i++){
+            if(score >= arrBestenListe.get(i).score) {
+                playerIsBetter = true;
+                break;
+            }
+        }
+
+        if(size == 0)
+            playerIsBetter = true;
+
+        if(playerIsBetter){
+            openDialog();
+        }
+    }
+
+    public void openDialog(){
+        RankingDialog rankingdialog = new RankingDialog();
+        rankingdialog.show(getSupportFragmentManager(), "Top5");
+    }
+
+    void saveFile(){
+       if(arrBestenListe.size() >= 1) Collections.sort(arrBestenListe, (p1, p2) -> Integer.valueOf(p2.score).compareTo(p1.score));
+
+        FileOutputStream fos = null;
+        String text = "";
+        String name;
+        String score;
+
+
+        int size = arrBestenListe.size();
+
+        for(int i = 0; i < size; i++){
+            name = arrBestenListe.get(i).name;
+            score = String.valueOf(arrBestenListe.get(i).score);
+            text = text + name + ";" + score + "\n";
+        }
+
+        try {
+            fos = openFileOutput(filename, MODE_PRIVATE);
+            fos.write(text.getBytes());
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void loadRanking(){
+        FileInputStream inputStream = null;
+
+        String[] lineSplit;
+
+        try{
+            inputStream = openFileInput(filename);
+            InputStreamReader streamReader = new InputStreamReader(inputStream);
+            BufferedReader buffReader = new BufferedReader(streamReader);
+            String textLine;
+            String name;
+            int score;
+            int counter = 0;
+
+            while( (textLine = buffReader.readLine()) != null) {
+                if (counter <= 4) {
+                    lineSplit = textLine.split(";");
+                    name = lineSplit[0];
+                    score = Integer.parseInt(lineSplit[1]);
+                    arrBestenListe.add(new bestenliste.player(name, score));
+                    counter++;
+
+                }
+            }
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getUserName(String username) {
+        userNameDone = username;
+        if(userNameDone.equals(""))
+            userNameDone = "empty";
+        arrBestenListe.add(new bestenliste.player(userNameDone, score));
+        saveFile();
+        gameEndDone = true;
+
+
+        if(gameEndDone) {
+            Intent newIntent = new Intent(this, hauptbildschirm.class);
+            startActivity(newIntent);
+        }
+    }
 }
 
 

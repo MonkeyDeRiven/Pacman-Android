@@ -13,6 +13,7 @@ import com.example.myfirstapp.R;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class bestenliste extends AppCompatActivity {
         btnExit.setOnClickListener(view -> {
             finish();
         });
-
+        // saveFile(); CLEAR RANKING
         loadData();
         sortArr();
         setUpBestenliste();
@@ -143,6 +144,22 @@ public class bestenliste extends AppCompatActivity {
             posFiveName.setText(arrBestenListe.get(4).name);
             String hilfsstring = String.valueOf(arrBestenListe.get(4).score);
             posFiveScore.setText(hilfsstring);
+        }
+    }
+
+    void saveFile(){ // CLEAR RANKING
+
+        FileOutputStream fos = null;
+        String text = "";
+
+        try {
+            fos = openFileOutput(filename, MODE_PRIVATE);
+            fos.write(text.getBytes());
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

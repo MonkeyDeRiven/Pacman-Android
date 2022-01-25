@@ -22,6 +22,7 @@ public class Spieler {
 
     public int y;
     public int x;
+    int life;
 
     private int direction;
 
@@ -34,6 +35,8 @@ public class Spieler {
         this.x = (int)entity.getX();
         this.y = (int)entity.getY();
         this.direction = -1;
+
+        this.life = 3;
     }
 
 
