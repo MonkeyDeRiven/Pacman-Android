@@ -19,7 +19,7 @@ public class RankingDialog extends AppCompatDialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.MyDialogTheme);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layouttophighscore, null);
 
@@ -29,10 +29,15 @@ public class RankingDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int i) {
                         String username = userName.getText().toString();
                         listener.getUserName(username);
+
                     }
                 });
+        setCancelable(false);
+
 
         userName = view.findViewById(R.id.userName);
+
+
 
         return builder.create();
     }

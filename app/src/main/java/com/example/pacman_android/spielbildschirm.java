@@ -2,18 +2,14 @@ package com.example.pacman_android;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Entity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,13 +24,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class spielbildschirm extends AppCompatActivity implements RankingDialog.RankingDialogListener {
@@ -52,9 +45,6 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     Boolean intersectsWithGhost = false;
 
     public GraphNode startingBlockRedGhost = null;
-
-
-
 
     int counter = 0;
 
@@ -159,14 +149,12 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                                         counter += 1;
                                         if(counter == 1)
                                         onHitWithGhost();
-
                                 }
-                                    //Pacman gets moved first
-                                else {
+                                else {//Pacman gets moved first
                                     moveEntity(pacman.getEntity(), pacman.getDirection());
                                     pacman.updateCoordinates();
                                     //Red Ghost gets moved
-                                    setRedGhostDirection(new GraphNode(null), true);
+                                    setGhostDirection(new GraphNode(null), true);
                                     moveEntity(redGhost.getEntity(), redGhost.getDirection());
                                     redGhost.updateCoordinates();
                                     checkCollision();
@@ -383,10 +371,10 @@ Boolean gameEndDone = false;
 
     }
 
-    public void setRedGhostDirection(GraphNode destination, boolean goToPacman){
+    public void setGhostDirection(GraphNode destination, boolean goToPacman){
         //Initialises path if not existent
         if(redGhost.path == null){
-            redGhost.path = generateShortestPath(destination, goToPacman);
+            redGhost.path = generateShortestPath(destination, goToPacman, redGhost);
             redGhost.setDirection(findDirection(redGhost));
         }
 
@@ -394,7 +382,7 @@ Boolean gameEndDone = false;
         waypoint dest = redGhost.path.getSecond();
 
         if(redGhost.reachedNextWaypoint(dest)){
-            redGhost.path = generateShortestPath(destination, goToPacman);
+            redGhost.path = generateShortestPath(destination, goToPacman, redGhost);
             redGhost.setDirection(findDirection(redGhost));
         }
     }
@@ -426,9 +414,9 @@ Boolean gameEndDone = false;
     }
 
     //Dijkstra
-    public pathLinkedList generateShortestPath(GraphNode dest, boolean goToPacman){
+    public pathLinkedList generateShortestPath(GraphNode dest, boolean goToPacman, Ghost ghost){
         GraphNode destination = null;
-        GraphNode start = findEntitysNode(redGhost.x + redGhost.getWidth()/2, redGhost.y + redGhost.getHeight()/2);
+        GraphNode start = findEntitysNode(ghost.x + ghost.getWidth()/2, redGhost.y + redGhost.getHeight()/2);
         if(goToPacman)destination = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
         else destination = dest;
         ArrayList<GraphNode> que = new ArrayList<GraphNode>();
@@ -568,12 +556,6 @@ Boolean gameEndDone = false;
             return false;
     }
 
-
-
-
-
-
-
     private int[][] level1 = new int[][]{
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                         {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
@@ -594,12 +576,12 @@ Boolean gameEndDone = false;
 
 
 
-    void moveRedGhostToStartPos(){
-        redGhost.path = null;
-        while(!ghostIsInStartingPos(redGhost, startingBlockRedGhost)) {
-            setRedGhostDirection(startingBlockRedGhost, false);
-            moveEntity(redGhost.getEntity(), redGhost.getDirection());
-            redGhost.updateCoordinates();
+    void moveGhostToStartPos(Ghost ghost, GraphNode startingBlockGhost){
+        ghost.path = null;
+        while(!ghostIsInStartingPos(ghost, startingBlockGhost)) {
+            setGhostDirection(startingBlockGhost, false);
+            moveEntity(ghost.getEntity(), ghost.getDirection());
+            ghost.updateCoordinates();
             checkCollision();
 
         }
@@ -618,11 +600,11 @@ Boolean gameEndDone = false;
             else{
                 if(pacman.life == 1){
                     herz2.setVisibility(herz2.INVISIBLE);
-                    moveRedGhostToStartPos();
+                    moveGhostToStartPos(redGhost, startingBlockRedGhost);
                 }
                 if(pacman.life == 2){
                     herz3.setVisibility(herz3.INVISIBLE);
-                    moveRedGhostToStartPos();
+                    moveGhostToStartPos(redGhost, startingBlockRedGhost);
                 }
 
             }
@@ -664,7 +646,7 @@ Boolean gameEndDone = false;
     }
 
     void saveFile(){
-        Collections.sort(arrBestenListe, (p1, p2) -> Integer.valueOf(p2.score).compareTo(p1.score));
+       if(arrBestenListe.size() >= 1) Collections.sort(arrBestenListe, (p1, p2) -> Integer.valueOf(p2.score).compareTo(p1.score));
 
         FileOutputStream fos = null;
         String text = "";
@@ -733,6 +715,7 @@ Boolean gameEndDone = false;
         arrBestenListe.add(new bestenliste.player(userNameDone, score));
         saveFile();
         gameEndDone = true;
+
 
         if(gameEndDone) {
             Intent newIntent = new Intent(this, hauptbildschirm.class);
