@@ -90,14 +90,13 @@
         android:text="Score: "
         android:textColor="#FF0000"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:fontFamily="@font/arcadeclassicregular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.004"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037" />
+        app:layout_constraintVertical_bias="0.04" />
 
     <ImageView
         android:id="@+id/herz1"
@@ -148,6 +147,56 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_media_pause" />
 
+
+    <RelativeLayout
+        android:id="@+id/pauseScreen"
+        android:translationZ="120dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        android:id="@+id/pauseScreen"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="1.0">
+
+
+        <TextView
+            android:id="@+id/pauseCounter"
+            android:layout_width="554dp"
+            android:layout_height="165dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="102dp"
+            android:layout_marginLeft="102dp"
+            android:layout_marginTop="112dp"
+            android:layout_marginEnd="75dp"
+            android:layout_marginRight="75dp"
+            android:layout_marginBottom="134dp"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="#EFD700"
+            android:textColorHighlight="#E2E805"
+            android:textSize="80sp"
+            android:visibility="invisible"
+            app:fontFamily="@font/arcadeclassicregular" />
+
+
+    </RelativeLayout>
+
+
     <RelativeLayout
         android:id="@+id/spielScreen"
         android:layout_width="fill_parent"
@@ -179,46 +228,28 @@
             android:translationZ="90dp"
             app:srcCompat="@drawable/gelbmundauf" />
 
-        <TextView
-            android:id="@+id/pauseCounter"
-            android:layout_width="match_parent"
-            android:layout_height="272dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="3dp"
-            android:gravity="center"
-            android:text="3"
-            android:textColor="#FFEB3B"
-            android:textSize="80sp"
-            android:visibility="invisible"
-            app:fontFamily="@font/arcadeclassicregular" />
+
 
 
     </RelativeLayout>
+
+
+
 
     <TextView
         android:id="@+id/timeGone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time:"
+        android:text="Time: "
         android:textColor="#FF0000"
         android:textSize="24sp"
         app:fontFamily="@font/arcadeclassicregular"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.834"
+        app:layout_constraintHorizontal_bias="0.831"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.636" />
+        app:layout_constraintVertical_bias="0.727" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

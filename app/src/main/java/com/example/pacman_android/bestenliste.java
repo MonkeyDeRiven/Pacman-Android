@@ -73,6 +73,7 @@ public class bestenliste extends AppCompatActivity {
             finish();
         });
         //saveFile(); //CLEAR RANKING
+
         loadData();
         sortArr();
         setUpBestenliste();

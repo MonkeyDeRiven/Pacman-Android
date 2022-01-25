@@ -53,9 +53,10 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
    public int cookiesEaten=0,amountCookies=0;
    public int xPosArray=0,yPosArray=0;
     public int survivedmilliseconds=0;
-    Animation fadein,fadeout;
     TextView startCounter,timeGone;
+RelativeLayout rl;
 
+boolean gamestart=false;
     private static final String filename = "highscore.txt";
     private static final String filenameStats = "playerStats.txt";
     private ArrayList<bestenliste.player> arrBestenListe = new ArrayList<>();
@@ -75,6 +76,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     int counter = 0;
     int skinauswahl = 0;
+
     AnimationDrawable pacmananimation;
     public block[][] gameField = new block[arrayHeight][arrayLength];
     Spieler pacman;
@@ -83,13 +85,18 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     boolean mapcreated=false;
     public GameActivity gameActivity = new GameActivity();
 
-    public void moveEntity(ImageView entity, int direction)
+
+    ReentrantLock l = new ReentrantLock();
+
+
+    public void moveEntity(ImageView entity, int direction,int acc)
+
     {
         if(mapcreated) {
-            if (direction == 0) entity.setY(entity.getY() - 3);   //OBEN
-            else if (direction == 1) entity.setX(entity.getX() + 3); //RECHTS
-            else if (direction == 2) entity.setY(entity.getY() + 3); //UNTEN
-            else if (direction == 3) entity.setX(entity.getX() - 3); //LINKS
+            if (direction == 0) entity.setY(entity.getY() - (3*acc));   //OBEN
+            else if (direction == 1) entity.setX(entity.getX() + (3*acc)); //RECHTS
+            else if (direction == 2) entity.setY(entity.getY() + (3*acc)); //UNTEN
+            else if (direction == 3) entity.setX(entity.getX() - (3*acc)); //LINKS
             else if (direction == -1) ;                            //STEHEN BLEIBEN
         }
     }
@@ -147,11 +154,106 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
            xPosArray=j;yPosArray=i;
    }
 
+
+
+
+
+
+
    public void pauseView(){
-       startCounter = findViewById(R.id.pauseCounter);
-       fadein = AnimationUtils.loadAnimation(this,R.anim.fadein);
-       fadeout = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+      startCounter = findViewById(R.id.pauseCounter);
+       rl = findViewById(R.id.pauseScreen);
+       rl.bringToFront();
+       RelativeLayout spiellayout = findViewById(R.id.spielScreen);
+
+
+       Animation fadeoutFirst = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+       fadeoutFirst.setDuration(1000);
+       Animation fadeoutSecond = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+       fadeoutSecond.setDuration(1000);
+       Animation fadeoutThird = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+       fadeoutThird.setDuration(1000);
+       Animation fadeoutFourth = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+       fadeoutFourth.setDuration(1000);
        startCounter.setVisibility(View.VISIBLE);
+       fadeoutFirst.setAnimationListener(new Animation.AnimationListener() {
+           @Override
+           public void onAnimationStart(Animation animation) {
+
+           }
+
+           @Override
+           public void onAnimationEnd(Animation animation) {
+startCounter.setText("2");
+startCounter.clearAnimation();
+startCounter.startAnimation(fadeoutSecond);
+           }
+
+           @Override
+           public void onAnimationRepeat(Animation animation) {
+
+           }
+       });
+
+       fadeoutSecond.setAnimationListener(new Animation.AnimationListener() {
+           @Override
+           public void onAnimationStart(Animation animation) {
+
+           }
+
+           @Override
+           public void onAnimationEnd(Animation animation) {
+               startCounter.setText("1");
+               startCounter.clearAnimation();
+               startCounter.startAnimation(fadeoutThird);
+           }
+
+           @Override
+           public void onAnimationRepeat(Animation animation) {
+
+           }
+       });
+       fadeoutThird.setAnimationListener(new Animation.AnimationListener() {
+           @Override
+           public void onAnimationStart(Animation animation) {
+
+           }
+
+           @Override
+           public void onAnimationEnd(Animation animation) {
+
+               startCounter.setText("GO!");
+               startCounter.clearAnimation();
+
+               startCounter.startAnimation(fadeoutFourth);
+
+           }
+
+           @Override
+           public void onAnimationRepeat(Animation animation) {
+
+           }
+       });
+       fadeoutFourth.setAnimationListener(new Animation.AnimationListener() {
+           @Override
+           public void onAnimationStart(Animation animation) {
+
+           }
+
+           @Override
+           public void onAnimationEnd(Animation animation) {
+              startCounter.setVisibility(View.INVISIBLE);
+                spiellayout.bringToFront();
+               startCounter.setText("3");
+                continueGame();
+           }
+
+           @Override
+           public void onAnimationRepeat(Animation animation) {
+
+           }
+       });
+       startCounter.startAnimation(fadeoutFirst);
    }
 
     public void updateTimeGone()
@@ -172,6 +274,25 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
         }
 
     }
+
+
+    public void pauseGame()
+    {
+gamestart=false;
+        pacman.setSpeed(0);
+        redGhost.setSpeed(0);
+        survivedmilliseconds -=20;
+    }
+    public void continueGame()
+    {
+        gamestart= true;
+        pacman.setSpeed(1);
+        redGhost.setSpeed(1);
+    }
+
+
+
+
     public boolean checkWin()
     {
         if(cookiesEaten==amountCookies) return true;
@@ -190,15 +311,17 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     protected void onResume() {
       super.onResume();
+        pauseView();
         Timer timer;
-
            {
             timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
                 synchronized public void run() { // wird periodisch im Timer thread aufgerufen
                     spielbildschirm.this.runOnUiThread(new Runnable() {
                         synchronized public void run() {
+
                             if (mapcreated) {
+                                if(!gamestart)pauseGame();
                                 intersectsWithRedGhost = pacmanIntersectsWithGhost(redGhost);
                                 if (intersectsWithRedGhost) {
                                         counter += 1;
@@ -260,16 +383,16 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
                                     //Check if field is a cookie
                                     checkDots();
-                                    moveEntity(pacman.getEntity(), pacman.getDirection());
+                                    moveEntity(pacman.getEntity(), pacman.getDirection(),pacman.getSpeed());
                                     pacman.updateCoordinates();
 
                                     //Red Ghost gets moved
-                                    setGhostDirection(new GraphNode(null), true);
-                                    moveEntity(redGhost.getEntity(), redGhost.getDirection());
+                                 if(gamestart) {  setGhostDirection(new GraphNode(null), true);
+                                    moveEntity(redGhost.getEntity(), redGhost.getDirection(),redGhost.getSpeed());
                                     redGhost.updateCoordinates();
                                     checkCollision();
                                     survivedmilliseconds+=20;
-                                    updateTimeGone();
+                                    updateTimeGone();}
                                 }
                             }
                         }
@@ -281,8 +404,13 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 Boolean gameEndDone = false;
     synchronized protected void onPause() {
         super.onPause();
+
         pacman.setDirection(-1);
         redGhost.setDirection(-1);
+
+       gamestart=false;
+
+
     }
 
     @Override
@@ -291,6 +419,10 @@ Boolean gameEndDone = false;
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.spielbildschirm);
+
+
+
+
         Button up = findViewById(R.id.upb);
         Button left = findViewById(R.id.leftb);
         Button right = findViewById(R.id.rightb);
@@ -419,7 +551,11 @@ Boolean gameEndDone = false;
 
         RelativeLayout gameDisplay = findViewById(R.id.spielScreen);
 
+
+
+
         if(mapcreated == false) {
+
             int screenWidth = gameDisplay.getWidth();
             int screenHeight = gameDisplay.getHeight();
 
@@ -532,6 +668,9 @@ Boolean gameEndDone = false;
             redGhost = new Ghost(newImageView, entitySize);
             redGhost.getEntity();
             mapcreated = true;
+
+
+
 
         }
     }
@@ -742,9 +881,11 @@ Boolean gameEndDone = false;
 
    void moveGhostToStartPos(Ghost ghost, block startingBlock){
         ghost.path = null;
+
         ghost.getEntity().setY(startingBlock.getY());
         ghost.getEntity().setX(startingBlock.getX());
         ghost.updateCoordinates();
+
     }
 
     public void movePacmanToStartPos(){

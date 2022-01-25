@@ -17,6 +17,7 @@ public class Spieler {
 
     public ImageView entity;
 
+    private int  speed;
     private int width;
     private int height;
 
@@ -99,4 +100,12 @@ public class Spieler {
         }
         return false;
     }
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
 }
