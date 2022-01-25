@@ -47,7 +47,7 @@ public class hauptbildschirm extends AppCompatActivity {
         setContentView(R.layout.hauptbildschirm);
 
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.app_src_main_res_raw_tetris_song);
+        mediaPlayer = MediaPlayer.create(this, R.raw.pacmansong);
         mediaPlayer.start();
 
         btnBestenliste = (Button)findViewById(R.id.btnBestenliste);

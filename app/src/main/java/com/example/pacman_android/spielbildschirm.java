@@ -3,7 +3,11 @@ package com.example.pacman_android;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.annotation.SuppressLint;
+
 import android.content.Context;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -12,10 +16,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
+import android.view.View;
+
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Timer;
@@ -49,17 +58,21 @@ RelativeLayout rl;
 
 boolean gamestart=false;
     private static final String filename = "highscore.txt";
+    private static final String filenameStats = "playerStats.txt";
     private ArrayList<bestenliste.player> arrBestenListe = new ArrayList<>();
     TextView txtScore;
     ImageView herz1;
     ImageView herz2;
     ImageView herz3;
-    int score = 0;
+
     String userNameDone = "";
     Boolean intersectsWithRedGhost = false;
+    TextView txtDialogScore;
 
-    public GraphNode startingBlockRedGhost = null;
+    public block startingBlockRedGhost = null;
     public block startingBlockPacman = null;
+
+    public TextView textScoreAnzeige = null;
 
     int counter = 0;
     int skinauswahl = 0;
@@ -72,10 +85,12 @@ boolean gamestart=false;
     boolean mapcreated=false;
     public GameActivity gameActivity = new GameActivity();
 
+
     ReentrantLock l = new ReentrantLock();
 
 
     public void moveEntity(ImageView entity, int direction,int acc)
+
     {
         if(mapcreated) {
             if (direction == 0) entity.setY(entity.getY() - (3*acc));   //OBEN
@@ -139,13 +154,9 @@ boolean gamestart=false;
            xPosArray=j;yPosArray=i;
    }
 
-   public void fixCollisionPosition() {
-       if (pacman.getDirection() == 0) pacman.getEntity().setY(pacman.getEntity().getY() + 4);
-       else if (pacman.getDirection() == 1) pacman.getEntity().setX(pacman.getEntity().getX() - 4);
-       else if (pacman.getDirection() == 2) pacman.getEntity().setY(pacman.getEntity().getY() - 4);
-       else if (pacman.getDirection() == 3) pacman.getEntity().setX(pacman.getEntity().getX() + 4);
-       pacman.updateCoordinates();
-   }
+
+
+
 
 
 
@@ -257,9 +268,13 @@ startCounter.startAnimation(fadeoutSecond);
            gameField[yPosArray][xPosArray].image.setBackgroundColor(Color.parseColor("#a4c639"));
            gameField[yPosArray][xPosArray].setVisited(true);
            ++cookiesEaten;
+           pacman.playerScore += 10;
+           String scoreList = "Score: ";
+           textScoreAnzeige.setText("Score: " + pacman.playerScore);
         }
 
     }
+
 
     public void pauseGame()
     {
@@ -277,10 +292,21 @@ gamestart=false;
 
 
 
+
     public boolean checkWin()
     {
         if(cookiesEaten==amountCookies) return true;
         return false;
+    }
+
+    public void fixCollisionPosition(){
+       if (pacman.getDirection() == 0) pacman.getEntity().setY(pacman.getEntity().getY() + 3);
+       else if (pacman.getDirection() == 1) pacman.getEntity().setX(pacman.getEntity().getX() - 3);
+       else if (pacman.getDirection() == 2) pacman.getEntity().setY(pacman.getEntity().getY() - 3);
+       else if (pacman.getDirection() == 3) pacman.getEntity().setX(pacman.getEntity().getX() + 3);
+
+       pacman.updateCoordinates();
+
     }
 
     protected void onResume() {
@@ -378,7 +404,12 @@ gamestart=false;
 Boolean gameEndDone = false;
     synchronized protected void onPause() {
         super.onPause();
+
+        pacman.setDirection(-1);
+        redGhost.setDirection(-1);
+
        gamestart=false;
+
 
     }
 
@@ -418,7 +449,6 @@ Boolean gameEndDone = false;
         onLeftMove();;
     })  ;
 
-
     h = new Handler() {
             public void handleMessage(Message msg) {
                 finish();
@@ -429,9 +459,9 @@ Boolean gameEndDone = false;
     herz2 = (ImageView) findViewById(R.id.herz4);
     herz3 = (ImageView) findViewById(R.id.herz5);
 
+    textScoreAnzeige = findViewById(R.id.txtPScoreAnzeige);
 
     }
-
     public void onUpMove(){
         block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
         int currentBlockIndex = findBlockIndex(currentBlock);
@@ -545,11 +575,6 @@ Boolean gameEndDone = false;
             block newBlock = null;
             Rect newRect;
 
-            int startXpacman = 0;
-            int startYpacman = 0;
-
-            int startXredGhost = 0;
-            int startYredGhost = 0;
 
             RelativeLayout.LayoutParams layoutParams;
 
@@ -573,8 +598,7 @@ Boolean gameEndDone = false;
                     }
 
                     if(i == 5 && j == 17){
-                        startXredGhost = xPosition;
-                        startYredGhost = yPosition;
+                        startingBlockRedGhost = newBlock;
                     }
 
                     //new layout for the imageview
@@ -638,14 +662,15 @@ Boolean gameEndDone = false;
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
-            newImageView.setY(startYredGhost);
-            newImageView.setX(startXredGhost);
+            newImageView.setY(startingBlockRedGhost.getY());
+            newImageView.setX(startingBlockRedGhost.getX());
 
             redGhost = new Ghost(newImageView, entitySize);
             redGhost.getEntity();
             mapcreated = true;
 
-            startingBlockRedGhost = findGraphNode(gameField[5][17]);
+
+
 
         }
     }
@@ -653,7 +678,6 @@ Boolean gameEndDone = false;
     public void moveGhostRandom(){
 
     }
-
     public void setGhostDirection(GraphNode destination, boolean goToPacman){
         //Initialises path if not existent
         if(redGhost.path == null){
@@ -699,7 +723,7 @@ Boolean gameEndDone = false;
     //Dijkstra
     public pathLinkedList generateShortestPath(GraphNode dest, boolean goToPacman, Ghost ghost){
         GraphNode destination = null;
-        GraphNode start = findEntitysNode(ghost.x + ghost.getWidth()/2, redGhost.y + redGhost.getHeight()/2);
+        GraphNode start = findEntitysNode(ghost.x + ghost.getWidth()/2, ghost.y + ghost.getHeight()/2);
         if(goToPacman)destination = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
         else destination = dest;
         ArrayList<GraphNode> que = new ArrayList<GraphNode>();
@@ -817,7 +841,6 @@ Boolean gameEndDone = false;
         return null;
     }
 
-
     synchronized public boolean pacmanIntersectsWithGhost(Ghost ghost){
         GraphNode mNodeGhost = findEntitysNode(ghost.x + ghost.getWidth()/2, ghost.y + ghost.getHeight()/2);
         GraphNode mNodePacman = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
@@ -839,10 +862,6 @@ Boolean gameEndDone = false;
             return false;
     }
 
-
-
-
-
     private int[][] level1 = new int[][]{
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                         {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
@@ -860,18 +879,13 @@ Boolean gameEndDone = false;
 
     private ArrayList<GraphNode> graph = new ArrayList<GraphNode>();
 
-
-
-
-    void moveGhostToStartPos(Ghost ghost, GraphNode startingBlockGhost){
+   void moveGhostToStartPos(Ghost ghost, block startingBlock){
         ghost.path = null;
-        while(!ghostIsInStartingPos(ghost, startingBlockGhost)) {
-            setGhostDirection(startingBlockGhost, false);
-            moveEntity(ghost.getEntity(), ghost.getDirection(),ghost.getSpeed());
-            ghost.updateCoordinates();
-            checkCollision();
 
-        }
+        ghost.getEntity().setY(startingBlock.getY());
+        ghost.getEntity().setX(startingBlock.getX());
+        ghost.updateCoordinates();
+
     }
 
     public void movePacmanToStartPos(){
@@ -913,16 +927,49 @@ Boolean gameEndDone = false;
     // ==================== Bestenliste Funktionen ====================
 
     synchronized public void gameEnd(){
+        savePlayerStats();
         loadRanking();
         addHighscore();
     }
 
+   public void savePlayerStats() {
+
+        FileOutputStream fos = null;
+        String text = "";
+
+       try {
+           fos = openFileOutput(filenameStats, MODE_PRIVATE);
+           fos.write(text.getBytes());
+       } catch (FileNotFoundException e) {
+           e.printStackTrace();
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+
+       String score = String.valueOf(pacman.playerScore);
+       String ateGhost = String.valueOf(pacman.ateGhosts);
+
+
+       text = score + ";" + ateGhost;
+
+        try {
+            fos = openFileOutput(filenameStats, MODE_PRIVATE);
+            fos.write(text.getBytes());
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void addHighscore(){
         int size = arrBestenListe.size();
         Boolean playerIsBetter = false;
-        score = 501;
+
         for(int i = 0; i<size; i++){
-            if(score >= arrBestenListe.get(i).score) {
+            if(pacman.playerScore >= arrBestenListe.get(i).score) {
                 playerIsBetter = true;
                 break;
             }
@@ -934,6 +981,13 @@ Boolean gameEndDone = false;
         if(playerIsBetter){
             openDialog();
         }
+        else
+            openLooseDialog();
+    }
+
+    public void openLooseDialog(){
+        EndScreen ende = new EndScreen();
+        ende.show(getSupportFragmentManager(), "Runde Beendet");
     }
 
     public void openDialog(){
@@ -947,15 +1001,14 @@ Boolean gameEndDone = false;
         FileOutputStream fos = null;
         String text = "";
         String name;
-        String score;
-
+        String scoreInto;
 
         int size = arrBestenListe.size();
 
         for(int i = 0; i < size; i++){
             name = arrBestenListe.get(i).name;
-            score = String.valueOf(arrBestenListe.get(i).score);
-            text = text + name + ";" + score + "\n";
+            scoreInto = String.valueOf(arrBestenListe.get(i).score);
+            text = text + name + ";" + scoreInto + "\n";
         }
 
         try {
@@ -970,13 +1023,13 @@ Boolean gameEndDone = false;
     }
 
 
-
     public void loadRanking(){
         FileInputStream inputStream = null;
 
         String[] lineSplit;
 
         try{
+
             inputStream = openFileInput(filename);
             InputStreamReader streamReader = new InputStreamReader(inputStream);
             BufferedReader buffReader = new BufferedReader(streamReader);
@@ -1005,10 +1058,11 @@ Boolean gameEndDone = false;
 
     @Override
     public void getUserName(String username) {
+
         userNameDone = username;
         if(userNameDone.equals(""))
             userNameDone = "empty";
-        arrBestenListe.add(new bestenliste.player(userNameDone, score));
+        arrBestenListe.add(new bestenliste.player(userNameDone, pacman.playerScore));
         saveFile();
         gameEndDone = true;
 
@@ -1018,7 +1072,6 @@ Boolean gameEndDone = false;
             startActivity(newIntent);
         }
     }
-
 
     private String readFromFile(Context context) {
 
@@ -1049,8 +1102,6 @@ Boolean gameEndDone = false;
 
         return String.valueOf(ret.charAt(1));
     }
-
-
 }
 
 
