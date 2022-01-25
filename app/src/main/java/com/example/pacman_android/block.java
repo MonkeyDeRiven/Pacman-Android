@@ -63,6 +63,15 @@ public class block {
 
     public void setVisited(boolean visited) { this.visited = visited; }
 
+    public boolean containsEntity(ImageView entity){
+        if(x <= entity.getX() && x + width >= entity.getX() + entity.getWidth()){
+            if(y <= entity.getY() && y + height >= entity.getY() + entity.getHeight()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean containsPoint(int x, int y){
 
         if(x >= this.x && x <= this.x + this.width){

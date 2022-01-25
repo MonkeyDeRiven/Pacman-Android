@@ -4,10 +4,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -20,9 +20,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class RankingDialog extends AppCompatDialogFragment {
-    private EditText userName;
-    private RankingDialogListener listener;
+public class EndScreen extends AppCompatDialogFragment {
+
+
     private TextView score;
     private TextView ateG;
     String playerScore;
@@ -34,15 +34,17 @@ public class RankingDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.MyDialogTheme);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.layouttophighscore, null);
+        View view = inflater.inflate(R.layout.verlorenlayout, null);
 
 
-        builder.setView(view).setTitle("Herzlichen Glückwunsch")
-                .setPositiveButton("FERTIG", new DialogInterface.OnClickListener() {
+        builder.setView(view).setTitle("Verloren")
+                .setPositiveButton("Beenden", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-                        String username = userName.getText().toString();
-                        listener.getUserName(username);
+
+                            dismiss();
+                            Intent newIntent = new Intent(getContext(),hauptbildschirm.class);
+                            startActivity(newIntent);
 
                     }
                 });
@@ -55,8 +57,6 @@ public class RankingDialog extends AppCompatDialogFragment {
 
         ateG = view.findViewById(R.id.txtLooseAteGhosts);
         ateG.setText(ateG.getText().toString() + "\t"+  ateGhosts);
-
-        userName = view.findViewById(R.id.userName);
 
         return builder.create();
     }
@@ -72,11 +72,11 @@ public class RankingDialog extends AppCompatDialogFragment {
             BufferedReader buffReader = new BufferedReader(streamReader);
 
             while( (textLine = buffReader.readLine()) != null) {
-                    lineSplit = textLine.split(";");
-                    playerScore = lineSplit[0];
-                    ateGhosts = lineSplit[1];
-                }
+                lineSplit = textLine.split(";");
+                playerScore = lineSplit[0];
+                ateGhosts = lineSplit[1];
             }
+        }
 
         catch(FileNotFoundException e){
             e.printStackTrace();
@@ -89,10 +89,7 @@ public class RankingDialog extends AppCompatDialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        listener = (RankingDialogListener) context;
     }
 
-    public interface RankingDialogListener{
-        void getUserName(String username);
-    }
+
 }
