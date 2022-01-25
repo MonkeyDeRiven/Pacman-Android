@@ -13,10 +13,11 @@ public class block {
     private int x;
     private int y;
 
-    private ImageView image;
+
+
+
+    public ImageView image;
     private Rect collisionArea = new Rect();
-
-
 
     private boolean visited = false;
 
@@ -56,7 +57,20 @@ public class block {
 
     public boolean isVisited() { return visited; }
 
+    public ImageView getImage() { return image; }
+
+    public void setImage(ImageView image) { this.image = image; }
+
     public void setVisited(boolean visited) { this.visited = visited; }
+
+    public boolean containsEntity(ImageView entity){
+        if(x <= entity.getX() && x + width >= entity.getX() + entity.getWidth()){
+            if(y <= entity.getY() && y + height >= entity.getY() + entity.getHeight()){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean containsPoint(int x, int y){
 

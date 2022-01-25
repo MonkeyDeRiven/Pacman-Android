@@ -8,6 +8,8 @@ public class Ghost {
 
     private ImageView entity;
 
+
+
     private int speed;
     private int direction;
 
@@ -82,5 +84,13 @@ public class Ghost {
         }
         System.out.println("FALSE");
         return false;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

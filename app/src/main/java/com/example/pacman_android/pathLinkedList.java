@@ -14,6 +14,17 @@ public class pathLinkedList {
         root = root.getPrev();
     }
 
+    public void addWaypointEnd(waypoint newWaypoint){
+        if(root == null){
+            root = newWaypoint;
+            end = root;
+            return;
+        }
+        end.setNext(newWaypoint);
+        end = end.getNext();
+
+    }
+
     public waypoint getFirst(){
         return root;
     }

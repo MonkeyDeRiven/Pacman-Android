@@ -17,13 +17,23 @@ public class Spieler {
 
     public ImageView entity;
 
+    private int  speed;
     private int width;
     private int height;
 
     public int y;
     public int x;
+    int life;
 
     private int direction;
+
+    public int ateGhosts;
+    public int playerScore;
+
+    private int directionBuffer = -1;
+
+    private block nextBlock = null;
+
 
     public Spieler(ImageView entity, int size){
 
@@ -34,6 +44,11 @@ public class Spieler {
         this.x = (int)entity.getX();
         this.y = (int)entity.getY();
         this.direction = -1;
+
+        this.life = 1;
+
+        this.ateGhosts = 0;
+        this.playerScore = 0;
     }
 
 
@@ -54,12 +69,43 @@ public class Spieler {
         return direction;
     }
 
+    public int getDirectionBuffer(){
+        return directionBuffer;
+    }
+
+    public block getNextBlock(){
+        return nextBlock;
+    }
+
     public void setDirection(int newDirection){
         direction = newDirection;
+    }
+
+    public void setDirectionBuffer(int newDirectionBuffer){
+        directionBuffer = newDirectionBuffer;
+    }
+
+    public void setNextBlock(block newNextBlock){
+        nextBlock = newNextBlock;
     }
 
     public void updateCoordinates(){
         x = (int)entity.getX();
         y = (int)entity.getY();
     }
+
+    public boolean reachedNextBlock(){
+        if(nextBlock.containsEntity(entity)){
+            return true;
+        }
+        return false;
+    }
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
 }
