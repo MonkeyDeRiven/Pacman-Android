@@ -8,14 +8,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextClock;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.myfirstapp.R;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class RankingDialog extends AppCompatDialogFragment {
     private EditText userName;
     private RankingDialogListener listener;
+    private TextView score;
+    private TextView ateG;
+    String playerScore;
+    String ateGhosts;
+
+    private static final String filenameStats = "playerStats.txt";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -23,8 +37,9 @@ public class RankingDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layouttophighscore, null);
 
+
         builder.setView(view).setTitle("Herzlichen Glückwunsch")
-                .setPositiveButton("Abgeben", new DialogInterface.OnClickListener() {
+                .setPositiveButton("FERTIG", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
                         String username = userName.getText().toString();
@@ -34,12 +49,41 @@ public class RankingDialog extends AppCompatDialogFragment {
                 });
         setCancelable(false);
 
+        loadRanking();
+
+        score = view.findViewById(R.id.txtDialogScore);
+        score.setText(score.getText().toString() + "         " +playerScore + " Punkte");
+
+        ateG = view.findViewById(R.id.txtAteGhosts);
+        ateG.setText(ateG.getText().toString() + "\t"+  ateGhosts);
 
         userName = view.findViewById(R.id.userName);
 
-
-
         return builder.create();
+    }
+
+    public void loadRanking(){
+        FileInputStream inputStream = null;
+        String textLine = "";
+        String[] lineSplit;
+
+        try{
+            inputStream = getActivity().openFileInput(filenameStats);
+            InputStreamReader streamReader = new InputStreamReader(inputStream);
+            BufferedReader buffReader = new BufferedReader(streamReader);
+
+            while( (textLine = buffReader.readLine()) != null) {
+                    lineSplit = textLine.split(";");
+                    playerScore = lineSplit[0];
+                    ateGhosts = lineSplit[1];
+                }
+            }
+
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

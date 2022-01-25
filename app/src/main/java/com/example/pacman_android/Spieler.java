@@ -25,6 +25,8 @@ public class Spieler {
     int life;
 
     private int direction;
+    public int ateGhosts;
+    public int playerScore;
 
     public Spieler(ImageView entity, int size){
 
@@ -36,7 +38,10 @@ public class Spieler {
         this.y = (int)entity.getY();
         this.direction = -1;
 
-        this.life = 3;
+        this.life = 1;
+
+        this.ateGhosts = 5;
+        this.playerScore = 501;
     }
 
 

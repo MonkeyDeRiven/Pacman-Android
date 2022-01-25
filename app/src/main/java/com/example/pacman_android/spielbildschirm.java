@@ -3,6 +3,7 @@ package com.example.pacman_android;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -10,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,14 +37,16 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     final int arrayHeight = 12; //24
 
     private static final String filename = "highscore.txt";
+    private static final String filenameStats = "playerStats.txt";
     private ArrayList<bestenliste.player> arrBestenListe = new ArrayList<>();
     TextView txtScore;
     ImageView herz1;
     ImageView herz2;
     ImageView herz3;
-    int score = 0;
+    int score = 502;
     String userNameDone = "";
     Boolean intersectsWithRedGhost = false;
+    TextView txtDialogScore;
 
     public GraphNode startingBlockRedGhost = null;
 
@@ -58,7 +62,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     boolean mapcreated=false;
     public GameActivity gameActivity = new GameActivity();
 
-    ReentrantLock l = new ReentrantLock();
+
 
 
     public void moveEntity(ImageView entity, int direction)
@@ -219,6 +223,9 @@ Boolean gameEndDone = false;
     herz3 = (ImageView) findViewById(R.id.herz5);
 
 
+
+
+
     }
 
     public void onUpMove(){
@@ -364,6 +371,7 @@ Boolean gameEndDone = false;
             mapcreated = true;
 
             startingBlockRedGhost = findGraphNode(gameField[5][17]);
+
         }
     }
 
@@ -617,14 +625,49 @@ Boolean gameEndDone = false;
     // ==================== Bestenliste Funktionen ====================
 
     synchronized public void gameEnd(){
+        savePlayerStats();
         loadRanking();
         addHighscore();
     }
 
+   public void savePlayerStats() {
+
+
+        FileOutputStream fos = null;
+        String text = "";
+
+       try {
+           fos = openFileOutput(filenameStats, MODE_PRIVATE);
+           fos.write(text.getBytes());
+       } catch (FileNotFoundException e) {
+           e.printStackTrace();
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+
+
+       String score = String.valueOf(pacman.playerScore);
+       String ateGhost = String.valueOf(pacman.ateGhosts);
+
+
+       text = score + ";" + ateGhost;
+
+        try {
+            fos = openFileOutput(filenameStats, MODE_PRIVATE);
+            fos.write(text.getBytes());
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void addHighscore(){
         int size = arrBestenListe.size();
         Boolean playerIsBetter = false;
-        score = 501;
+
         for(int i = 0; i<size; i++){
             if(score >= arrBestenListe.get(i).score) {
                 playerIsBetter = true;
@@ -681,6 +724,7 @@ Boolean gameEndDone = false;
         String[] lineSplit;
 
         try{
+
             inputStream = openFileInput(filename);
             InputStreamReader streamReader = new InputStreamReader(inputStream);
             BufferedReader buffReader = new BufferedReader(streamReader);
@@ -709,6 +753,7 @@ Boolean gameEndDone = false;
 
     @Override
     public void getUserName(String username) {
+
         userNameDone = username;
         if(userNameDone.equals(""))
             userNameDone = "empty";
