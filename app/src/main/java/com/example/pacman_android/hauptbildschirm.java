@@ -86,7 +86,6 @@ skinanimater =(int) (Math.random()*3-0+1) + 0;
             shake.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-
                 }
 
                 @Override
@@ -161,15 +160,9 @@ mediaPlayer.start();
 
     protected void onPause() {
         super.onPause();
-
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
-    @Override
-    protected void onUserLeaveHint()
-    { super.onUserLeaveHint();
-       // mediaPlayer.stop();
-    }
 
     public void animate(Button button,Intent intentt)
     {

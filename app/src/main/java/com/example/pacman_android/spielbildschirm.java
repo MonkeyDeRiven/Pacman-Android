@@ -3,15 +3,27 @@ package com.example.pacman_android;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.annotation.SuppressLint;
+
+import android.content.Context;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import android.view.View;
+
+import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,7 +37,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Timer;
@@ -35,6 +49,12 @@ import java.util.concurrent.locks.ReentrantLock;
 public class spielbildschirm extends AppCompatActivity implements RankingDialog.RankingDialogListener {
     final int arrayLength = 40; //80
     final int arrayHeight = 12; //24
+
+   public int cookiesEaten=0,amountCookies=0;
+   public int xPosArray=0,yPosArray=0;
+    public int survivedmilliseconds=0;
+    Animation fadein,fadeout;
+    TextView startCounter,timeGone;
 
     private static final String filename = "highscore.txt";
     private static final String filenameStats = "playerStats.txt";
@@ -52,9 +72,8 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     int counter = 0;
 
-
-    int width = 0;
-    int height = 0;
+ int skinauswahl = 0;
+  AnimationDrawable pacmananimation;
     public block[][] gameField = new block[arrayHeight][arrayLength];
     Spieler pacman;
     Ghost redGhost;
@@ -124,10 +143,40 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                     }
                     break;
                 }
+
             }
+           xPosArray=j;yPosArray=i;
    }
 
-   public void fixCollisionPosition(){
+   public void pauseView() {
+        startCounter = findViewById(R.id.pauseCounter);
+        fadein = AnimationUtils.loadAnimation(this,R.anim.fadein);
+        fadeout = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        startCounter.setVisibility(View.VISIBLE);
+   }
+
+    public void updateTimeGone()
+    {timeGone = findViewById(R.id.timeGone);
+    timeGone.setText("Time: "+ survivedmilliseconds/1000);
+
+    }
+    public void checkDots()
+    {
+        if(!gameField[yPosArray][xPosArray].isVisited())
+        {
+           gameField[yPosArray][xPosArray].image.setBackgroundColor(Color.parseColor("#a4c639"));
+           gameField[yPosArray][xPosArray].setVisited(true);
+           ++cookiesEaten;
+        }
+
+    }
+    public boolean checkWin()
+    {
+        if(cookiesEaten==amountCookies) return true;
+        return false;
+    }
+
+    public void fixCollisionPosition(){
        if (pacman.getDirection() == 0) pacman.getEntity().setY(pacman.getEntity().getY() + 3);
        else if (pacman.getDirection() == 1) pacman.getEntity().setX(pacman.getEntity().getX() - 3);
        else if (pacman.getDirection() == 2) pacman.getEntity().setY(pacman.getEntity().getY() - 3);
@@ -154,7 +203,10 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                                         if(counter == 1)
                                         onHitWithGhost();
                                 }
-                                else {//Pacman gets moved first
+                                else {
+                                    //Check if field is a cookie
+                                    checkDots();
+                                    //Pacman gets moved first
                                     moveEntity(pacman.getEntity(), pacman.getDirection());
                                     pacman.updateCoordinates();
                                     //Red Ghost gets moved
@@ -162,6 +214,8 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                                     moveEntity(redGhost.getEntity(), redGhost.getDirection());
                                     redGhost.updateCoordinates();
                                     checkCollision();
+                                    survivedmilliseconds+=20;
+                                    updateTimeGone();
                                 }
                             }
                         }
@@ -181,7 +235,9 @@ Boolean gameEndDone = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.spielbildschirm);
         Button up = findViewById(R.id.upb);
@@ -217,14 +273,9 @@ Boolean gameEndDone = false;
             }
         };
 
-    txtScore = (TextView) findViewById(R.id.txtScoree);
     herz1 = (ImageView) findViewById(R.id.herz1);
     herz2 = (ImageView) findViewById(R.id.herz4);
     herz3 = (ImageView) findViewById(R.id.herz5);
-
-
-
-
 
     }
 
@@ -293,7 +344,7 @@ Boolean gameEndDone = false;
 
                     if (level1[i][j] == 0) {
                         newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.WHITE);
+                        newImageView.setBackgroundColor(Color.WHITE);++amountCookies;
                     }
                     if (level1[i][j] >= 1) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
@@ -339,7 +390,15 @@ Boolean gameEndDone = false;
 
             //pacman gets created
             newImageView = new ImageView(this);
-            newImageView.setBackgroundColor(Color.YELLOW);
+            skinauswahl = Integer.valueOf(readFromFile(this));
+            if(skinauswahl==0)newImageView.setBackgroundResource(R.drawable.pacmanmovementgelb);
+            if(skinauswahl==1)newImageView.setBackgroundResource(R.drawable.pacmanmovementblau);
+            if(skinauswahl==2)newImageView.setBackgroundResource(R.drawable.pacmanmovementgrun);
+            if(skinauswahl==3)newImageView.setBackgroundResource(R.drawable.pacmanmovementrot);
+
+            pacmananimation = (AnimationDrawable) newImageView.getBackground();
+            pacmananimation.start();
+
             gameDisplay.addView(newImageView);
 
             //scales pacman
@@ -564,6 +623,10 @@ Boolean gameEndDone = false;
             return false;
     }
 
+
+
+
+
     private int[][] level1 = new int[][]{
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                         {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
@@ -767,6 +830,40 @@ Boolean gameEndDone = false;
             startActivity(newIntent);
         }
     }
+
+
+    private String readFromFile(Context context) {
+
+        String ret = "";
+
+        try {
+            try (InputStream inputStream = context.openFileInput("selectPacman.txt")) {
+
+                if (inputStream != null) {
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    String receiveString = "";
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    while ((receiveString = bufferedReader.readLine()) != null) {
+                        stringBuilder.append("\n").append(receiveString);
+                    }
+
+                    inputStream.close();
+                    ret = stringBuilder.toString();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return String.valueOf(ret.charAt(1));
+    }
+
+
+
 }
 
 
