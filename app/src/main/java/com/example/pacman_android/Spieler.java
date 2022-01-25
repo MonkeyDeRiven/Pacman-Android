@@ -25,6 +25,9 @@ public class Spieler {
     int life;
 
     private int direction;
+    private int directionBuffer = -1;
+
+    private block nextBlock = null;
 
     public Spieler(ImageView entity, int size){
 
@@ -57,12 +60,35 @@ public class Spieler {
         return direction;
     }
 
+    public int getDirectionBuffer(){
+        return directionBuffer;
+    }
+
+    public block getNextBlock(){
+        return nextBlock;
+    }
+
     public void setDirection(int newDirection){
         direction = newDirection;
+    }
+
+    public void setDirectionBuffer(int newDirectionBuffer){
+        directionBuffer = newDirectionBuffer;
+    }
+
+    public void setNextBlock(block newNextBlock){
+        nextBlock = newNextBlock;
     }
 
     public void updateCoordinates(){
         x = (int)entity.getX();
         y = (int)entity.getY();
+    }
+
+    public boolean reachedNextBlock(){
+        if(nextBlock.containsEntity(entity)){
+            return true;
+        }
+        return false;
     }
 }

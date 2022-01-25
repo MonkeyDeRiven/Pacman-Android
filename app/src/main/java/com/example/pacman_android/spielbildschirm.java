@@ -45,6 +45,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     Boolean intersectsWithRedGhost = false;
 
     public GraphNode startingBlockRedGhost = null;
+    public block startingBlockPacman = null;
 
     int counter = 0;
 
@@ -124,10 +125,10 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
    }
 
    public void fixCollisionPosition(){
-       if (pacman.getDirection() == 0) pacman.getEntity().setY(pacman.getEntity().getY() + 3);
-       else if (pacman.getDirection() == 1) pacman.getEntity().setX(pacman.getEntity().getX() - 3);
-       else if (pacman.getDirection() == 2) pacman.getEntity().setY(pacman.getEntity().getY() - 3);
-       else if (pacman.getDirection() == 3) pacman.getEntity().setX(pacman.getEntity().getX() + 3);
+       if (pacman.getDirection() == 0) pacman.getEntity().setY(pacman.getEntity().getY() + 4);
+       else if (pacman.getDirection() == 1) pacman.getEntity().setX(pacman.getEntity().getX() - 4);
+       else if (pacman.getDirection() == 2) pacman.getEntity().setY(pacman.getEntity().getY() - 4);
+       else if (pacman.getDirection() == 3) pacman.getEntity().setX(pacman.getEntity().getX() + 4);
 
        pacman.updateCoordinates();
 
@@ -150,9 +151,61 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                                         if(counter == 1)
                                         onHitWithGhost();
                                 }
-                                else {//Pacman gets moved first
+                                else {
+                                    //Pacman gets moved first
+                                    if(pacman.getNextBlock() != null) {
+                                        if(pacman.reachedNextBlock()){
+                                            block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
+                                            int currentBlockIndex = findBlockIndex(pacman.getNextBlock());
+                                            if(pacman.getDirectionBuffer() == 0){
+                                                if(gameField[(currentBlockIndex/40)-1][currentBlockIndex%40].getIsWall() == false){
+                                                    pacman.getEntity().setRotation(0);
+                                                    pacman.setDirection(0);
+                                                    pacman.setDirectionBuffer(-1);
+                                                    pacman.setNextBlock(null);
+                                                }
+                                                else{
+                                                    pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
+                                                }
+                                            }
+                                            if(pacman.getDirectionBuffer() == 1){
+                                                if(gameField[currentBlockIndex/40][(currentBlockIndex%40)+1].getIsWall() == false){
+                                                    pacman.getEntity().setRotation(90);
+                                                    pacman.setDirection(1);
+                                                    pacman.setDirectionBuffer(-1);
+                                                    pacman.setNextBlock(null);
+                                                }
+                                                else{
+                                                    pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
+                                                }
+                                            }
+                                            if(pacman.getDirectionBuffer() == 2){
+                                                if(gameField[(currentBlockIndex/40)+1][currentBlockIndex%40].getIsWall() == false){
+                                                    pacman.getEntity().setRotation(180);
+                                                    pacman.setDirection(2);
+                                                    pacman.setDirectionBuffer(-1);
+                                                    pacman.setNextBlock(null);
+                                                }
+                                                else{
+                                                    pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
+                                                }
+                                            }
+                                            if(pacman.getDirectionBuffer() == 3){
+                                                if(gameField[currentBlockIndex/40][(currentBlockIndex%40)-1].getIsWall() == false){
+                                                    pacman.getEntity().setRotation(-90);
+                                                    pacman.setDirection(3);
+                                                    pacman.setDirectionBuffer(-1);
+                                                    pacman.setNextBlock(null);
+                                                }
+                                                else{
+                                                    pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
+                                                }
+                                            }
+                                        }
+                                    }
                                     moveEntity(pacman.getEntity(), pacman.getDirection());
                                     pacman.updateCoordinates();
+
                                     //Red Ghost gets moved
                                     setGhostDirection(new GraphNode(null), true);
                                     moveEntity(redGhost.getEntity(), redGhost.getDirection());
@@ -222,25 +275,85 @@ Boolean gameEndDone = false;
     }
 
     public void onUpMove(){
-        pacman.getEntity().setRotation(0);
-        pacman.setDirection(0);
+        block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
+        int currentBlockIndex = findBlockIndex(currentBlock);
+        if(currentBlock.containsEntity(pacman.getEntity()) && gameField[(currentBlockIndex/40)-1][currentBlockIndex%40].getIsWall() == false){
+            pacman.getEntity().setRotation(0);
+            pacman.setDirection(0);
+        }
+        else{
+            pacman.setDirectionBuffer(0);
+            pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
+        }
     }
     public void onLeftMove(){
-        pacman.getEntity().setRotation(-90);
-        pacman.setDirection(3);
+        block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
+        int currentBlockIndex = findBlockIndex(currentBlock);
+        if(currentBlock.containsEntity(pacman.getEntity()) && gameField[currentBlockIndex/40][(currentBlockIndex%40)-1].getIsWall() == false){
+            pacman.getEntity().setRotation(-90);
+            pacman.setDirection(3);
+        }
+        else{
+            pacman.setDirectionBuffer(3);
+            pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
+        }
     }
     public void onDownMove() {
-        pacman.getEntity().setRotation(180);
-        pacman.setDirection(2);
+        block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
+        int currentBlockIndex = findBlockIndex(currentBlock);
+        if(currentBlock.containsEntity(pacman.getEntity()) && gameField[(currentBlockIndex/40)+1][currentBlockIndex%40].getIsWall() == false){
+            pacman.getEntity().setRotation(180);
+            pacman.setDirection(2);
+        }
+        else{
+            pacman.setDirectionBuffer(2);
+            pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
+        }
     }
     public void onRightMove(){
-        pacman.getEntity().setRotation(90);
-        pacman.setDirection(1);
+        block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
+        int currentBlockIndex = findBlockIndex(currentBlock);
+        if(currentBlock.containsEntity(pacman.getEntity()) && gameField[currentBlockIndex/40][(currentBlockIndex%40)+1].getIsWall() == false){
+            pacman.getEntity().setRotation(90);
+            pacman.setDirection(1);
+        }
+        else{
+            pacman.setDirectionBuffer(1);
+            pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
+        }
+    }
+
+    public block getNexBlock(block currentBlock, int direction){
+        int currentBlockIndex = findBlockIndex(currentBlock);
+        if(direction == 0 && gameField[(currentBlockIndex/40)-1][currentBlockIndex%40].getIsWall() == false){
+            return gameField[(currentBlockIndex/40)-1][currentBlockIndex%40];
+        }
+        if(direction == 1 && gameField[currentBlockIndex/40][(currentBlockIndex%40)+1].getIsWall() == false){
+            return gameField[currentBlockIndex/40][(currentBlockIndex%40)+1];
+        }
+        if(direction == 2 && gameField[(currentBlockIndex/40)+1][currentBlockIndex%40].getIsWall() == false){
+            return gameField[(currentBlockIndex/40)+1][currentBlockIndex%40];
+        }
+        if(direction == 3 && gameField[currentBlockIndex/40][(currentBlockIndex%40)-1].getIsWall() == false){
+            return gameField[currentBlockIndex/40][(currentBlockIndex%40)-1];
+        }
+        return null;
     }
 
     public void openSpielmenueView(){
         Intent spielmenueView = new Intent(this, spielmenu.class);
         startActivity(spielmenueView);
+    }
+
+    public int findBlockIndex(block toFind){
+        for(int i = 0; i < arrayHeight; i++){
+            for(int j = 0; j < arrayLength; j++){
+                if (gameField[i][j] == toFind){
+                    return i*40+j;
+                }
+            }
+        }
+        return 0;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -294,8 +407,7 @@ Boolean gameEndDone = false;
                     }
 
                     if (i == 9 && j == 19) {
-                        startXpacman = xPosition;
-                        startYpacman = yPosition;
+                        startingBlockPacman = newBlock;
                     }
 
                     if(i == 5 && j == 17){
@@ -340,8 +452,8 @@ Boolean gameEndDone = false;
             newImageView.setLayoutParams(layoutParams);
 
             //sets pacmans starting position
-            newImageView.setY(startYpacman);
-            newImageView.setX(startXpacman);
+            newImageView.setY(startingBlockPacman.getY());
+            newImageView.setX(startingBlockPacman.getX());
 
             pacman = new Spieler(newImageView, entitySize);
 
@@ -587,6 +699,12 @@ Boolean gameEndDone = false;
         }
     }
 
+    public void movePacmanToStartPos(){
+        pacman.getEntity().setY(startingBlockPacman.getY());
+        pacman.getEntity().setX(startingBlockPacman.getX());
+        pacman.updateCoordinates();
+    }
+
 
     void onHitWithGhost(){
         counter = 0;
@@ -601,10 +719,13 @@ Boolean gameEndDone = false;
                 if(pacman.life == 1){
                     herz2.setVisibility(herz2.INVISIBLE);
                     moveGhostToStartPos(redGhost, startingBlockRedGhost);
+                    movePacmanToStartPos();
+
                 }
                 if(pacman.life == 2){
                     herz3.setVisibility(herz3.INVISIBLE);
                     moveGhostToStartPos(redGhost, startingBlockRedGhost);
+                    movePacmanToStartPos();
                 }
 
             }
