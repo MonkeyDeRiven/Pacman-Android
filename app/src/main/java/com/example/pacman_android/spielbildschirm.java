@@ -42,7 +42,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     ImageView herz3;
     int score = 0;
     String userNameDone = "";
-    Boolean intersectsWithGhost = false;
+    Boolean intersectsWithRedGhost = false;
 
     public GraphNode startingBlockRedGhost = null;
 
@@ -144,8 +144,8 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                     spielbildschirm.this.runOnUiThread(new Runnable() {
                         synchronized public void run() {
                             if (mapcreated) {
-                                intersectsWithGhost = pacmanIntersectsWithGhost(redGhost);
-                                if (intersectsWithGhost) {
+                                intersectsWithRedGhost = pacmanIntersectsWithGhost(redGhost);
+                                if (intersectsWithRedGhost) {
                                         counter += 1;
                                         if(counter == 1)
                                         onHitWithGhost();
@@ -540,9 +540,9 @@ Boolean gameEndDone = false;
         GraphNode mNodePacman = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
 
         if(mNodePacman == mNodeGhost)
-            intersectsWithGhost = true;
+            intersectsWithRedGhost = true;
 
-        return intersectsWithGhost;
+        return intersectsWithRedGhost;
 
     }
 
@@ -592,7 +592,7 @@ Boolean gameEndDone = false;
         counter = 0;
         pacman.setDirection(-1);
         redGhost.setDirection(-1);
-        if(intersectsWithGhost){
+        if(intersectsWithRedGhost){ // || intersectsWithOtherGhosts
 
             pacman.life -= 1;
             if(pacman.life == 0)
@@ -608,7 +608,7 @@ Boolean gameEndDone = false;
                 }
 
             }
-            intersectsWithGhost = false;
+            intersectsWithRedGhost = false;
             //onResume();
 
         }
