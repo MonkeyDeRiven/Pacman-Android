@@ -13,10 +13,11 @@ public class block {
     private int x;
     private int y;
 
-    private ImageView image;
+
+
+
+    public ImageView image;
     private Rect collisionArea = new Rect();
-
-
 
     private boolean visited = false;
 
@@ -55,6 +56,10 @@ public class block {
     }
 
     public boolean isVisited() { return visited; }
+
+    public ImageView getImage() { return image; }
+
+    public void setImage(ImageView image) { this.image = image; }
 
     public void setVisited(boolean visited) { this.visited = visited; }
 
