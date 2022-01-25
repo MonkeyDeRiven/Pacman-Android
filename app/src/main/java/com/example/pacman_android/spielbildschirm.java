@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,7 +43,9 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
    public int cookiesEaten=0,amountCookies=0;
    public int xPosArray=0,yPosArray=0;
-
+    public int survivedmilliseconds=0;
+    Animation fadein,fadeout;
+    TextView startCounter,timeGone;
 
     private static final String filename = "highscore.txt";
     private ArrayList<bestenliste.player> arrBestenListe = new ArrayList<>();
@@ -133,6 +137,22 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
            xPosArray=j;yPosArray=i;
    }
 
+   public void pauseView()
+   {startCounter = findViewById(R.id.pauseCounter);
+   fadein = AnimationUtils.loadAnimation(this,R.anim.fadein);
+       fadeout = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+   startCounter.setVisibility(View.VISIBLE);
+
+
+
+
+   }
+
+    public void updateTimeGone()
+    {timeGone = findViewById(R.id.timeGone);
+    timeGone.setText("Time: "+ survivedmilliseconds/1000);
+
+    }
     public void checkDots()
     {
         if(!gameField[yPosArray][xPosArray].isVisited())
@@ -189,6 +209,8 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                                     moveEntity(redGhost.getEntity(), redGhost.getDirection());
                                     redGhost.updateCoordinates();
                                     checkCollision();
+                                    survivedmilliseconds+=20;
+                                    updateTimeGone();
                                 }
                             }
                         }
@@ -244,7 +266,6 @@ Boolean gameEndDone = false;
             }
         };
 
-    txtScore = (TextView) findViewById(R.id.txtScoree);
     herz1 = (ImageView) findViewById(R.id.herz1);
     herz2 = (ImageView) findViewById(R.id.herz4);
     herz3 = (ImageView) findViewById(R.id.herz5);
