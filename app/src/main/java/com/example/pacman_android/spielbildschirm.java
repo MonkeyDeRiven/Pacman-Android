@@ -157,12 +157,6 @@ boolean gamestart=false;
            xPosArray=j;yPosArray=i;
    }
 
-
-
-
-
-
-
    public void pauseView(){
       startCounter = findViewById(R.id.pauseCounter);
        rl = findViewById(R.id.pauseScreen);
@@ -187,9 +181,9 @@ boolean gamestart=false;
 
            @Override
            public void onAnimationEnd(Animation animation) {
-startCounter.setText("2");
-startCounter.clearAnimation();
-startCounter.startAnimation(fadeoutSecond);
+               startCounter.setText("2");
+               startCounter.clearAnimation();
+               startCounter.startAnimation(fadeoutSecond);
            }
 
            @Override
@@ -284,6 +278,7 @@ startCounter.startAnimation(fadeoutSecond);
 gamestart=false;
         pacman.setSpeed(0);
         redGhost.setSpeed(0);
+        blueGhost.setSpeed(0);
         survivedmilliseconds -=20;
     }
     public void continueGame()
@@ -291,6 +286,7 @@ gamestart=false;
         gamestart= true;
         pacman.setSpeed(1);
         redGhost.setSpeed(1);
+        blueGhost.setSpeed(1);
     }
 
 
@@ -396,7 +392,7 @@ gamestart=false;
 
                                     //Blue Ghost gets moved
                                     setBlueGhostDirection();
-                                    moveEntity(blueGhost.getEntity(), blueGhost.getDirection());
+                                    moveEntity(blueGhost.getEntity(), blueGhost.getDirection(), blueGhost.getSpeed());
                                     blueGhost.updateCoordinates();
 
                                     checkCollision();
@@ -428,9 +424,6 @@ Boolean gameEndDone = false;
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.spielbildschirm);
-
-
-
 
         Button up = findViewById(R.id.upb);
         Button left = findViewById(R.id.leftb);
@@ -606,7 +599,7 @@ Boolean gameEndDone = false;
                         startingBlockPacman = newBlock;
                     }
 
-                    if (i == 9 && j == 19) {
+                    if (i == 5 && j == 18) {
                         startingBlockBlueGhost = newBlock;
                     }
 
@@ -689,11 +682,8 @@ Boolean gameEndDone = false;
             newImageView.setX(startingBlockBlueGhost.getX());
 
             blueGhost = new Ghost(newImageView, entitySize);
+
             mapcreated = true;
-
-
-
-
         }
     }
 
@@ -718,7 +708,7 @@ Boolean gameEndDone = false;
         index = r1.nextInt(currentNode.getNeighbourListSize());
         currentNode = currentNode.getNeighbour(index);
         while(currentNode == path.getFirst().getNode()){
-            index = r1.nextInt(currentNode.getNeighbourListSize());
+            index = r1.nextInt(currentNode.getPrev().getNeighbourListSize());
             currentNode = currentNode.getPrev().getNeighbour(index);
         }
         newStop = new waypoint(currentNode);
