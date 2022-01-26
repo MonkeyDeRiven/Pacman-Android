@@ -45,13 +45,11 @@ public class Spieler {
         this.y = (int)entity.getY();
         this.direction = -1;
 
-        this.life = 1;
+        this.life = 3;
 
         this.ateGhosts = 0;
         this.playerScore = 0;
     }
-
-
 
     public ImageView getEntity(){
         return entity;
