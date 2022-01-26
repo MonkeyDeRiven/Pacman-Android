@@ -134,7 +134,7 @@
         android:id="@+id/imageView"
         android:layout_width="fill_parent"
         android:layout_height="94dp"
-        android:background="@color/yellow"
+        android:background="@color/grey_font"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -146,7 +146,7 @@
         android:id="@+id/imageView2"
         android:layout_width="fill_parent"
         android:layout_height="42dp"
-        android:background="@color/yellow"
+        android:background="@color/grey_font"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -159,7 +159,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Score: "
-        android:textColor="#FF0000"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:fontFamily="@font/arcadeclassicregular"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -209,7 +209,8 @@
         android:id="@+id/btnSpielmenue"
         android:layout_width="51dp"
         android:layout_height="41dp"
-        android:backgroundTint="@color/yellow"
+        android:background="@color/grey_font"
+        android:tint="#FF0000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -250,74 +251,62 @@
             android:translationZ="90dp"
             app:srcCompat="@drawable/gelbmundauf" />
 
-        <RelativeLayout
-            android:id="@+id/pauseScreen"
-            android:layout_width="400dp"
-            android:layout_height="200dp"
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/pauseScreen"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:translationZ="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        android:id="@+id/pauseScreen"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="1.0">
+
+
+        <TextView
+            android:id="@+id/pauseCounter"
+            android:layout_width="554dp"
+            android:layout_height="165dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="165dp"
-            android:layout_marginLeft="165dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="166dp"
-            android:layout_marginRight="166dp"
-            android:layout_marginBottom="39dp"
-            android:translationZ="120dp"><![CDATA[
-            android:id="@+id/pauseScreen"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:background="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            app:layout_constraintVertical_bias="1.0">
-
-
-
-
-
-
-
-
-            ]]>
-
-            <TextView
-                android:id="@+id/pauseCounter"
-                android:layout_width="554dp"
-                android:layout_height="165dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="102dp"
-                android:layout_marginLeft="102dp"
-                android:layout_marginTop="112dp"
-                android:layout_marginEnd="75dp"
-                android:layout_marginRight="75dp"
-                android:layout_marginBottom="134dp"
-                android:gravity="center"
-                android:text="3"
-                android:textColor="#EFD700"
-                android:textColorHighlight="#E2E805"
-                android:textSize="80sp"
-                android:visibility="invisible"
-                app:fontFamily="@font/arcadeclassicregular" />
-
-
-        </RelativeLayout>
+            android:layout_marginStart="102dp"
+            android:layout_marginLeft="102dp"
+            android:layout_marginTop="112dp"
+            android:layout_marginEnd="75dp"
+            android:layout_marginRight="75dp"
+            android:layout_marginBottom="134dp"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="#EFD700"
+            android:textColorHighlight="#E2E805"
+            android:textSize="80sp"
+            android:visibility="invisible"
+            app:fontFamily="@font/arcadeclassicregular" />
 
 
     </RelativeLayout>
-
-
 
 
     <TextView
@@ -325,7 +314,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time: "
-        android:textColor="#FF0000"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:fontFamily="@font/arcadeclassicregular"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"

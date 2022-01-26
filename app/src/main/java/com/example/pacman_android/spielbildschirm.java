@@ -13,6 +13,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 
@@ -94,19 +95,19 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     ReentrantLock l = new ReentrantLock();
 
-    public void moveEntity(ImageView entity, int direction, double acc) {
+    public void moveEntity(ImageView entity, int direction, int acc) {
         if(mapcreated) {
             if(direction == 0) {
-                entity.setY(entity.getY() - (int)(2*acc));   //OBEN
+                entity.setY(entity.getY() - acc);   //OBEN
             }
             if(direction == 1){
-                entity.setX(entity.getX() + (int)(2*acc)); //RECHTS
+                entity.setX(entity.getX() + acc); //RECHTS
             }
             if(direction == 2){
-                entity.setY(entity.getY() + (int)(2*acc)); //UNTEN
+                entity.setY(entity.getY() + acc); //UNTEN
             }
             if(direction == 3){
-                entity.setX(entity.getX() - (int)(2*acc)); //LINKS
+                entity.setX(entity.getX() - acc); //LINKS
             }
         }
     }
@@ -370,7 +371,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     {
         if(!gameField[yPosArray][xPosArray].isVisited())
         {
-           gameField[yPosArray][xPosArray].image.setBackgroundColor(Color.parseColor("#a4c639"));
+           gameField[yPosArray][xPosArray].image.setBackgroundResource(R.drawable.pfadleer);
            gameField[yPosArray][xPosArray].setVisited(true);
            ++cookiesEaten;
            pacman.playerScore += 10;
@@ -379,6 +380,85 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
         }
 
     }
+
+    public void checkFruit()
+    {
+
+        if(gameField[yPosArray][xPosArray].isFruit())
+        {gameField[yPosArray][xPosArray].setFruit(false);
+
+            if(gameField[yPosArray][xPosArray].fruchtart==0)
+            {if(!redGhost.isFrozen) {redGhost.setSpeed(1);redGhost.entity.setBackgroundResource(R.drawable.snail);}
+            if(!pinkGhost.isFrozen) {pinkGhost.setSpeed(1);pinkGhost.entity.setBackgroundResource(R.drawable.snail);}
+            if(!orangeGhost.isFrozen) {orangeGhost.setSpeed(1);orangeGhost.entity.setBackgroundResource(R.drawable.snail);}
+                new CountDownTimer(10000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    public void onFinish() {
+                    resetFigures();
+                    }
+
+                }.start();
+            }
+           else if(gameField[yPosArray][xPosArray].fruchtart==1)
+            {
+                redGhost.setFrozen(true); pinkGhost.setFrozen(true); orangeGhost.setFrozen(true);
+                redGhost.setSpeed(0);pinkGhost.setSpeed(0);orangeGhost.setSpeed(0);
+                redGhost.entity.setBackgroundResource(R.drawable.snowman);
+                pinkGhost.entity.setBackgroundResource(R.drawable.snowman);
+                orangeGhost.entity.setBackgroundResource(R.drawable.snowman);
+                new CountDownTimer(7000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    public void onFinish() {
+                        redGhost.setFrozen(false);pinkGhost.setFrozen(false);orangeGhost.setFrozen(false);resetFigures();
+                    }
+
+                }.start();
+            }
+
+          else  if(gameField[yPosArray][xPosArray].fruchtart==2)
+            {
+                pacman.playerScore+=200;
+            }
+          else  if(gameField[yPosArray][xPosArray].fruchtart==3)
+            {
+                pacman.setSpeed(4);
+                new CountDownTimer(7000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    public void onFinish() {
+                        resetFigures();
+                    }
+
+                }.start();
+            }
+        }
+
+
+    }
+public void resetFigures()
+{
+    pacman.setSpeed(3);
+    redGhost.setSpeed(3);
+    pinkGhost.setSpeed(3);
+    orangeGhost.setSpeed(3);
+
+
+    redGhost.entity.setBackgroundResource(R.drawable.rotergeist);
+    pinkGhost.entity.setBackgroundResource(R.drawable.pinkergeist);
+    orangeGhost.entity.setBackgroundResource(R.drawable.orangegeist);
+
+}
 
     public void setControllerLayout() {
 
@@ -652,6 +732,7 @@ Boolean gameEndDone = false;
 
                                     //Check if field is a cookie
                                     checkDots();
+                                    checkFruit();
                                     moveEntity(pacman.getEntity(), pacman.getDirection(),pacman.getSpeed());
                                     pacman.updateCoordinates();
 
@@ -805,7 +886,7 @@ Boolean gameEndDone = false;
 
                     if (level1[i][j] == 0) {
                         newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.BLUE);++amountCookies;
+                        newImageView.setBackgroundResource(R.drawable.pfadcookie);++amountCookies;
                     }
                     if (level1[i][j] == 1) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
@@ -899,30 +980,30 @@ Boolean gameEndDone = false;
                     }
 
                     if (level1[i][j] == 40) {
-                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                      newImageView.setBackgroundColor(Color.GREEN);
-                        newBlock.setFruit(true);
+                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                      newImageView.setBackgroundResource(R.drawable.pfadkirsche);
+                        newBlock.setFruit(true);newBlock.fruchtart=0;
                     }
 
 
                     if (level1[i][j] == 41) {
-                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.BLUE);
-                        newBlock.setFruit(true);
+                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundResource(R.drawable.pfadeisfrucht);
+                        newBlock.setFruit(true);newBlock.fruchtart=1;
                     }
 
 
                     if (level1[i][j] == 42) {
-                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.YELLOW);
-                        newBlock.setFruit(true);
+                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundResource(R.drawable.pfadananas);
+                        newBlock.setFruit(true);newBlock.fruchtart=2;
                     }
 
 
                     if (level1[i][j] == 43) {
-                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.RED);
-                        newBlock.setFruit(true);
+                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundResource(R.drawable.pfadfeuerfrucht);
+                        newBlock.setFruit(true);newBlock.fruchtart=3;
                     }
 
 
@@ -1003,7 +1084,7 @@ Boolean gameEndDone = false;
 
             //Red Ghost gets created
             newImageView = new ImageView(this);
-            newImageView.setBackground(getDrawable(R.drawable.rotergeist_rechts));
+            newImageView.setBackground(getDrawable(R.drawable.rotergeist));
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
@@ -1014,7 +1095,7 @@ Boolean gameEndDone = false;
 
             //Orange Ghost gets created
             newImageView = new ImageView(this);
-            newImageView.setBackground(getDrawable(R.drawable.orangergeist_rechts));
+            newImageView.setBackground(getDrawable(R.drawable.orangegeist));
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
@@ -1025,7 +1106,7 @@ Boolean gameEndDone = false;
 
             //Pink Ghost gets ceated
             newImageView = new ImageView(this);
-            newImageView.setBackground(getDrawable(R.drawable.pinkergeist_rechts));
+            newImageView.setBackground(getDrawable(R.drawable.pinkergeist));
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
@@ -1333,20 +1414,20 @@ Boolean gameEndDone = false;
             return false;
     }
 
-    private int[][] level1 = new int[][]{
-            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
-            {1,0,1,1,1,0,1,0,1,0,1,1,0,0,0,0,1,1,0,1,1,1,1,0,1,1,0,0,0,1,0,1,0,1,1,1,0,1,0,1},
-            {1,0,0,0,1,0,1,0,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,0,1,0,0,0,1,0,1},
-            {1,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,0,1},
-            {1,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,1},
-            {1,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,1,0,1,1,0,1,1,0,1},
-            {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,1,0,1},
-            {1,0,1,1,0,0,0,0,1,1,1,1,1,0,0,0,1,1,0,0,0,1,0,1,0,1,0,1,1,1,0,1,0,1,1,0,1,1,0,1},
-            {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-    };
+    private int[][] level1 = new int[][]
+            {  {1 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,1 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,1},
+    {9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,17 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,4},
+    {9 ,0 ,10,11,13,0 ,14,0 ,14,0 ,21,16,16,16,22 ,43 ,10,12,0 ,10,11,11,12,0 ,21,22,0 ,0 ,0 ,14,0 ,14,0 ,21,11,12,0 ,14,0 ,4},
+    {9 ,0 ,0 ,0 ,15,0 ,15,0 ,15,0 ,4 ,1 ,1 ,1, 9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,6 ,11,22,0 ,5 ,11,8 ,42 ,15,0 ,0 ,0 ,15,0 ,4},
+    {9 ,0 ,10,11,8 ,0 ,17,0 ,17,0 ,5 ,6 ,6 ,6 ,8 ,0 ,14,0 ,0 ,0 ,14,0 ,14,0 ,0 ,40 ,0 ,15,0 ,0 ,0 ,0 ,0 ,15,0 ,14,0 ,15,0 ,4},
+    {9 ,0 ,40 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,0 ,0 ,15,0 ,4 ,22,0 ,14,0 ,15,0 ,10,11,22,0 ,15,0 ,17,0 ,17,0 ,4},
+    {9 ,0 ,21,22,0 ,21,22,0 ,21,16,16,22,0 ,21,22,0 ,5 ,11,11,11,8 ,0 ,5 ,8 ,0 ,15,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,0 ,4},
+    {9 ,0 ,5 ,8 ,0 ,4 ,9 ,0 ,5 ,6 ,6 ,8 ,0 ,5 ,9 ,0 ,0 ,0 ,0 ,0 ,41 ,0 ,0 ,0 ,0 ,15,0 ,5 ,11,22,0 ,15,0 ,5 ,12,0 ,21,22,0 ,4},
+    {9 ,0 ,0 ,42 ,0 ,5 ,8 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,17,0 ,21,16,12,0 ,10,22,0 ,14,43 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,4 ,9 ,0 ,4},
+    {9 ,0 ,10,12,0 ,41 ,0 ,0 ,10,11,11,11,12,0 ,0 ,0 ,5 ,8 ,0 ,0 ,0 ,17,0 ,17,0 ,17,0 ,10,11,8 ,0 ,17,0 ,10,12,0 ,5 ,8 ,0 ,4},
+    {9 ,0, 0, 0, 0,21,22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    {1,16,16,16,16, 1, 1,16,16,16,16,16,16,16,16,16,16,16,16, 1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1}};
+
 
 // 40 Kirsche, 41 Eisfrucht, 42 Ananas,43 Feuerfrucht
 
@@ -1385,6 +1466,7 @@ Boolean gameEndDone = false;
             if(pacman.life == 2){
                 herz3.setVisibility(herz3.INVISIBLE);
             }
+            pauseView();
             moveGhostToStartPos(redGhost, startingBlockRedGhost);
             moveGhostToStartPos(orangeGhost, startingBlockOrangeGhost);
             moveGhostToStartPos(pinkGhost, startingBlockPinkGhost);
