@@ -11,8 +11,8 @@ import com.example.myfirstapp.R;
 
 public class fruchtlexikon extends AppCompatActivity {
     String s1[] = {"Kirsche","Eisfrucht","Ananas","Feuerfrucht"};
-    String s2[] ={"Alle Geister im Labyrinth werden langsamer.",
-            "Alle Geister gefrieren für x sec.",
+    String s2[] ={"Alle Geister im Labyrinth werden zu langsame Schnecken.",
+            "Alle Geister gefrieren für 5 sec und werden zu Schneemännern.",
             "200 Extra Punkte.",
             "Der PAC MAN brennt und ist schneller."};
     String s3[] = {"","","",""};
