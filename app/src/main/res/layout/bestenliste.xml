@@ -32,9 +32,10 @@
         android:id="@+id/txtRang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Rang"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,32 +43,32 @@
         app:layout_constraintHorizontal_bias="0.185"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtBestenliste"
-        app:layout_constraintVertical_bias="0.092"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.092" />
 
     <TextView
         android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Spielername"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtBestenliste"
-        app:layout_constraintVertical_bias="0.092"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.092" />
 
     <TextView
         android:id="@+id/txtScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Score"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -75,248 +76,248 @@
         app:layout_constraintHorizontal_bias="0.818"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtBestenliste"
-        app:layout_constraintVertical_bias="0.092"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.092" />
 
     <TextView
         android:id="@+id/posTwoName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="-"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textColor="#C5C5C4"
+        android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.319"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.319" />
 
     <TextView
         android:id="@+id/posTwoRang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="2"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textColor="#C5C5C4"
+        android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.323"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.323" />
 
     <TextView
         android:id="@+id/posThreeRang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="3"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
+        android:textColor="#BF4706"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.496"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.496" />
 
     <TextView
         android:id="@+id/posFourRang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="4"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.676"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.676" />
 
     <TextView
         android:id="@+id/posOneRang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="1"
+
         android:textAlignment="center"
         android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.20"
+        app:layout_constraintHorizontal_bias="0.199"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.146"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.108" />
 
     <TextView
         android:id="@+id/posOneName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="-"
         android:textAlignment="center"
+        android:textAllCaps="true"
         android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.142"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.108" />
 
     <TextView
         android:id="@+id/posFiveScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="0"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.864"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.864" />
 
     <TextView
         android:id="@+id/posThreeScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="0"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
+        android:textColor="#BF4706"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.496"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.496" />
 
     <TextView
         android:id="@+id/posFourName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="-"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.676"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.676" />
 
     <TextView
         android:id="@+id/posFiveName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="-"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.864"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.864" />
 
     <TextView
         android:id="@+id/posOneScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="0"
         android:textAlignment="center"
         android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.142"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.108" />
 
     <TextView
         android:id="@+id/posTwoScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="0"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textColor="#C5C5C4"
+        android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.323"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.323" />
 
     <TextView
         android:id="@+id/posThreeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="-"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
+        android:textColor="#BF4706"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.496"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.496" />
 
     <TextView
         android:id="@+id/posFourScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="0"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtScore"
-        app:layout_constraintVertical_bias="0.676"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.676" />
 
     <TextView
         android:id="@+id/posFiveRang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="5"
         android:textAlignment="center"
-        android:textColor="#FFFF00"
-        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRang"
-        app:layout_constraintVertical_bias="0.864"
-        android:gravity="center_horizontal" />
+        app:layout_constraintVertical_bias="0.864" />
 
 
     <ImageButton
@@ -333,10 +334,18 @@
         app:srcCompat="@android:drawable/ic_delete"
         app:tint="@color/yellow" />
 
-
-
-
-    />
+    <ImageView
+        android:id="@+id/krone"
+        android:layout_width="62dp"
+        android:layout_height="29dp"
+        android:src="@drawable/krone"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.481" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

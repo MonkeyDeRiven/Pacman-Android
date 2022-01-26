@@ -6,15 +6,19 @@ import android.widget.ImageView;
 
 public class Ghost {
 
-    private ImageView entity;
+
+    public ImageView entity;
 
 
 
-    private int speed;
+    private int speed=3;
     private int direction;
 
     private int width;
     private int height;
+
+
+    private boolean isFrozen= false;
 
     public int x;
     public int y;
@@ -37,9 +41,6 @@ public class Ghost {
         path = newPath;
     }
 
-    public ImageView getEntity(){
-        return entity;
-    }
 
     public int getHeight(){
         return height;
@@ -93,4 +94,15 @@ public class Ghost {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public boolean isFrozen() {
+        return isFrozen;
+    }
+
+    public void setFrozen(boolean frozen) {
+        isFrozen = frozen;
+    }
+
+
+
 }

@@ -4,24 +4,21 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import android.annotation.SuppressLint;
-
 import android.content.Context;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 
 import android.view.View;
 
 import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -40,7 +37,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -97,10 +93,10 @@ boolean gamestart=false;
 
     {
         if(mapcreated) {
-            if (direction == 0) entity.setY(entity.getY() - (3*acc));   //OBEN
-            else if (direction == 1) entity.setX(entity.getX() + (3*acc)); //RECHTS
-            else if (direction == 2) entity.setY(entity.getY() + (3*acc)); //UNTEN
-            else if (direction == 3) entity.setX(entity.getX() - (3*acc)); //LINKS
+            if (direction == 0) entity.setY(entity.getY() - (acc));   //OBEN
+            else if (direction == 1) entity.setX(entity.getX() + (acc)); //RECHTS
+            else if (direction == 2) entity.setY(entity.getY() + (acc)); //UNTEN
+            else if (direction == 3) entity.setX(entity.getX() - (acc)); //LINKS
             else if (direction == -1) ;                            //STEHEN BLEIBEN
         }
     }
@@ -272,7 +268,65 @@ boolean gamestart=false;
         }
 
     }
+    public void checkFruit()
+    {
+        if(gameField[yPosArray][xPosArray].isFruit()) {
+            if (gameField[yPosArray][xPosArray].fruchtart == 0) {
+              if(!redGhost.isFrozen())  redGhost.setSpeed(2);
+                if(!blueGhost.isFrozen()) blueGhost.setSpeed(2);
+                new CountDownTimer(10000, 1000) {
+                    @Override
+                    public void onFinish() {
+                        resetFigures();
+                    }
 
+                    public void onTick(long l) {
+
+                    }
+                }.start();
+            } else if (gameField[yPosArray][xPosArray].fruchtart == 1) {
+                Runnable threadding;
+                Handler mHandler = new Handler();
+                redGhost.setSpeed(0);redGhost.entity.setBackgroundResource(R.drawable.snowman);
+                redGhost.setFrozen(true);blueGhost.setFrozen(true);
+                blueGhost.setSpeed(0);blueGhost.entity.setBackgroundResource(R.drawable.snowman);
+                new CountDownTimer(7000, 1000) {
+                    @Override
+                    public void onFinish() {
+                        resetFigures();
+                    }
+
+                    public void onTick(long l) {
+
+                    }
+                }.start();
+            } else if (gameField[yPosArray][xPosArray].fruchtart == 2) {
+                pacman.playerScore += 200;
+            } else if (gameField[yPosArray][xPosArray].fruchtart == 3) {
+                pacman.setSpeed(4);
+                new CountDownTimer(10000, 1000) {
+                    @Override
+                    public void onFinish() {
+                        resetFigures();
+                    }
+
+                    public void onTick(long l) {
+
+                    }
+                }.start();
+            }
+        gameField[yPosArray][xPosArray].setFruit(false);
+        }
+
+    }
+public void resetFigures()
+{
+    redGhost.entity.setBackgroundResource(R.drawable.rotergeist);
+    blueGhost.entity.setBackgroundResource(R.drawable.blauergeist);
+    pacman.setSpeed(3);
+    redGhost.setSpeed(3);
+    blueGhost.setSpeed(3);
+}
 
     public void pauseGame()
     {
@@ -285,9 +339,9 @@ gamestart=false;
     public void continueGame()
     {
         gamestart= true;
-        pacman.setSpeed(1);
-        redGhost.setSpeed(1);
-        blueGhost.setSpeed(1);
+        pacman.setSpeed(3);
+        redGhost.setSpeed(3);
+        blueGhost.setSpeed(3);
     }
 
 
@@ -383,17 +437,20 @@ gamestart=false;
 
                                     //Check if field is a cookie
                                     checkDots();
+                                    checkFruit();
+                                    //Check if field is a fruti
+
                                     moveEntity(pacman.getEntity(), pacman.getDirection(),pacman.getSpeed());
                                     pacman.updateCoordinates();
 
                                     //Red Ghost gets moved
                                  if(gamestart) {  setGhostDirection(new GraphNode(null), true);
-                                    moveEntity(redGhost.getEntity(), redGhost.getDirection(),redGhost.getSpeed());
+                                    moveEntity(redGhost.entity, redGhost.getDirection(),redGhost.getSpeed());
                                     redGhost.updateCoordinates();
 
                                     //Blue Ghost gets moved
                                     setBlueGhostDirection();
-                                    moveEntity(blueGhost.getEntity(), blueGhost.getDirection(), blueGhost.getSpeed());
+                                    moveEntity(blueGhost.entity, blueGhost.getDirection(), blueGhost.getSpeed());
                                     blueGhost.updateCoordinates();
 
                                     checkCollision();
@@ -589,7 +646,7 @@ Boolean gameEndDone = false;
 
                     if (level1[i][j] == 0) {
                         newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.BLUE);++amountCookies;
+                        newImageView.setBackgroundResource(R.drawable.wand);++amountCookies;
                     }
                     if (level1[i][j] == 1) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
@@ -682,31 +739,36 @@ Boolean gameEndDone = false;
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_top_right));
                     }
 
+                    if(level1[i][j]==23)
+                    { newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundColor(Color.BLACK);
+                    }
+
                     if (level1[i][j] == 40) {
-                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                      newImageView.setBackgroundColor(Color.GREEN);
+                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                    newImageView.setBackgroundResource(R.drawable.kirsche);
                         newBlock.setFruit(true);
                     }
 
 
                     if (level1[i][j] == 41) {
-                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.BLUE);
-                        newBlock.setFruit(true);
+                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                         newImageView.setBackgroundResource(R.drawable.eisfrucht);
+                        newBlock.setFruit(true);newBlock.fruchtart=1;
                     }
 
 
                     if (level1[i][j] == 42) {
-                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.YELLOW);
-                        newBlock.setFruit(true);
+                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                         newImageView.setBackgroundResource(R.drawable.ananas);
+                        newBlock.setFruit(true);newBlock.fruchtart=2;
                     }
 
 
                     if (level1[i][j] == 43) {
-                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.RED);
-                        newBlock.setFruit(true);
+                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundResource(R.drawable.feuerfrucht_transparent);
+                        newBlock.setFruit(true);newBlock.fruchtart=3;
                     }
 
 
@@ -783,7 +845,7 @@ Boolean gameEndDone = false;
 
             //Red Ghost gets created
             newImageView = new ImageView(this);
-            newImageView.setBackground(getDrawable(R.drawable.rotergeist_rechts));
+            newImageView.setBackground(getDrawable(R.drawable.rotergeist));
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
@@ -794,7 +856,7 @@ Boolean gameEndDone = false;
 
             //Blue Ghost gets created
             newImageView = new ImageView(this);
-            newImageView.setBackground(getDrawable(R.drawable.blauergeist_rechts));
+            newImageView.setBackground(getDrawable(R.drawable.blauergeist));
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
@@ -808,8 +870,8 @@ Boolean gameEndDone = false;
     }
 
     public void setRandomPath(Ghost ghost){
-        int ghostCenterX = (int)ghost.getEntity().getX() + ghost.getEntity().getWidth()/2;
-        int ghostCenterY = (int)ghost.getEntity().getY() + ghost.getEntity().getHeight()/2;
+        int ghostCenterX = (int)ghost.entity.getX() + ghost.entity.getWidth()/2;
+        int ghostCenterY = (int)ghost.entity.getY() + ghost.entity.getHeight()/2;
 
         pathLinkedList path = new pathLinkedList();
         waypoint newStop;
@@ -1051,18 +1113,21 @@ Boolean gameEndDone = false;
     }
 
     private int[][] level1 = new int[][]{
-            {0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},
-            {9 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,4},
-            {9 ,0 ,10,11,13,0 ,14,0 ,14,0 ,21,16,16,22,0 ,0 ,10,12,0 ,10,11,11,12,0 ,21,22,0 ,0 ,0 ,14,0 ,14,0 ,21,11,12,0 ,14,0 ,4},
-            {9 ,0 ,0 ,0 ,15,0 ,15,0 ,15,0 ,4 ,0 ,0 ,0,22 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,6 ,11,22,0 ,5 ,11,8 ,0 ,15,0 ,0 ,0 ,15,0 ,4},
-            {9 ,0 ,10,11,8 ,0 ,17,0 ,17,0 ,5 ,6 ,6 ,6 ,8 ,0 ,14,0 ,0 ,0 ,14,0 ,14,0 ,0 ,0 ,0 ,15,0 ,0 ,0 ,0 ,0 ,15,0 ,14,0 ,15,0 ,4},
-            {9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,0 ,0 ,15,0 ,4 ,22,0 ,14,0 ,15,0 ,10,11,22,0 ,15,0 ,17,0 ,17,0 ,4},
-            {9 ,0 ,21,22,0 ,21,22,0 ,21,16,16,22,0 ,21,22,0 ,5 ,11,11,11,8 ,0 ,5 ,8 ,0 ,15,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,0 ,4},
-            {9 ,0 ,5 ,8 ,0 ,4 ,9 ,0 ,5 ,6 ,6 ,8 ,0 ,5 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,5 ,11,22,0 ,15,0 ,5 ,12,0 ,21,22,0 ,4},
-            {9 ,0 ,0 ,0 ,0 ,5 ,8 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,17,0 ,21,16,12,0 ,10,22,0 ,14,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,4 ,9 ,0 ,4},
-            {9 ,0 ,10,12,0 ,0 ,0 ,0 ,10,11,11,11,12,0 ,0 ,0 ,5 ,8 ,0 ,0 ,0 ,17,0 ,17,0 ,17,0 ,10,11,8 ,0 ,17,0 ,10,12,0 ,5 ,8 ,0 ,4},
-            {9 ,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,4},
-            {0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0}};
+            {2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2},
+            {23 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19,19 ,19 ,19 ,19 ,19 ,19 ,19,19,19 ,19 ,19 ,19 ,19 ,23},
+            {23 ,0 ,10,11,13,0 ,14,0 ,14,0 ,21,16,16,22,0 ,0 ,10,12,0 ,10,11,11,12,0 ,21,22,0 ,0 ,0 ,14,0 ,14,0 ,21,11,12,0 ,14,0 ,23},
+            {23 ,0 ,0 ,0 ,15,0 ,15,0 ,15,0 ,4 ,0 ,0 ,0,22 ,0 ,0 ,0 ,41 ,0 ,0 ,0 ,0 ,0 ,5 ,6 ,11,22,0 ,5 ,11,8 ,0 ,15,0 ,0 ,0 ,15,0 ,23},
+            {23 ,0 ,10,11,8 ,0 ,17,0 ,17,0 ,5 ,6 ,6 ,6 ,8 ,0 ,14,0 ,0 ,0 ,14,0 ,14,0 ,0 ,0 ,0 ,15,0 ,42 ,0 ,0 ,0 ,15,0 ,14,42 ,15,0 ,23},
+            {23 ,0 ,0 ,0 ,0 ,40 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,0 ,0 ,15,0 ,4 ,22,0 ,14,0 ,15,0 ,10,11,22,0 ,15,0 ,17,0 ,17,0 ,23},
+            {23 ,0 ,21,22,0 ,21,22,0 ,21,16,16,22,0 ,21,22,0 ,5 ,11,11,11,8 ,0 ,5 ,8 ,0 ,15,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,0 ,23},
+            {23 ,0 ,5 ,8 ,0 ,4 ,9 ,0 ,5 ,6 ,6 ,8 ,0 ,5 ,9 ,0 ,0 ,0 ,43 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,5 ,11,22,0 ,15,0 ,5 ,12,0 ,21,22,0 ,23},
+            {23 ,0 ,0 ,0 ,0 ,5 ,8 ,0 ,0 ,41 ,0 ,0 ,0 ,0 ,17,0 ,21,16,12,0 ,10,22,0 ,14,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,43 ,4 ,9 ,0 ,23},
+            {23 ,0 ,10,12,0 ,0 ,0 ,0 ,10,11,11,11,12,0 ,0 ,0 ,5 ,8 ,40 ,0 ,0 ,17,0 ,17,0 ,17,0 ,10,11,8 ,0 ,17,0 ,10,12,0 ,5 ,8 ,0 ,23},
+            {23 ,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,23},
+            {6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6}};
+
+    //
+
 
 // 40 Kirsche, 41 Eisfrucht, 42 Ananas,43 Feuerfrucht
 
@@ -1072,8 +1137,8 @@ Boolean gameEndDone = false;
    void moveGhostToStartPos(Ghost ghost, block startingBlock){
         ghost.path = null;
 
-        ghost.getEntity().setY(startingBlock.getY());
-        ghost.getEntity().setX(startingBlock.getX());
+        ghost.entity.setY(startingBlock.getY());
+        ghost.entity.setX(startingBlock.getX());
         ghost.updateCoordinates();
 
     }
@@ -1091,6 +1156,8 @@ Boolean gameEndDone = false;
         redGhost.setDirection(-1);
         if(intersectsWithRedGhost){ // || intersectsWithOtherGhosts
 
+            pauseGame();
+
             pacman.life -= 1;
             if(pacman.life == 0)
                 gameEnd();
@@ -1106,7 +1173,7 @@ Boolean gameEndDone = false;
                     moveGhostToStartPos(redGhost, startingBlockRedGhost);
                     movePacmanToStartPos();
                 }
-
+pauseView();
             }
             intersectsWithRedGhost = false;
             //onResume();

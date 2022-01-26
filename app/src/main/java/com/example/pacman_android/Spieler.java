@@ -17,7 +17,7 @@ public class Spieler {
 
     public ImageView entity;
 
-    private int  speed;
+    private int  speed=3;
     private int width;
     private int height;
 
@@ -45,7 +45,7 @@ public class Spieler {
         this.y = (int)entity.getY();
         this.direction = -1;
 
-        this.life = 1;
+        this.life = 3;
 
         this.ateGhosts = 0;
         this.playerScore = 0;

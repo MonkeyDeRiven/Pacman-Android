@@ -18,7 +18,7 @@ String s2[] ={"Blinky ist der Verfolger. Sieht er dich einmal ist es schwer ihn 
         "Clyde ist … halt Clyde. Langsam und ein großer Dummkopf."};
 
 
-int images[] = {R.drawable.rotergeist_rechts,R.drawable.pinkergeist_rechts,R.drawable.blauergeist_rechts,R.drawable.orangergeist_rechts};
+int images[] = {R.drawable.rotergeist,R.drawable.pinkergeist,R.drawable.blauergeist,R.drawable.orangegeist};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -111,7 +111,8 @@
         app:layout_constraintHorizontal_bias="0.952"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.139" />
+        app:layout_constraintVertical_bias="0.139"
+        tools:src="@drawable/wardrobe" />
 
     <ImageView
         android:id="@+id/pacmananimated"

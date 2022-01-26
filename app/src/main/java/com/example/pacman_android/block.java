@@ -14,7 +14,7 @@ public class block {
     private int x;
     private int y;
 
-
+public int fruchtart=0;
 
 
     public ImageView image;
