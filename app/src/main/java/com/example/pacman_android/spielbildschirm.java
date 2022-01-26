@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -110,57 +109,158 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
         }
     }
     public void checkCollision () {
+        //check collision pacman
+        double pacmanX_1 = pacman.x;
+        double pacmanY_1 = pacman.y;
 
-            double pacmanX_1 = pacman.x;
-            double pacmanY_1 = pacman.y;
+        double pacmanX_2 = pacman.x + pacman.getWidth();
+        double pacmanY_2 = pacman.y + pacman.getHeight();
 
-            double pacmanX_2 = pacman.x + pacman.getWidth();
-            double pacmanY_2 = pacman.y + pacman.getHeight();
+        double pacmanCenterX = pacmanX_1 + (double)pacman.getWidth() / 2;
+        double pacmanCenterY = pacmanY_1 + (double)pacman.getHeight() / 2;
 
-            double pacmanCenterX = pacmanX_1 + (double)pacman.getWidth() / 2;
-            double pacmanCenterY = pacmanY_1 + (double)pacman.getHeight() / 2;
-
-            int i = 0;
-            int j = 0;
-            while(true){
-                if((pacmanCenterX > gameField[i][j].getX() && pacmanCenterX < gameField[i][j].getX() + gameField[i][j].getWidth()) == false){
-                    j++;
-                    continue;
-                }
-                else if((pacmanCenterY > gameField[i][j].getY() && pacmanCenterY < gameField[i][j].getY() + gameField[i][j].getHeight()) == false){
-                    i++;
-                    continue;
-                }
-                else{
-                    if(gameField[i+1][j].getIsWall()){
-                        if(gameField[i+1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            fixCollisionPosition();
-                            pacman.setDirection(-1);
-                        }
-                    }
-                    if(gameField[i-1][j].getIsWall()){
-                        if(gameField[i-1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            fixCollisionPosition();
-                            pacman.setDirection(-1);
-                        }
-                    }
-                    if(gameField[i][j+1].getIsWall()){
-                        if(gameField[i][j+1].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            fixCollisionPosition();
-                            pacman.setDirection(-1);
-                        }
-                    }
-                    if(gameField[i][j-1].getIsWall()){
-                        if(gameField[i][j-1].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            fixCollisionPosition();
-                            pacman.setDirection(-1);
-                        }
-                    }
-                    break;
-                }
-
+        int i = 0;
+        int j = 0;
+        while(true){
+            if((pacmanCenterX > gameField[i][j].getX() && pacmanCenterX < gameField[i][j].getX() + gameField[i][j].getWidth()) == false){
+                j++;
+                continue;
             }
-           xPosArray=j;yPosArray=i;
+            else if((pacmanCenterY > gameField[i][j].getY() && pacmanCenterY < gameField[i][j].getY() + gameField[i][j].getHeight()) == false){
+                i++;
+                continue;
+            }
+            else{
+                if(gameField[i+1][j].getIsWall()){
+                    if(gameField[i+1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
+                        fixCollisionPositionPacman();
+                        pacman.setDirection(-1);
+                    }
+                }
+                if(gameField[i-1][j].getIsWall()){
+                    if(gameField[i-1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
+                        fixCollisionPositionPacman();
+                        pacman.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j+1].getIsWall()){
+                    if(gameField[i][j+1].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
+                        fixCollisionPositionPacman();
+                        pacman.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j-1].getIsWall()){
+                    if(gameField[i][j-1].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
+                        fixCollisionPositionPacman();
+                        pacman.setDirection(-1);
+                    }
+                }
+                pacman.updateCoordinates();
+                break;
+            }
+        }
+        xPosArray=j;yPosArray=i;
+
+        //check collison pinkGhost
+        double pinkGhostX_1 = pinkGhost.x;
+        double pinkGhostY_1 = pinkGhost.y;
+
+        double pinkGhostX_2 = pinkGhost.x + pinkGhost.getWidth();
+        double pinkGhostY_2 = pinkGhost.y + pinkGhost.getHeight();
+
+        double pinkGhostCenterX = pinkGhostX_1 + (double)pinkGhost.getWidth() / 2;
+        double pinkGhostCenterY = pinkGhostY_1 + (double)pinkGhost.getHeight() / 2;
+
+        i = 0;
+        j = 0;
+        while(true){
+            if((pinkGhostCenterX > gameField[i][j].getX() && pinkGhostCenterX < gameField[i][j].getX() + gameField[i][j].getWidth()) == false){
+                j++;
+                continue;
+            }
+            else if((pinkGhostCenterY > gameField[i][j].getY() && pinkGhostCenterY < gameField[i][j].getY() + gameField[i][j].getHeight()) == false){
+                i++;
+                continue;
+            }
+            else{
+                if(gameField[i+1][j].getIsWall()){
+                    if(gameField[i+1][j].getCollisionArea().intersects((int)pinkGhostX_1,(int)pinkGhostY_1,(int)pinkGhostX_2,(int)pinkGhostY_2)){
+                        fixCollisionPositionGhost(pinkGhost);
+                        pinkGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i-1][j].getIsWall()){
+                    if(gameField[i-1][j].getCollisionArea().intersects((int)pinkGhostX_1,(int)pinkGhostY_1,(int)pinkGhostX_2,(int)pinkGhostY_2)){
+                        fixCollisionPositionGhost(pinkGhost);
+                        pinkGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j+1].getIsWall()){
+                    if(gameField[i][j+1].getCollisionArea().intersects((int)pinkGhostX_1,(int)pinkGhostY_1,(int)pinkGhostX_2,(int)pinkGhostY_2)){
+                        fixCollisionPositionGhost(pinkGhost);
+                        pinkGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j-1].getIsWall()){
+                    if(gameField[i][j-1].getCollisionArea().intersects((int)pinkGhostX_1,(int)pinkGhostY_1,(int)pinkGhostX_2,(int)pinkGhostY_2)){
+                        fixCollisionPositionGhost(pinkGhost);
+                        pinkGhost.setDirection(-1);
+                    }
+                }
+                pinkGhost.updateCoordinates();
+                break;
+            }
+        }
+
+        double orangeGhostX_1 = orangeGhost.x;
+        double orangeGhostY_1 = orangeGhost.y;
+
+        double orangeGhostX_2 = orangeGhost.x + orangeGhost.getWidth();
+        double orangeGhostY_2 = orangeGhost.y + orangeGhost.getHeight();
+
+        double orangeGhostCenterX = pinkGhostX_1 + (double)orangeGhost.getWidth() / 2;
+        double orangeGhostCenterY = pinkGhostY_1 + (double)orangeGhost.getHeight() / 2;
+
+        i = 0;
+        j = 0;
+        while(true){
+            if((orangeGhostCenterX > gameField[i][j].getX() && orangeGhostCenterX < gameField[i][j].getX() + gameField[i][j].getWidth()) == false){
+                j++;
+                continue;
+            }
+            else if((orangeGhostCenterY > gameField[i][j].getY() && orangeGhostCenterY < gameField[i][j].getY() + gameField[i][j].getHeight()) == false){
+                i++;
+                continue;
+            }
+            else{
+                if(gameField[i+1][j].getIsWall()){
+                    if(gameField[i+1][j].getCollisionArea().intersects((int)orangeGhostX_1,(int)orangeGhostY_1,(int)orangeGhostX_2,(int)orangeGhostY_2)){
+                        fixCollisionPositionGhost(orangeGhost);
+                        orangeGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i-1][j].getIsWall()){
+                    if(gameField[i-1][j].getCollisionArea().intersects((int)orangeGhostX_1,(int)orangeGhostY_1,(int)orangeGhostX_2,(int)orangeGhostY_2)){
+                        fixCollisionPositionGhost(orangeGhost);
+                        orangeGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j+1].getIsWall()){
+                    if(gameField[i][j+1].getCollisionArea().intersects((int)orangeGhostX_1,(int)orangeGhostY_1,(int)orangeGhostX_2,(int)orangeGhostY_2)){
+                        fixCollisionPositionGhost(orangeGhost);
+                        pinkGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j-1].getIsWall()){
+                    if(gameField[i][j-1].getCollisionArea().intersects((int)orangeGhostX_1,(int)orangeGhostY_1,(int)orangeGhostX_2,(int)orangeGhostY_2)){
+                        fixCollisionPositionGhost(orangeGhost);
+                        orangeGhost.setDirection(-1);
+                    }
+                }
+                orangeGhost.updateCoordinates();
+                break;
+            }
+        }
    }
 
    public void pauseView(){
@@ -303,14 +403,37 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
         return false;
     }
 
-    public void fixCollisionPosition(){
-       if (pacman.getDirection() == 0) pacman.getEntity().setY(pacman.getEntity().getY() + 5);
-       else if (pacman.getDirection() == 1) pacman.getEntity().setX(pacman.getEntity().getX() - 5);
-       else if (pacman.getDirection() == 2) pacman.getEntity().setY(pacman.getEntity().getY() - 5);
-       else if (pacman.getDirection() == 3) pacman.getEntity().setX(pacman.getEntity().getX() + 5);
+    public void fixCollisionPositionPacman(){
+       if(pacman.getDirection() == 0){
+           pacman.getEntity().setY(pacman.getEntity().getY() + 5);
+       }
+       else if(pacman.getDirection() == 1){
+           pacman.getEntity().setX(pacman.getEntity().getX() - 5);
+       }
+       else if(pacman.getDirection() == 2){
+           pacman.getEntity().setY(pacman.getEntity().getY() - 5);
+       }
+       else if(pacman.getDirection() == 3){
+           pacman.getEntity().setX(pacman.getEntity().getX() + 5);
+       }
 
        pacman.updateCoordinates();
+    }
 
+    public void fixCollisionPositionGhost(Ghost ghost){
+        if(ghost.getDirection() == 0){
+            ghost.getEntity().setY(ghost.getEntity().getY() + (int)(2*ghost.getSpeed()));
+        }
+        else if(ghost.getDirection() == 1){
+            ghost.getEntity().setX(ghost.getEntity().getX() - (int)(2*ghost.getSpeed()));
+        }
+        else if(ghost.getDirection() == 2){
+            ghost.getEntity().setY(ghost.getEntity().getY() - (int)(2*ghost.getSpeed()));
+        }
+        else if(ghost.getDirection() == 3){
+            ghost.getEntity().setX(ghost.getEntity().getX() + (int)(2*ghost.getSpeed()));
+        }
+        ghost.updateCoordinates();
     }
 
     protected void onResume() {
@@ -603,7 +726,7 @@ Boolean gameEndDone = false;
                     if (level1[i][j] == 1) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
                         newBlock.setVisited(true);
-                        newImageView.setBackground(getDrawable(R.drawable.wall_inner_top_left));
+                        newImageView.setBackgroundColor(Color.BLACK);
                     }
 
                     if (level1[i][j] == 2) {
@@ -1127,18 +1250,19 @@ Boolean gameEndDone = false;
     }
 
     private int[][] level1 = new int[][]{
-            {0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},
-            {9 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,4},
-            {9 ,0 ,10,11,13,0 ,14,0 ,14,0 ,21,16,16,22,0 ,0 ,10,12,0 ,10,11,11,12,0 ,21,22,0 ,0 ,0 ,14,0 ,14,0 ,21,11,12,0 ,14,0 ,4},
-            {9 ,0 ,0 ,0 ,15,0 ,15,0 ,15,0 ,4 ,0 ,0 ,0,22 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,6 ,11,22,0 ,5 ,11,8 ,0 ,15,0 ,0 ,0 ,15,0 ,4},
-            {9 ,0 ,10,11,8 ,0 ,17,0 ,17,0 ,5 ,6 ,6 ,6 ,8 ,0 ,14,0 ,0 ,0 ,14,0 ,14,0 ,0 ,0 ,0 ,15,0 ,0 ,0 ,0 ,0 ,15,0 ,14,0 ,15,0 ,4},
-            {9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,0 ,0 ,15,0 ,4 ,22,0 ,14,0 ,15,0 ,10,11,22,0 ,15,0 ,17,0 ,17,0 ,4},
-            {9 ,0 ,21,22,0 ,21,22,0 ,21,16,16,22,0 ,21,22,0 ,5 ,11,11,11,8 ,0 ,5 ,8 ,0 ,15,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,0 ,4},
-            {9 ,0 ,5 ,8 ,0 ,4 ,9 ,0 ,5 ,6 ,6 ,8 ,0 ,5 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,5 ,11,22,0 ,15,0 ,5 ,12,0 ,21,22,0 ,4},
-            {9 ,0 ,0 ,0 ,0 ,5 ,8 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,17,0 ,21,16,12,0 ,10,22,0 ,14,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,4 ,9 ,0 ,4},
-            {9 ,0 ,10,12,0 ,0 ,0 ,0 ,10,11,11,11,12,0 ,0 ,0 ,5 ,8 ,0 ,0 ,0 ,17,0 ,17,0 ,17,0 ,10,11,8 ,0 ,17,0 ,10,12,0 ,5 ,8 ,0 ,4},
-            {9 ,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,4},
-            {0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0}};
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
+            {1,0,1,1,1,0,1,0,1,0,1,1,0,0,0,0,1,1,0,1,1,1,1,0,1,1,0,0,0,1,0,1,0,1,1,1,0,1,0,1},
+            {1,0,0,0,1,0,1,0,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,0,1,0,0,0,1,0,1},
+            {1,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,0,1},
+            {1,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,1},
+            {1,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,1,0,1,1,0,1,1,0,1},
+            {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,1,0,1},
+            {1,0,1,1,0,0,0,0,1,1,1,1,1,0,0,0,1,1,0,0,0,1,0,1,0,1,0,1,1,1,0,1,0,1,1,0,1,1,0,1},
+            {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+    };
 
 // 40 Kirsche, 41 Eisfrucht, 42 Ananas,43 Feuerfrucht
 
