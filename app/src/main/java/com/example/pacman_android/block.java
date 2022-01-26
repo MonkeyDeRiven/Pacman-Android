@@ -7,6 +7,7 @@ import android.widget.ImageView;
 public class block {
     private boolean isWall;
 
+    private boolean isFruit= false;
     private int height;
     private int width;
 
@@ -81,4 +82,13 @@ public class block {
         }
         return false;
     }
+
+    public boolean isFruit() {
+        return isFruit;
+    }
+
+    public void setFruit(boolean fruit) {
+        isFruit = fruit;
+    }
+
 }
