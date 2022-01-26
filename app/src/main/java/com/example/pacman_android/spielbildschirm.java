@@ -12,7 +12,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 
@@ -48,13 +47,13 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     final int arrayLength = 40; //80
     final int arrayHeight = 12; //24
 
-   public int cookiesEaten=0,amountCookies=0;
-   public int xPosArray=0,yPosArray=0;
+    public int cookiesEaten=0,amountCookies=0;
+    public int xPosArray=0,yPosArray=0;
     public int survivedmilliseconds=0;
     TextView startCounter,timeGone;
-RelativeLayout rl;
+    RelativeLayout rl;
 
-boolean gamestart=false;
+    boolean gamestart=false;
     private static final String filename = "highscore.txt";
     private static final String filenameStats = "playerStats.txt";
     private ArrayList<bestenliste.player> arrBestenListe = new ArrayList<>();
@@ -64,12 +63,12 @@ boolean gamestart=false;
     ImageView herz3;
 
     String userNameDone = "";
-    Boolean intersectsWithRedGhost = false;
     TextView txtDialogScore;
 
-    public block startingBlockRedGhost = null;
     public block startingBlockPacman = null;
-    public block startingBlockBlueGhost = null;
+    public block startingBlockRedGhost = null;
+    public block startingBlockOrangeGhost = null;
+    public block startingBlockPinkGhost = null;
 
     public TextView textScoreAnzeige = null;
 
@@ -78,80 +77,190 @@ boolean gamestart=false;
 
     AnimationDrawable pacmananimation;
     public block[][] gameField = new block[arrayHeight][arrayLength];
-    Spieler pacman;
-    Ghost redGhost;
-    Ghost blueGhost;
-    public static Handler h;
-    boolean mapcreated=false;
-    public GameActivity gameActivity = new GameActivity();
 
+    Spieler pacman;
+
+    Ghost redGhost;
+    Ghost orangeGhost;
+    Ghost pinkGhost;
+
+    public static Handler h;
+
+    boolean mapcreated=false;
+
+    public GameActivity gameActivity = new GameActivity();
 
     ReentrantLock l = new ReentrantLock();
 
-
-    public void moveEntity(ImageView entity, int direction,int acc)
-
-    {
+    public void moveEntity(ImageView entity, int direction, double acc) {
         if(mapcreated) {
-            if (direction == 0) entity.setY(entity.getY() - (acc));   //OBEN
-            else if (direction == 1) entity.setX(entity.getX() + (acc)); //RECHTS
-            else if (direction == 2) entity.setY(entity.getY() + (acc)); //UNTEN
-            else if (direction == 3) entity.setX(entity.getX() - (acc)); //LINKS
-            else if (direction == -1) ;                            //STEHEN BLEIBEN
+            if(direction == 0) {
+                entity.setY(entity.getY() - (int)(2*acc));   //OBEN
+            }
+            if(direction == 1){
+                entity.setX(entity.getX() + (int)(2*acc)); //RECHTS
+            }
+            if(direction == 2){
+                entity.setY(entity.getY() + (int)(2*acc)); //UNTEN
+            }
+            if(direction == 3){
+                entity.setX(entity.getX() - (int)(2*acc)); //LINKS
+            }
         }
     }
     public void checkCollision () {
+        //check collision pacman
+        double pacmanX_1 = pacman.x;
+        double pacmanY_1 = pacman.y;
 
-            double pacmanX_1 = pacman.x;
-            double pacmanY_1 = pacman.y;
+        double pacmanX_2 = pacman.x + pacman.getWidth();
+        double pacmanY_2 = pacman.y + pacman.getHeight();
 
-            double pacmanX_2 = pacman.x + pacman.getWidth();
-            double pacmanY_2 = pacman.y + pacman.getHeight();
+        double pacmanCenterX = pacmanX_1 + (double)pacman.getWidth() / 2;
+        double pacmanCenterY = pacmanY_1 + (double)pacman.getHeight() / 2;
 
-            double pacmanCenterX = pacmanX_1 + (double)pacman.getWidth() / 2;
-            double pacmanCenterY = pacmanY_1 + (double)pacman.getHeight() / 2;
-
-            int i = 0;
-            int j = 0;
-            while(true){
-                if((pacmanCenterX > gameField[i][j].getX() && pacmanCenterX < gameField[i][j].getX() + gameField[i][j].getWidth()) == false){
-                    j++;
-                    continue;
-                }
-                else if((pacmanCenterY > gameField[i][j].getY() && pacmanCenterY < gameField[i][j].getY() + gameField[i][j].getHeight()) == false){
-                    i++;
-                    continue;
-                }
-                else{
-                    if(gameField[i+1][j].getIsWall()){
-                        if(gameField[i+1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            fixCollisionPosition();
-                            pacman.setDirection(-1);
-                        }
-                    }
-                    if(gameField[i-1][j].getIsWall()){
-                        if(gameField[i-1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            fixCollisionPosition();
-                            pacman.setDirection(-1);
-                        }
-                    }
-                    if(gameField[i][j+1].getIsWall()){
-                        if(gameField[i][j+1].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            fixCollisionPosition();
-                            pacman.setDirection(-1);
-                        }
-                    }
-                    if(gameField[i][j-1].getIsWall()){
-                        if(gameField[i][j-1].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
-                            fixCollisionPosition();
-                            pacman.setDirection(-1);
-                        }
-                    }
-                    break;
-                }
-
+        int i = 0;
+        int j = 0;
+        while(true){
+            if((pacmanCenterX > gameField[i][j].getX() && pacmanCenterX < gameField[i][j].getX() + gameField[i][j].getWidth()) == false){
+                j++;
+                continue;
             }
-           xPosArray=j;yPosArray=i;
+            else if((pacmanCenterY > gameField[i][j].getY() && pacmanCenterY < gameField[i][j].getY() + gameField[i][j].getHeight()) == false){
+                i++;
+                continue;
+            }
+            else{
+                if(gameField[i+1][j].getIsWall()){
+                    if(gameField[i+1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
+                        fixCollisionPositionPacman();
+                        pacman.setDirection(-1);
+                    }
+                }
+                if(gameField[i-1][j].getIsWall()){
+                    if(gameField[i-1][j].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
+                        fixCollisionPositionPacman();
+                        pacman.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j+1].getIsWall()){
+                    if(gameField[i][j+1].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
+                        fixCollisionPositionPacman();
+                        pacman.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j-1].getIsWall()){
+                    if(gameField[i][j-1].getCollisionArea().intersects((int)pacmanX_1,(int)pacmanY_1,(int)pacmanX_2,(int)pacmanY_2)){
+                        fixCollisionPositionPacman();
+                        pacman.setDirection(-1);
+                    }
+                }
+                pacman.updateCoordinates();
+                break;
+            }
+        }
+        xPosArray=j;yPosArray=i;
+
+        //check collison pinkGhost
+        double pinkGhostX_1 = pinkGhost.x;
+        double pinkGhostY_1 = pinkGhost.y;
+
+        double pinkGhostX_2 = pinkGhost.x + pinkGhost.getWidth();
+        double pinkGhostY_2 = pinkGhost.y + pinkGhost.getHeight();
+
+        double pinkGhostCenterX = pinkGhostX_1 + (double)pinkGhost.getWidth() / 2;
+        double pinkGhostCenterY = pinkGhostY_1 + (double)pinkGhost.getHeight() / 2;
+
+        i = 0;
+        j = 0;
+        while(true){
+            if((pinkGhostCenterX > gameField[i][j].getX() && pinkGhostCenterX < gameField[i][j].getX() + gameField[i][j].getWidth()) == false){
+                j++;
+                continue;
+            }
+            else if((pinkGhostCenterY > gameField[i][j].getY() && pinkGhostCenterY < gameField[i][j].getY() + gameField[i][j].getHeight()) == false){
+                i++;
+                continue;
+            }
+            else{
+                if(gameField[i+1][j].getIsWall()){
+                    if(gameField[i+1][j].getCollisionArea().intersects((int)pinkGhostX_1,(int)pinkGhostY_1,(int)pinkGhostX_2,(int)pinkGhostY_2)){
+                        fixCollisionPositionGhost(pinkGhost);
+                        pinkGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i-1][j].getIsWall()){
+                    if(gameField[i-1][j].getCollisionArea().intersects((int)pinkGhostX_1,(int)pinkGhostY_1,(int)pinkGhostX_2,(int)pinkGhostY_2)){
+                        fixCollisionPositionGhost(pinkGhost);
+                        pinkGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j+1].getIsWall()){
+                    if(gameField[i][j+1].getCollisionArea().intersects((int)pinkGhostX_1,(int)pinkGhostY_1,(int)pinkGhostX_2,(int)pinkGhostY_2)){
+                        fixCollisionPositionGhost(pinkGhost);
+                        pinkGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j-1].getIsWall()){
+                    if(gameField[i][j-1].getCollisionArea().intersects((int)pinkGhostX_1,(int)pinkGhostY_1,(int)pinkGhostX_2,(int)pinkGhostY_2)){
+                        fixCollisionPositionGhost(pinkGhost);
+                        pinkGhost.setDirection(-1);
+                    }
+                }
+                pinkGhost.updateCoordinates();
+                break;
+            }
+        }
+
+        double orangeGhostX_1 = orangeGhost.x;
+        double orangeGhostY_1 = orangeGhost.y;
+
+        double orangeGhostX_2 = orangeGhost.x + orangeGhost.getWidth();
+        double orangeGhostY_2 = orangeGhost.y + orangeGhost.getHeight();
+
+        double orangeGhostCenterX = pinkGhostX_1 + (double)orangeGhost.getWidth() / 2;
+        double orangeGhostCenterY = pinkGhostY_1 + (double)orangeGhost.getHeight() / 2;
+
+        i = 0;
+        j = 0;
+        while(true){
+            if((orangeGhostCenterX > gameField[i][j].getX() && orangeGhostCenterX < gameField[i][j].getX() + gameField[i][j].getWidth()) == false){
+                j++;
+                continue;
+            }
+            else if((orangeGhostCenterY > gameField[i][j].getY() && orangeGhostCenterY < gameField[i][j].getY() + gameField[i][j].getHeight()) == false){
+                i++;
+                continue;
+            }
+            else{
+                if(gameField[i+1][j].getIsWall()){
+                    if(gameField[i+1][j].getCollisionArea().intersects((int)orangeGhostX_1,(int)orangeGhostY_1,(int)orangeGhostX_2,(int)orangeGhostY_2)){
+                        fixCollisionPositionGhost(orangeGhost);
+                        orangeGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i-1][j].getIsWall()){
+                    if(gameField[i-1][j].getCollisionArea().intersects((int)orangeGhostX_1,(int)orangeGhostY_1,(int)orangeGhostX_2,(int)orangeGhostY_2)){
+                        fixCollisionPositionGhost(orangeGhost);
+                        orangeGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j+1].getIsWall()){
+                    if(gameField[i][j+1].getCollisionArea().intersects((int)orangeGhostX_1,(int)orangeGhostY_1,(int)orangeGhostX_2,(int)orangeGhostY_2)){
+                        fixCollisionPositionGhost(orangeGhost);
+                        pinkGhost.setDirection(-1);
+                    }
+                }
+                if(gameField[i][j-1].getIsWall()){
+                    if(gameField[i][j-1].getCollisionArea().intersects((int)orangeGhostX_1,(int)orangeGhostY_1,(int)orangeGhostX_2,(int)orangeGhostY_2)){
+                        fixCollisionPositionGhost(orangeGhost);
+                        orangeGhost.setDirection(-1);
+                    }
+                }
+                orangeGhost.updateCoordinates();
+                break;
+            }
+        }
    }
 
    public void pauseView(){
@@ -268,84 +377,25 @@ boolean gamestart=false;
         }
 
     }
-    public void checkFruit()
-    {
-        if(gameField[yPosArray][xPosArray].isFruit()) {
-            if (gameField[yPosArray][xPosArray].fruchtart == 0) {
-              if(!redGhost.isFrozen())  redGhost.setSpeed(2);
-                if(!blueGhost.isFrozen()) blueGhost.setSpeed(2);
-                new CountDownTimer(10000, 1000) {
-                    @Override
-                    public void onFinish() {
-                        resetFigures();
-                    }
 
-                    public void onTick(long l) {
-
-                    }
-                }.start();
-            } else if (gameField[yPosArray][xPosArray].fruchtart == 1) {
-                Runnable threadding;
-                Handler mHandler = new Handler();
-                redGhost.setSpeed(0);redGhost.entity.setBackgroundResource(R.drawable.snowman);
-                redGhost.setFrozen(true);blueGhost.setFrozen(true);
-                blueGhost.setSpeed(0);blueGhost.entity.setBackgroundResource(R.drawable.snowman);
-                new CountDownTimer(7000, 1000) {
-                    @Override
-                    public void onFinish() {
-                        resetFigures();
-                    }
-
-                    public void onTick(long l) {
-
-                    }
-                }.start();
-            } else if (gameField[yPosArray][xPosArray].fruchtart == 2) {
-                pacman.playerScore += 200;
-            } else if (gameField[yPosArray][xPosArray].fruchtart == 3) {
-                pacman.setSpeed(4);
-                new CountDownTimer(10000, 1000) {
-                    @Override
-                    public void onFinish() {
-                        resetFigures();
-                    }
-
-                    public void onTick(long l) {
-
-                    }
-                }.start();
-            }
-        gameField[yPosArray][xPosArray].setFruit(false);
-        }
-
-    }
-public void resetFigures()
-{
-    redGhost.entity.setBackgroundResource(R.drawable.rotergeist);
-    blueGhost.entity.setBackgroundResource(R.drawable.blauergeist);
-    pacman.setSpeed(3);
-    redGhost.setSpeed(3);
-    blueGhost.setSpeed(3);
-}
 
     public void pauseGame()
     {
-gamestart=false;
+        gamestart=false;
         pacman.setSpeed(0);
         redGhost.setSpeed(0);
-        blueGhost.setSpeed(0);
+        orangeGhost.setSpeed(0);
+        pinkGhost.setSpeed(0);
         survivedmilliseconds -=20;
     }
     public void continueGame()
     {
         gamestart= true;
-        pacman.setSpeed(3);
-        redGhost.setSpeed(3);
-        blueGhost.setSpeed(3);
+        pacman.setSpeed(2);
+        redGhost.setSpeed(1);
+        orangeGhost.setSpeed(2);
+        pinkGhost.setSpeed(1);
     }
-
-
-
 
     public boolean checkWin()
     {
@@ -353,14 +403,37 @@ gamestart=false;
         return false;
     }
 
-    public void fixCollisionPosition(){
-       if (pacman.getDirection() == 0) pacman.getEntity().setY(pacman.getEntity().getY() + 3);
-       else if (pacman.getDirection() == 1) pacman.getEntity().setX(pacman.getEntity().getX() - 3);
-       else if (pacman.getDirection() == 2) pacman.getEntity().setY(pacman.getEntity().getY() - 3);
-       else if (pacman.getDirection() == 3) pacman.getEntity().setX(pacman.getEntity().getX() + 3);
+    public void fixCollisionPositionPacman(){
+       if(pacman.getDirection() == 0){
+           pacman.getEntity().setY(pacman.getEntity().getY() + 5);
+       }
+       else if(pacman.getDirection() == 1){
+           pacman.getEntity().setX(pacman.getEntity().getX() - 5);
+       }
+       else if(pacman.getDirection() == 2){
+           pacman.getEntity().setY(pacman.getEntity().getY() - 5);
+       }
+       else if(pacman.getDirection() == 3){
+           pacman.getEntity().setX(pacman.getEntity().getX() + 5);
+       }
 
        pacman.updateCoordinates();
+    }
 
+    public void fixCollisionPositionGhost(Ghost ghost){
+        if(ghost.getDirection() == 0){
+            ghost.getEntity().setY(ghost.getEntity().getY() + (int)(2*ghost.getSpeed()));
+        }
+        else if(ghost.getDirection() == 1){
+            ghost.getEntity().setX(ghost.getEntity().getX() - (int)(2*ghost.getSpeed()));
+        }
+        else if(ghost.getDirection() == 2){
+            ghost.getEntity().setY(ghost.getEntity().getY() - (int)(2*ghost.getSpeed()));
+        }
+        else if(ghost.getDirection() == 3){
+            ghost.getEntity().setX(ghost.getEntity().getX() + (int)(2*ghost.getSpeed()));
+        }
+        ghost.updateCoordinates();
     }
 
     protected void onResume() {
@@ -375,9 +448,10 @@ gamestart=false;
                         synchronized public void run() {
 
                             if (mapcreated) {
-                                if(!gamestart)pauseGame();
-                                intersectsWithRedGhost = pacmanIntersectsWithGhost(redGhost);
-                                if (intersectsWithRedGhost) {
+                                if(!gamestart){
+                                    pauseGame();
+                                }
+                                if (pacmanIntersectsWithGhost(redGhost) || pacmanIntersectsWithGhost(orangeGhost) || pacmanIntersectsWithGhost(pinkGhost)){
                                         counter += 1;
                                         if(counter == 1)
                                         onHitWithGhost();
@@ -437,25 +511,29 @@ gamestart=false;
 
                                     //Check if field is a cookie
                                     checkDots();
-                                    checkFruit();
-                                    //Check if field is a fruti
-
                                     moveEntity(pacman.getEntity(), pacman.getDirection(),pacman.getSpeed());
                                     pacman.updateCoordinates();
 
-                                    //Red Ghost gets moved
-                                 if(gamestart) {  setGhostDirection(new GraphNode(null), true);
-                                    moveEntity(redGhost.entity, redGhost.getDirection(),redGhost.getSpeed());
-                                    redGhost.updateCoordinates();
+                                    if(gamestart){
+                                        //Red Ghost gets moved
+                                        setRedGhostDirection(new GraphNode(null), true);
+                                        moveEntity(redGhost.getEntity(), redGhost.getDirection(),redGhost.getSpeed());
+                                        redGhost.updateCoordinates();
 
-                                    //Blue Ghost gets moved
-                                    setBlueGhostDirection();
-                                    moveEntity(blueGhost.entity, blueGhost.getDirection(), blueGhost.getSpeed());
-                                    blueGhost.updateCoordinates();
+                                        //Blue Ghost gets moved
+                                        setOrangeGhostDirection();
+                                        moveEntity(orangeGhost.getEntity(), orangeGhost.getDirection(), orangeGhost.getSpeed());
+                                        orangeGhost.updateCoordinates();
 
-                                    checkCollision();
-                                    survivedmilliseconds+=20;
-                                    updateTimeGone();}
+                                        //Pink Ghost gets moved
+                                        setPinkGhostDirection();
+                                        moveEntity(pinkGhost.getEntity(), pinkGhost.getDirection(), pinkGhost.getSpeed());
+                                        pinkGhost.updateCoordinates();
+
+                                        checkCollision();
+                                        survivedmilliseconds+=20;
+                                        updateTimeGone();
+                                    }
                                 }
                             }
                         }
@@ -611,9 +689,6 @@ Boolean gameEndDone = false;
 
         RelativeLayout gameDisplay = findViewById(R.id.spielScreen);
 
-
-
-
         if(mapcreated == false) {
 
             int screenWidth = gameDisplay.getWidth();
@@ -646,12 +721,12 @@ Boolean gameEndDone = false;
 
                     if (level1[i][j] == 0) {
                         newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundResource(R.drawable.wand);++amountCookies;
+                        newImageView.setBackgroundColor(Color.BLUE);++amountCookies;
                     }
                     if (level1[i][j] == 1) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
                         newBlock.setVisited(true);
-                        newImageView.setBackground(getDrawable(R.drawable.wall_inner_top_left));
+                        newImageView.setBackgroundColor(Color.BLACK);
                     }
 
                     if (level1[i][j] == 2) {
@@ -739,36 +814,31 @@ Boolean gameEndDone = false;
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_top_right));
                     }
 
-                    if(level1[i][j]==23)
-                    { newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(Color.BLACK);
-                    }
-
                     if (level1[i][j] == 40) {
-                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                    newImageView.setBackgroundResource(R.drawable.kirsche);
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                      newImageView.setBackgroundColor(Color.GREEN);
                         newBlock.setFruit(true);
                     }
 
 
                     if (level1[i][j] == 41) {
-                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                         newImageView.setBackgroundResource(R.drawable.eisfrucht);
-                        newBlock.setFruit(true);newBlock.fruchtart=1;
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundColor(Color.BLUE);
+                        newBlock.setFruit(true);
                     }
 
 
                     if (level1[i][j] == 42) {
-                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                         newImageView.setBackgroundResource(R.drawable.ananas);
-                        newBlock.setFruit(true);newBlock.fruchtart=2;
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundColor(Color.YELLOW);
+                        newBlock.setFruit(true);
                     }
 
 
                     if (level1[i][j] == 43) {
-                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundResource(R.drawable.feuerfrucht_transparent);
-                        newBlock.setFruit(true);newBlock.fruchtart=3;
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundColor(Color.RED);
+                        newBlock.setFruit(true);
                     }
 
 
@@ -781,8 +851,12 @@ Boolean gameEndDone = false;
                         startingBlockPacman = newBlock;
                     }
 
-                    if (i == 5 && j == 18) {
-                        startingBlockBlueGhost = newBlock;
+                    if(i == 5 && j == 19){
+                        startingBlockPinkGhost = newBlock;
+                    }
+
+                    if(i == 5 && j == 18) {
+                        startingBlockOrangeGhost = newBlock;
                     }
 
                     if(i == 5 && j == 17){
@@ -845,7 +919,7 @@ Boolean gameEndDone = false;
 
             //Red Ghost gets created
             newImageView = new ImageView(this);
-            newImageView.setBackground(getDrawable(R.drawable.rotergeist));
+            newImageView.setBackground(getDrawable(R.drawable.rotergeist_rechts));
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
@@ -854,24 +928,35 @@ Boolean gameEndDone = false;
 
             redGhost = new Ghost(newImageView, entitySize);
 
-            //Blue Ghost gets created
+            //Orange Ghost gets created
             newImageView = new ImageView(this);
-            newImageView.setBackground(getDrawable(R.drawable.blauergeist));
+            newImageView.setBackground(getDrawable(R.drawable.orangergeist_rechts));
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
-            newImageView.setY(startingBlockBlueGhost.getY());
-            newImageView.setX(startingBlockBlueGhost.getX());
+            newImageView.setY(startingBlockOrangeGhost.getY());
+            newImageView.setX(startingBlockOrangeGhost.getX());
 
-            blueGhost = new Ghost(newImageView, entitySize);
+            orangeGhost = new Ghost(newImageView, entitySize);
+
+            //Pink Ghost gets ceated
+            newImageView = new ImageView(this);
+            newImageView.setBackground(getDrawable(R.drawable.pinkergeist_rechts));
+            gameDisplay.addView(newImageView);
+            layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
+            newImageView.setLayoutParams(layoutParams);
+            newImageView.setX(startingBlockPinkGhost.getX());
+            newImageView.setY(startingBlockPinkGhost.getY());
+
+            pinkGhost = new Ghost(newImageView, entitySize);
 
             mapcreated = true;
         }
     }
 
     public void setRandomPath(Ghost ghost){
-        int ghostCenterX = (int)ghost.entity.getX() + ghost.entity.getWidth()/2;
-        int ghostCenterY = (int)ghost.entity.getY() + ghost.entity.getHeight()/2;
+        int ghostCenterX = (int)ghost.getEntity().getX() + ghost.getEntity().getWidth()/2;
+        int ghostCenterY = (int)ghost.getEntity().getY() + ghost.getEntity().getHeight()/2;
 
         pathLinkedList path = new pathLinkedList();
         waypoint newStop;
@@ -899,39 +984,85 @@ Boolean gameEndDone = false;
         ghost.path = path;
     }
 
-    public void setBlueGhostDirection(){
-        if(blueGhost.path == null){
-            setRandomPath(blueGhost);
-            blueGhost.setDirection(findDirection(blueGhost));
+    public void setOrangeGhostDirection(){
+        if(orangeGhost.path == null){
+            setRandomPath(orangeGhost);
+            orangeGhost.setDirection(findDirection(orangeGhost));
         }
 
-        waypoint dest = blueGhost.path.getSecond();
+        waypoint dest = orangeGhost.path.getSecond();
 
-        if(blueGhost.reachedNextWaypoint(dest)){
+        if(orangeGhost.reachedNextWaypoint(dest)){
             waypoint nextStop = null;
-            blueGhost.path.removeFirst();
-            if(blueGhost.path.getSecond().getNode().getNeighbourListSize() == 1){
-                nextStop = new waypoint(blueGhost.path.getFirst().getNode());
+            orangeGhost.path.removeFirst();
+            if(orangeGhost.path.getSecond().getNode().getNeighbourListSize() == 1){
+                nextStop = new waypoint(orangeGhost.path.getFirst().getNode());
             }
             else {
                 Random r1 = new Random();
                 int index;
 
-                GraphNode nextNode = blueGhost.path.getFirst().getNode();
-                while(nextNode == blueGhost.path.getFirst().getNode()){
-                    index = r1.nextInt(blueGhost.path.getSecond().getNode().getNeighbourListSize());
-                    nextNode = blueGhost.path.getSecond().getNode().getNeighbour(index);
+                GraphNode nextNode = orangeGhost.path.getFirst().getNode();
+                while(nextNode == orangeGhost.path.getFirst().getNode()){
+                    index = r1.nextInt(orangeGhost.path.getSecond().getNode().getNeighbourListSize());
+                    nextNode = orangeGhost.path.getSecond().getNode().getNeighbour(index);
                 }
                 nextStop = new waypoint(nextNode);
             }
-            blueGhost.path.addWaypointEnd(nextStop);
-            blueGhost.setDirection(findDirection(blueGhost));
+            orangeGhost.path.addWaypointEnd(nextStop);
+            orangeGhost.setDirection(findDirection(orangeGhost));
         }
     }
-    public void setGhostDirection(GraphNode destination, boolean goToPacman){
+
+    public void setPinkGhostDirection(){
+        if(pinkGhost.isInReach(pacman.getEntity())){
+            if(pinkGhost.getInReach()){
+                pinkGhost.setDirection(findDirection(pinkGhost));
+            }
+            else{
+                pinkGhost.setInReach(true);
+                setShortestPath(null, true, pinkGhost);
+                pinkGhost.setDirection(findDirection(pinkGhost));
+            }
+        }
+        else{
+            if(pinkGhost.getInReach()){
+                pinkGhost.setInReach(false);
+                setRandomPath(pinkGhost);
+                pinkGhost.setDirection(findDirection(pinkGhost));
+            }
+            else{
+                waypoint dest = pinkGhost.path.getSecond();
+                if(pinkGhost.reachedNextWaypoint(dest)){
+                    waypoint nextStop = null;
+                    pinkGhost.path.removeFirst();
+                    if(pinkGhost.path.getSecond().getNode().getNeighbourListSize() == 1){
+                        nextStop = new waypoint(pinkGhost.path.getFirst().getNode());
+                    }
+                    else {
+                        Random r1 = new Random();
+                        int index;
+
+                        GraphNode nextNode = pinkGhost.path.getFirst().getNode();
+                        while(nextNode == pinkGhost.path.getFirst().getNode()){
+                            index = r1.nextInt(pinkGhost.path.getSecond().getNode().getNeighbourListSize());
+                            nextNode = pinkGhost.path.getSecond().getNode().getNeighbour(index);
+                        }
+                        nextStop = new waypoint(nextNode);
+                    }
+                    pinkGhost.path.addWaypointEnd(nextStop);
+                    pinkGhost.setDirection(findDirection(pinkGhost));
+                }
+
+            }
+        }
+    }
+
+
+    public void setRedGhostDirection(GraphNode destination, boolean goToPacman){
         //Initialises path if not existent
         if(redGhost.path == null){
-            redGhost.path = generateShortestPath(destination, goToPacman, redGhost);
+            setShortestPath(destination, goToPacman, redGhost);
             redGhost.setDirection(findDirection(redGhost));
         }
 
@@ -939,7 +1070,7 @@ Boolean gameEndDone = false;
         waypoint dest = redGhost.path.getSecond();
 
         if(redGhost.reachedNextWaypoint(dest)){
-            redGhost.path = generateShortestPath(destination, goToPacman, redGhost);
+            setShortestPath(destination, goToPacman, redGhost);
             redGhost.setDirection(findDirection(redGhost));
         }
     }
@@ -971,11 +1102,17 @@ Boolean gameEndDone = false;
     }
 
     //Dijkstra
-    public pathLinkedList generateShortestPath(GraphNode dest, boolean goToPacman, Ghost ghost){
+    public void setShortestPath(GraphNode dest, boolean goToPacman, Ghost ghost){
         GraphNode destination = null;
         GraphNode start = findEntitysNode(ghost.x + ghost.getWidth()/2, ghost.y + ghost.getHeight()/2);
-        if(goToPacman)destination = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2);
-        else destination = dest;
+
+        if(goToPacman) {
+            destination = findEntitysNode(pacman.x + pacman.getWidth() / 2, pacman.y + pacman.getHeight() / 2);
+        }
+        else {
+            destination = dest;
+        }
+
         ArrayList<GraphNode> que = new ArrayList<GraphNode>();
 
         GraphNode currentNode = start;
@@ -1025,7 +1162,7 @@ Boolean gameEndDone = false;
         route.addWaypoint(newWaypoint);
 
         resetGraph();
-        return route;
+        ghost.path = route;
     }
 
     public void resetGraph(){
@@ -1098,7 +1235,7 @@ Boolean gameEndDone = false;
         if(mNodePacman == mNodeGhost)
             return true;
 
-        return intersectsWithRedGhost;
+        return false;
 
     }
 
@@ -1113,21 +1250,19 @@ Boolean gameEndDone = false;
     }
 
     private int[][] level1 = new int[][]{
-            {2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2},
-            {23 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19 ,19,19 ,19 ,19 ,19 ,19 ,19 ,19,19,19 ,19 ,19 ,19 ,19 ,23},
-            {23 ,0 ,10,11,13,0 ,14,0 ,14,0 ,21,16,16,22,0 ,0 ,10,12,0 ,10,11,11,12,0 ,21,22,0 ,0 ,0 ,14,0 ,14,0 ,21,11,12,0 ,14,0 ,23},
-            {23 ,0 ,0 ,0 ,15,0 ,15,0 ,15,0 ,4 ,0 ,0 ,0,22 ,0 ,0 ,0 ,41 ,0 ,0 ,0 ,0 ,0 ,5 ,6 ,11,22,0 ,5 ,11,8 ,0 ,15,0 ,0 ,0 ,15,0 ,23},
-            {23 ,0 ,10,11,8 ,0 ,17,0 ,17,0 ,5 ,6 ,6 ,6 ,8 ,0 ,14,0 ,0 ,0 ,14,0 ,14,0 ,0 ,0 ,0 ,15,0 ,42 ,0 ,0 ,0 ,15,0 ,14,42 ,15,0 ,23},
-            {23 ,0 ,0 ,0 ,0 ,40 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,0 ,0 ,15,0 ,4 ,22,0 ,14,0 ,15,0 ,10,11,22,0 ,15,0 ,17,0 ,17,0 ,23},
-            {23 ,0 ,21,22,0 ,21,22,0 ,21,16,16,22,0 ,21,22,0 ,5 ,11,11,11,8 ,0 ,5 ,8 ,0 ,15,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,0 ,23},
-            {23 ,0 ,5 ,8 ,0 ,4 ,9 ,0 ,5 ,6 ,6 ,8 ,0 ,5 ,9 ,0 ,0 ,0 ,43 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,5 ,11,22,0 ,15,0 ,5 ,12,0 ,21,22,0 ,23},
-            {23 ,0 ,0 ,0 ,0 ,5 ,8 ,0 ,0 ,41 ,0 ,0 ,0 ,0 ,17,0 ,21,16,12,0 ,10,22,0 ,14,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,43 ,4 ,9 ,0 ,23},
-            {23 ,0 ,10,12,0 ,0 ,0 ,0 ,10,11,11,11,12,0 ,0 ,0 ,5 ,8 ,40 ,0 ,0 ,17,0 ,17,0 ,17,0 ,10,11,8 ,0 ,17,0 ,10,12,0 ,5 ,8 ,0 ,23},
-            {23 ,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,23},
-            {6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6}};
-
-    //
-
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
+            {1,0,1,1,1,0,1,0,1,0,1,1,0,0,0,0,1,1,0,1,1,1,1,0,1,1,0,0,0,1,0,1,0,1,1,1,0,1,0,1},
+            {1,0,0,0,1,0,1,0,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,0,1,0,0,0,1,0,1},
+            {1,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,0,1},
+            {1,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,1},
+            {1,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,1,0,1,1,0,1,1,0,1},
+            {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,1,0,1},
+            {1,0,1,1,0,0,0,0,1,1,1,1,1,0,0,0,1,1,0,0,0,1,0,1,0,1,0,1,1,1,0,1,0,1,1,0,1,1,0,1},
+            {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+    };
 
 // 40 Kirsche, 41 Eisfrucht, 42 Ananas,43 Feuerfrucht
 
@@ -1137,8 +1272,8 @@ Boolean gameEndDone = false;
    void moveGhostToStartPos(Ghost ghost, block startingBlock){
         ghost.path = null;
 
-        ghost.entity.setY(startingBlock.getY());
-        ghost.entity.setX(startingBlock.getX());
+        ghost.getEntity().setY(startingBlock.getY());
+        ghost.getEntity().setX(startingBlock.getX());
         ghost.updateCoordinates();
 
     }
@@ -1149,35 +1284,29 @@ Boolean gameEndDone = false;
         pacman.updateCoordinates();
     }
 
-
     void onHitWithGhost(){
         counter = 0;
         pacman.setDirection(-1);
         redGhost.setDirection(-1);
-        if(intersectsWithRedGhost){ // || intersectsWithOtherGhosts
+        orangeGhost.setDirection(-1);
+        // || intersectsWithOtherGhosts
 
-            pauseGame();
-
-            pacman.life -= 1;
-            if(pacman.life == 0)
-                gameEnd();
-            else{
-                if(pacman.life == 1){
-                    herz2.setVisibility(herz2.INVISIBLE);
-                    moveGhostToStartPos(redGhost, startingBlockRedGhost);
-                    movePacmanToStartPos();
-
-                }
-                if(pacman.life == 2){
-                    herz3.setVisibility(herz3.INVISIBLE);
-                    moveGhostToStartPos(redGhost, startingBlockRedGhost);
-                    movePacmanToStartPos();
-                }
-pauseView();
+        pacman.life -= 1;
+        if(pacman.life == 0)
+            gameEnd();
+        else{
+            if(pacman.life == 1){
+                herz2.setVisibility(herz2.INVISIBLE);
             }
-            intersectsWithRedGhost = false;
+            if(pacman.life == 2){
+                herz3.setVisibility(herz3.INVISIBLE);
+            }
+            moveGhostToStartPos(redGhost, startingBlockRedGhost);
+            moveGhostToStartPos(orangeGhost, startingBlockOrangeGhost);
+            moveGhostToStartPos(pinkGhost, startingBlockPinkGhost);
+            movePacmanToStartPos();
+            pinkGhost.setInReach(true);
             //onResume();
-
         }
     }
 

@@ -51,8 +51,6 @@ public class Spieler {
         this.playerScore = 0;
     }
 
-
-
     public ImageView getEntity(){
         return entity;
     }

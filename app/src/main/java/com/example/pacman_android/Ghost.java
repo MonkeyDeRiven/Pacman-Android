@@ -6,19 +6,14 @@ import android.widget.ImageView;
 
 public class Ghost {
 
+    private ImageView entity;
 
-    public ImageView entity;
-
-
-
-    private int speed=3;
+    private double speed;
     private int direction;
+    private boolean inReach = true;
 
     private int width;
     private int height;
-
-
-    private boolean isFrozen= false;
 
     public int x;
     public int y;
@@ -41,6 +36,9 @@ public class Ghost {
         path = newPath;
     }
 
+    public ImageView getEntity(){
+        return entity;
+    }
 
     public int getHeight(){
         return height;
@@ -87,22 +85,36 @@ public class Ghost {
         return false;
     }
 
-    public int getSpeed() {
+    public boolean isInReach(ImageView entity){
+        int ghostCenterX = x + width/2;
+        int ghostCenterY = y + height/2;
+
+        int pacmanCenterX = (int)entity.getX() + entity.getWidth()/2;
+        int pacmanCenterY = (int)entity.getY() + entity.getHeight()/2;
+
+        int distance = (int) Math.sqrt((ghostCenterX - pacmanCenterX) * (ghostCenterX - pacmanCenterX) + (pacmanCenterX - pacmanCenterY) * (pacmanCenterX - pacmanCenterY));
+        if(distance < 300){
+            System.out.println("TRUE");
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean getInReach(){
+        return inReach;
+    }
+
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
-    public boolean isFrozen() {
-        return isFrozen;
+    public void setInReach(boolean newInReach){
+        inReach = newInReach;
     }
-
-    public void setFrozen(boolean frozen) {
-        isFrozen = frozen;
-    }
-
-
-
 }
