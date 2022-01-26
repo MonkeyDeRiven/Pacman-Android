@@ -12,52 +12,18 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2626e8a9-496f-4f5a-82f8-469f0e1fd1cb" name="Default Changelist" comment="Blöcke aktualisiert">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/krone.png" afterDir="false" />
+    <list default="true" id="2626e8a9-496f-4f5a-82f8-469f0e1fd1cb" name="Default Changelist" comment="Früchte hinzugefügt, Bestenliste visuell verschönert, Blockbilderauflösung verringert, Geschwindigkeit Geister und Pacman individualiseirt&#10;Bug entstanden: wenn pacman gegen bestimmte wände läuft, bleibt er stecken">
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/Ghost.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/Ghost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/Spieler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/Spieler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/block.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/geisterlexikon.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/geisterlexikon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielbildschirm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielbildschirm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/blauergeist_rechts.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/blauergeist.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/orangergeist_rechts.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/orangegeist.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/pinkergeist_rechts.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pinkergeist.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/rotergeist_rechts.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rotergeist.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_block_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_block_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_block_middle.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_block_middle.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_block_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_block_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_bottom.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_bottom.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_bottom_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_bottom_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_bottom_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_bottom_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_top.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_top.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_top_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_top_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_top_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_inner_top_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_lower_end.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_lower_end.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_bottom.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_bottom.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_bottom_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_bottom_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_bottom_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_bottom_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_left_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_left_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_top.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_top.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_top_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_top_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_top_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_outer_top_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wall_upper_end.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wall_upper_end.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/wardrobe.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/wardrobe.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/bestenliste.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/bestenliste.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643158058736</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Früchte hinzugefügt, Bestenliste visuell verschönert, Blockbilderauflösung verringert, Geschwindigkeit Geister und Pacman individualiseirt&#10;Bug entstanden: wenn pacman gegen bestimmte wände läuft, bleibt er stecken">
+      <created>1643199394242</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1643199394242</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -266,7 +239,8 @@
     <MESSAGE value="Timecounter eingefügt, Fonts aktualsiiert Spielbildschirm" />
     <MESSAGE value="Übergang zwischen Haupt- und Spielbildschirm, Pause und Spielbildscirm aufgebaut" />
     <MESSAGE value="Blöcke aktualisiert" />
-    <option name="LAST_COMMIT_MESSAGE" value="Blöcke aktualisiert" />
+    <MESSAGE value="Früchte hinzugefügt, Bestenliste visuell verschönert, Blockbilderauflösung verringert, Geschwindigkeit Geister und Pacman individualiseirt&#10;Bug entstanden: wenn pacman gegen bestimmte wände läuft, bleibt er stecken" />
+    <option name="LAST_COMMIT_MESSAGE" value="Früchte hinzugefügt, Bestenliste visuell verschönert, Blockbilderauflösung verringert, Geschwindigkeit Geister und Pacman individualiseirt&#10;Bug entstanden: wenn pacman gegen bestimmte wände läuft, bleibt er stecken" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
