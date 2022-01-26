@@ -12,10 +12,11 @@ import com.example.myfirstapp.R;
 public class geisterlexikon extends AppCompatActivity {
 RecyclerView recyclerView;
 String s1[] = {"Blinky","Pinky","Inky","Clyde"};
-String s2[] ={"Blinky ist der Verfolger. Sieht er dich einmal ist es schwer ihn wieder los zuwerden.",
-        "Pinky liebt den Hinterhalt. Vor diesem Geist solltest du dich in Acht nehmen.",
+String s2[] ={"Blinky ist der Verfolger. Er wird alles tun um so schnell wie möglich zu dir zu kommen, also behalte ihn lieber im Auge!",
+        "Pinky liebt den Hinterhalt. Pinky ist weniger gefährlich wenn du eine gute Distanz zu ihm hast, aber nimm dich in Acht! Sobald",
         "Inky ist sehr launisch. Man weiß nie wie seine aktuelle Laune gerade ist.",
-        "Clyde ist … halt Clyde. Langsam und ein großer Dummkopf."};
+        "Clyde ist nicht die hellste Kerze auf der Torte. Er verfolgt kein gewisses Ziel, bewegt sich dafür aber sehr schnell"};
+String s3[] = {"", "du ihm zu nahe kommst eröffnet er die Jagd auf dich.", "",""};
 
 
 int images[] = {R.drawable.rotergeist_rechts,R.drawable.pinkergeist_rechts,R.drawable.blauergeist_rechts,R.drawable.orangergeist_rechts};
@@ -26,7 +27,7 @@ int images[] = {R.drawable.rotergeist_rechts,R.drawable.pinkergeist_rechts,R.dra
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         RecyclerView rv= findViewById(R.id.recycleview);
 
-        MyAdapter myAdapter = new MyAdapter(this,s1,s2,images);
+        MyAdapter myAdapter = new MyAdapter(this,s1,s2,s3,images);
         rv.setAdapter(myAdapter);
        rv.setLayoutManager(new LinearLayoutManager(this));
 

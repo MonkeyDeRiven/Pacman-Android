@@ -7,38 +7,75 @@
     tools:context="com.example.pacman_android.spielbildschirm">
 
 
-    <Button
-        android:id="@+id/rightb"
+    <ImageButton
+        android:id="@+id/downb3"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/movebuttons"
-        android:text="r"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.932" />
-
-    <Button
-        android:id="@+id/downb"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/movebuttons"
+        android:rotation="-90"
+        android:src="@drawable/steuerungsbutton"
         android:text="v"
+        android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintHorizontal_bias="0.926"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <Button
+    <ImageButton
+        android:id="@+id/rightb3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/movebuttons"
+        android:rotation="180"
+        android:src="@drawable/steuerungsbutton"
+        android:text="r"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.984"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.932" />
+
+    <ImageButton
+        android:id="@+id/upb3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/movebuttons"
+        android:rotation="90"
+        android:src="@drawable/steuerungsbutton"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.926"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.854" />
+
+    <ImageButton
+        android:id="@+id/leftb3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/movebuttons"
+        android:src="@drawable/steuerungsbutton"
+        android:text="left"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.868"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.932" />
+
+    <ImageButton
         android:id="@+id/leftb"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/movebuttons"
+        android:src="@drawable/steuerungsbutton"
         android:text="left"
+        android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.023"
@@ -46,18 +83,52 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.932" />
 
-    <Button
+    <ImageButton
         android:id="@+id/upb"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/movebuttons"
+        android:rotation="90"
+        android:src="@drawable/steuerungsbutton"
         android:text="ʌ"
+        android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintVertical_bias="0.854" />
+
+    <ImageButton
+        android:id="@+id/downb"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:rotation="-90"
+        android:src="@drawable/steuerungsbutton"
+        android:text="v"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.081"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/rightb"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/movebuttons"
+        android:rotation="180"
+        android:src="@drawable/steuerungsbutton"
+        android:text="r"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.932" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -149,55 +220,6 @@
 
 
     <RelativeLayout
-        android:id="@+id/pauseScreen"
-        android:translationZ="120dp"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        android:id="@+id/pauseScreen"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="1.0">
-
-
-        <TextView
-            android:id="@+id/pauseCounter"
-            android:layout_width="554dp"
-            android:layout_height="165dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="102dp"
-            android:layout_marginLeft="102dp"
-            android:layout_marginTop="112dp"
-            android:layout_marginEnd="75dp"
-            android:layout_marginRight="75dp"
-            android:layout_marginBottom="134dp"
-            android:gravity="center"
-            android:text="3"
-            android:textColor="#EFD700"
-            android:textColorHighlight="#E2E805"
-            android:textSize="80sp"
-            android:visibility="invisible"
-            app:fontFamily="@font/arcadeclassicregular" />
-
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
         android:id="@+id/spielScreen"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -228,7 +250,69 @@
             android:translationZ="90dp"
             app:srcCompat="@drawable/gelbmundauf" />
 
+        <RelativeLayout
+            android:id="@+id/pauseScreen"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="165dp"
+            android:layout_marginLeft="165dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="166dp"
+            android:layout_marginRight="166dp"
+            android:layout_marginBottom="39dp"
+            android:translationZ="120dp"><![CDATA[
+            android:id="@+id/pauseScreen"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintVertical_bias="1.0">
 
+
+
+
+
+
+
+
+            ]]>
+
+            <TextView
+                android:id="@+id/pauseCounter"
+                android:layout_width="554dp"
+                android:layout_height="165dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="102dp"
+                android:layout_marginLeft="102dp"
+                android:layout_marginTop="112dp"
+                android:layout_marginEnd="75dp"
+                android:layout_marginRight="75dp"
+                android:layout_marginBottom="134dp"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="#EFD700"
+                android:textColorHighlight="#E2E805"
+                android:textSize="80sp"
+                android:visibility="invisible"
+                app:fontFamily="@font/arcadeclassicregular" />
+
+
+        </RelativeLayout>
 
 
     </RelativeLayout>

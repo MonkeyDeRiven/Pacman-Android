@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,6 +45,7 @@ import java.util.TimerTask;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class spielbildschirm extends AppCompatActivity implements RankingDialog.RankingDialogListener {
+    final String settingsFileName = "settings.txt";
     final int arrayLength = 40; //80
     final int arrayHeight = 12; //24
 
@@ -378,6 +380,69 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     }
 
+    public void setControllerLayout() {
+
+        //Button for LEFT controller
+        ImageButton btnRight_L = findViewById(R.id.rightb);
+        ImageButton btnLeft_L = findViewById(R.id.leftb);
+        ImageButton btnUp_L = findViewById(R.id.upb);
+        ImageButton btnDown_L = findViewById(R.id.downb);
+
+        //Button for RIGHT controller
+        ImageButton btnRight_R = findViewById(R.id.rightb3);
+        ImageButton btnLeft_R = findViewById(R.id.leftb3);
+        ImageButton btnUp_R = findViewById(R.id.upb3);
+        ImageButton btnDown_R = findViewById(R.id.downb3);
+
+        //Pause Button
+        ImageButton btnPause = findViewById(R.id.btnPause);
+
+        String controllerLayout = "left";
+
+        try {
+            FileInputStream settingsOutput = openFileInput(settingsFileName);
+            InputStreamReader reader = new InputStreamReader(settingsOutput);
+            BufferedReader settingsReader = new BufferedReader(reader);
+
+            //reads line from settings.txt
+            controllerLayout = settingsReader.readLine();
+
+            //Formats the String
+            controllerLayout = controllerLayout.substring(controllerLayout.indexOf('=') + 1);
+            controllerLayout = controllerLayout.trim();
+            controllerLayout = controllerLayout.toLowerCase();
+
+        } catch (IOException e) {
+            Log.e("SETTINGS_ERROR", "Could not set controller layout, settings file may be corrupted");
+        }
+
+        if (controllerLayout.equals("left")) {
+            //hide right controller
+            btnRight_R.setVisibility(View.GONE);
+            btnLeft_R.setVisibility(View.GONE);
+            btnUp_R.setVisibility(View.GONE);
+            btnDown_R.setVisibility(View.GONE);
+
+            //show left controller
+            btnRight_L.setVisibility(View.VISIBLE);
+            btnLeft_L.setVisibility(View.VISIBLE);
+            btnUp_L.setVisibility(View.VISIBLE);
+            btnDown_L.setVisibility(View.VISIBLE);
+
+        } else if (controllerLayout.equals("right")) {
+            //hide rigth controller
+            btnRight_R.setVisibility(View.VISIBLE);
+            btnLeft_R.setVisibility(View.VISIBLE);
+            btnUp_R.setVisibility(View.VISIBLE);
+            btnDown_R.setVisibility(View.VISIBLE);
+
+            //show left controller
+            btnRight_L.setVisibility(View.GONE);
+            btnLeft_L.setVisibility(View.GONE);
+            btnUp_L.setVisibility(View.GONE);
+            btnDown_L.setVisibility(View.GONE);
+        }
+    }
 
     public void pauseGame()
     {
@@ -439,8 +504,84 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     protected void onResume() {
       super.onResume();
         pauseView();
+        setControllerLayout();
+
+  }
+Boolean gameEndDone = false;
+    synchronized protected void onPause() {
+        super.onPause();
+
+        pacman.setDirection(-1);
+        redGhost.setDirection(-1);
+
+       gamestart=false;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.spielbildschirm);
+
+        ImageButton up = findViewById(R.id.upb);
+        ImageButton left = findViewById(R.id.leftb);
+        ImageButton right = findViewById(R.id.rightb);
+        ImageButton down = findViewById(R.id.downb);
+
+        ImageButton up2 = findViewById(R.id.upb3);
+        ImageButton left2 = findViewById(R.id.leftb3);
+        ImageButton right2 = findViewById(R.id.rightb3);
+        ImageButton down2 = findViewById(R.id.downb3);
+
+        ImageButton btnSpielmenue = (ImageButton) findViewById(R.id.btnSpielmenue);
+
+        btnSpielmenue.setOnClickListener(view -> {
+            openSpielmenueView();
+        });
+
+        up.setOnClickListener(view ->{
+            onUpMove();
+        });
+        down.setOnClickListener(view ->{
+            onDownMove();
+        });
+        right.setOnClickListener(view ->{
+            onRightMove();
+        });
+        left.setOnClickListener(view ->{
+            onLeftMove();;
+        });
+
+        up2.setOnClickListener(view ->{
+            onUpMove();
+        });
+        down2.setOnClickListener(view ->{
+            onDownMove();
+        });
+        right2.setOnClickListener(view ->{
+            onRightMove();
+        });
+        left2.setOnClickListener(view ->{
+            onLeftMove();;
+        });
+
+        h = new Handler() {
+            public void handleMessage(Message msg) {
+                finish();
+            }
+        };
+
+        herz1 = (ImageView) findViewById(R.id.herz1);
+        herz2 = (ImageView) findViewById(R.id.herz4);
+        herz3 = (ImageView) findViewById(R.id.herz5);
+
+        textScoreAnzeige = findViewById(R.id.txtPScoreAnzeige);
+
+        setControllerLayout();
+
         Timer timer;
-           {
+        {
             timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
                 synchronized public void run() { // wird periodisch im Timer thread aufgerufen
@@ -452,8 +593,8 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                                     pauseGame();
                                 }
                                 if (pacmanIntersectsWithGhost(redGhost) || pacmanIntersectsWithGhost(orangeGhost) || pacmanIntersectsWithGhost(pinkGhost)){
-                                        counter += 1;
-                                        if(counter == 1)
+                                    counter += 1;
+                                    if(counter == 1)
                                         onHitWithGhost();
                                 }
                                 else {
@@ -541,65 +682,8 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                 }
             }, 0, 20);
         }
-  }
-Boolean gameEndDone = false;
-    synchronized protected void onPause() {
-        super.onPause();
-
-        pacman.setDirection(-1);
-        redGhost.setDirection(-1);
-
-       gamestart=false;
-
-
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.spielbildschirm);
-
-        Button up = findViewById(R.id.upb);
-        Button left = findViewById(R.id.leftb);
-        Button right = findViewById(R.id.rightb);
-        Button down = findViewById(R.id.downb);
-
-        ImageButton btnSpielmenue = (ImageButton) findViewById(R.id.btnSpielmenue);
-
-        btnSpielmenue.setOnClickListener(view -> {
-            openSpielmenueView();
-        });
-
-        up.setOnClickListener(view ->{
-       onUpMove();
-        })  ;
-        down.setOnClickListener(view ->{
-            onDownMove();
-        })  ;
-
-        right.setOnClickListener(view ->{
-            onRightMove();
-        })  ;
-
-     left.setOnClickListener(view ->{
-        onLeftMove();;
-    })  ;
-
-    h = new Handler() {
-            public void handleMessage(Message msg) {
-                finish();
-            }
-        };
-
-    herz1 = (ImageView) findViewById(R.id.herz1);
-    herz2 = (ImageView) findViewById(R.id.herz4);
-    herz3 = (ImageView) findViewById(R.id.herz5);
-
-    textScoreAnzeige = findViewById(R.id.txtPScoreAnzeige);
-
-    }
     public void onUpMove(){
         block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
         int currentBlockIndex = findBlockIndex(currentBlock);
