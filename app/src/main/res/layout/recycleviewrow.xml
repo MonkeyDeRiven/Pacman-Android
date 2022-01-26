@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="100dp">
+    android:layout_height="150dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="409dp"
@@ -11,14 +11,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/consti"
-        android:layout_width="730dp"
-        android:layout_height="101dp"
+        android:layout_width="727dp"
+        android:layout_height="148dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -32,8 +32,9 @@
 
         <TextView
             android:id="@+id/Text"
-            android:layout_width="517dp"
+            android:layout_width="515dp"
             android:layout_height="45dp"
+            android:gravity="start"
             android:text="HALLO"
             android:textAlignment="textStart"
             android:textColor="#FFFF00"
@@ -41,11 +42,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/Bild"
+            app:layout_constraintHorizontal_bias="0.471"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.089"
-            android:gravity="start" />
+            app:layout_constraintVertical_bias="0.029" />
 
         <ImageView
             android:id="@+id/Bild"
@@ -58,12 +58,29 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/Text2"
-            android:layout_width="460dp"
-            android:layout_height="48dp"
+            android:layout_width="515dp"
+            android:layout_height="50dp"
+            android:gravity="start"
+            android:text="HALLO"
+            android:textAlignment="textStart"
+            android:textColor="#FFFF00"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/Text3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.489" />
+
+        <TextView
+            android:id="@+id/Text3"
+            android:layout_width="515dp"
+            android:layout_height="50dp"
             android:gravity="start"
             android:text="HALLO"
             android:textAlignment="textStart"
@@ -71,8 +88,8 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/Bild"
+            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>

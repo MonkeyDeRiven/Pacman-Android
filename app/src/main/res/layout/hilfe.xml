@@ -40,12 +40,13 @@
         android:backgroundTint="#FFFF00"
         android:text="Steuerung"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.424" />
 
     <Button
         android:id="@+id/btnFruechtelexikon"
@@ -54,6 +55,7 @@
         android:backgroundTint="#FFFF00"
         android:text="Früchtelexikon"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -68,12 +70,13 @@
         android:backgroundTint="#FFFF00"
         android:text="Geisterlexikon"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/TextViewHilfe"
-        app:layout_constraintVertical_bias="0.75"
+        app:layout_constraintVertical_bias="0.74"
         tools:ignore="MissingConstraints" />
 
     <ImageButton

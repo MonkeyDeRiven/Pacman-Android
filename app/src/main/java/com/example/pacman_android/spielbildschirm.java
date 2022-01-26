@@ -10,9 +10,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 
@@ -45,6 +45,7 @@ import java.util.TimerTask;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class spielbildschirm extends AppCompatActivity implements RankingDialog.RankingDialogListener {
+    final String settingsFileName = "settings.txt";
     final int arrayLength = 40; //80
     final int arrayHeight = 12; //24
 
@@ -93,19 +94,19 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     ReentrantLock l = new ReentrantLock();
 
-    public void moveEntity(ImageView entity, int direction, int acc) {
+    public void moveEntity(ImageView entity, int direction, double acc) {
         if(mapcreated) {
             if(direction == 0) {
-                entity.setY(entity.getY() - acc);   //OBEN
+                entity.setY(entity.getY() - (int)(2*acc));   //OBEN
             }
             if(direction == 1){
-                entity.setX(entity.getX() + acc); //RECHTS
+                entity.setX(entity.getX() + (int)(2*acc)); //RECHTS
             }
             if(direction == 2){
-                entity.setY(entity.getY() + acc); //UNTEN
+                entity.setY(entity.getY() + (int)(2*acc)); //UNTEN
             }
             if(direction == 3){
-                entity.setX(entity.getX() - acc); //LINKS
+                entity.setX(entity.getX() - (int)(2*acc)); //LINKS
             }
         }
     }
@@ -373,81 +374,74 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
            gameField[yPosArray][xPosArray].setVisited(true);
            ++cookiesEaten;
            pacman.playerScore += 10;
+           String scoreList = "Score: ";
            textScoreAnzeige.setText("Score: " + pacman.playerScore);
         }
 
     }
 
-    public void checkFruit()
-    {
-        if(gameField[yPosArray][xPosArray].isFruit())
-        {gameField[yPosArray][xPosArray].setFruit(false);
-            if(gameField[yPosArray][xPosArray].fruchtart==0)
-            {
-               if(!pinkGhost.isFrozen) pinkGhost.setSpeed(2);if(!redGhost.isFrozen)redGhost.setSpeed(2);if(!orangeGhost.isFrozen)orangeGhost.setSpeed(2);
-                new CountDownTimer(10000, 1000) {
+    public void setControllerLayout() {
 
-                    public void onTick(long millisUntilFinished) {
-resetFigures();
-                    }
+        //Button for LEFT controller
+        ImageButton btnRight_L = findViewById(R.id.rightb);
+        ImageButton btnLeft_L = findViewById(R.id.leftb);
+        ImageButton btnUp_L = findViewById(R.id.upb);
+        ImageButton btnDown_L = findViewById(R.id.downb);
 
-                    public void onFinish() {
+        //Button for RIGHT controller
+        ImageButton btnRight_R = findViewById(R.id.rightb3);
+        ImageButton btnLeft_R = findViewById(R.id.leftb3);
+        ImageButton btnUp_R = findViewById(R.id.upb3);
+        ImageButton btnDown_R = findViewById(R.id.downb3);
 
-                    }
+        //Pause Button
+        ImageButton btnPause = findViewById(R.id.btnPause);
 
-                }.start();
-            }
-                if(gameField[yPosArray][xPosArray].fruchtart==1)
-                {
-                    redGhost.setFrozen(true);orangeGhost.setFrozen(true);pinkGhost.setFrozen(true);
-                    redGhost.setSpeed(0);pinkGhost.setSpeed(0);orangeGhost.setSpeed(0);
-                    redGhost.entity.setBackgroundResource(R.drawable.snowman);
-                    pinkGhost.entity.setBackgroundResource(R.drawable.snowman);
-                    orangeGhost.entity.setBackgroundResource(R.drawable.snowman);
-                    new CountDownTimer(7000, 1000) {
+        String controllerLayout = "left";
 
-                        public void onTick(long millisUntilFinished) {
-                            resetFigures();
-                        }
+        try {
+            FileInputStream settingsOutput = openFileInput(settingsFileName);
+            InputStreamReader reader = new InputStreamReader(settingsOutput);
+            BufferedReader settingsReader = new BufferedReader(reader);
 
-                        public void onFinish() {
+            //reads line from settings.txt
+            controllerLayout = settingsReader.readLine();
 
-                        }
+            //Formats the String
+            controllerLayout = controllerLayout.substring(controllerLayout.indexOf('=') + 1);
+            controllerLayout = controllerLayout.trim();
+            controllerLayout = controllerLayout.toLowerCase();
 
-                    }.start();
-                }
-                    if(gameField[yPosArray][xPosArray].fruchtart==2)
-                    { pacman.playerScore +=200;
-                    }
-                    pacman.setSpeed(4);
-                        if(gameField[yPosArray][xPosArray].fruchtart==3)
-                        {
-                            new CountDownTimer(10000, 1000) {
-
-                                public void onTick(long millisUntilFinished) {
-                                    resetFigures();
-                                }
-
-                                public void onFinish() {
-
-                                }
-
-                            }.start();
-                        }
+        } catch (IOException e) {
+            Log.e("SETTINGS_ERROR", "Could not set controller layout, settings file may be corrupted");
         }
 
-    }
+        if (controllerLayout.equals("left")) {
+            //hide right controller
+            btnRight_R.setVisibility(View.GONE);
+            btnLeft_R.setVisibility(View.GONE);
+            btnUp_R.setVisibility(View.GONE);
+            btnDown_R.setVisibility(View.GONE);
 
-    public void resetFigures()
-    {
-        pacman.setSpeed(3);
-        redGhost.setSpeed(3);
-        orangeGhost.setSpeed(3);
-        pinkGhost.setSpeed(3);
-        redGhost.entity.setBackgroundResource(R.drawable.rotergeist);
-        pinkGhost.entity.setBackgroundResource(R.drawable.pinkergeist);
-        orangeGhost.entity.setBackgroundResource(R.drawable.orangegeist);
+            //show left controller
+            btnRight_L.setVisibility(View.VISIBLE);
+            btnLeft_L.setVisibility(View.VISIBLE);
+            btnUp_L.setVisibility(View.VISIBLE);
+            btnDown_L.setVisibility(View.VISIBLE);
 
+        } else if (controllerLayout.equals("right")) {
+            //hide rigth controller
+            btnRight_R.setVisibility(View.VISIBLE);
+            btnLeft_R.setVisibility(View.VISIBLE);
+            btnUp_R.setVisibility(View.VISIBLE);
+            btnDown_R.setVisibility(View.VISIBLE);
+
+            //show left controller
+            btnRight_L.setVisibility(View.GONE);
+            btnLeft_L.setVisibility(View.GONE);
+            btnUp_L.setVisibility(View.GONE);
+            btnDown_L.setVisibility(View.GONE);
+        }
     }
 
     public void pauseGame()
@@ -462,10 +456,10 @@ resetFigures();
     public void continueGame()
     {
         gamestart= true;
-        pacman.setSpeed(3);
-        redGhost.setSpeed(3);
-        orangeGhost.setSpeed(3);
-        pinkGhost.setSpeed(3);
+        pacman.setSpeed(2);
+        redGhost.setSpeed(1);
+        orangeGhost.setSpeed(2);
+        pinkGhost.setSpeed(1);
     }
 
     public boolean checkWin()
@@ -510,8 +504,84 @@ resetFigures();
     protected void onResume() {
       super.onResume();
         pauseView();
+        setControllerLayout();
+
+  }
+Boolean gameEndDone = false;
+    synchronized protected void onPause() {
+        super.onPause();
+
+        pacman.setDirection(-1);
+        redGhost.setDirection(-1);
+
+       gamestart=false;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.spielbildschirm);
+
+        ImageButton up = findViewById(R.id.upb);
+        ImageButton left = findViewById(R.id.leftb);
+        ImageButton right = findViewById(R.id.rightb);
+        ImageButton down = findViewById(R.id.downb);
+
+        ImageButton up2 = findViewById(R.id.upb3);
+        ImageButton left2 = findViewById(R.id.leftb3);
+        ImageButton right2 = findViewById(R.id.rightb3);
+        ImageButton down2 = findViewById(R.id.downb3);
+
+        ImageButton btnSpielmenue = (ImageButton) findViewById(R.id.btnSpielmenue);
+
+        btnSpielmenue.setOnClickListener(view -> {
+            openSpielmenueView();
+        });
+
+        up.setOnClickListener(view ->{
+            onUpMove();
+        });
+        down.setOnClickListener(view ->{
+            onDownMove();
+        });
+        right.setOnClickListener(view ->{
+            onRightMove();
+        });
+        left.setOnClickListener(view ->{
+            onLeftMove();;
+        });
+
+        up2.setOnClickListener(view ->{
+            onUpMove();
+        });
+        down2.setOnClickListener(view ->{
+            onDownMove();
+        });
+        right2.setOnClickListener(view ->{
+            onRightMove();
+        });
+        left2.setOnClickListener(view ->{
+            onLeftMove();;
+        });
+
+        h = new Handler() {
+            public void handleMessage(Message msg) {
+                finish();
+            }
+        };
+
+        herz1 = (ImageView) findViewById(R.id.herz1);
+        herz2 = (ImageView) findViewById(R.id.herz4);
+        herz3 = (ImageView) findViewById(R.id.herz5);
+
+        textScoreAnzeige = findViewById(R.id.txtPScoreAnzeige);
+
+        setControllerLayout();
+
         Timer timer;
-           {
+        {
             timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
                 synchronized public void run() { // wird periodisch im Timer thread aufgerufen
@@ -523,8 +593,8 @@ resetFigures();
                                     pauseGame();
                                 }
                                 if (pacmanIntersectsWithGhost(redGhost) || pacmanIntersectsWithGhost(orangeGhost) || pacmanIntersectsWithGhost(pinkGhost)){
-                                        counter += 1;
-                                        if(counter == 1)
+                                    counter += 1;
+                                    if(counter == 1)
                                         onHitWithGhost();
                                 }
                                 else {
@@ -582,7 +652,6 @@ resetFigures();
 
                                     //Check if field is a cookie
                                     checkDots();
-                                    checkFruit();
                                     moveEntity(pacman.getEntity(), pacman.getDirection(),pacman.getSpeed());
                                     pacman.updateCoordinates();
 
@@ -613,65 +682,8 @@ resetFigures();
                 }
             }, 0, 20);
         }
-  }
-Boolean gameEndDone = false;
-    synchronized protected void onPause() {
-        super.onPause();
-
-        pacman.setDirection(-1);
-        redGhost.setDirection(-1);
-
-       gamestart=false;
-
-
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.spielbildschirm);
-
-        Button up = findViewById(R.id.upb);
-        Button left = findViewById(R.id.leftb);
-        Button right = findViewById(R.id.rightb);
-        Button down = findViewById(R.id.downb);
-
-        ImageButton btnSpielmenue = (ImageButton) findViewById(R.id.btnSpielmenue);
-
-        btnSpielmenue.setOnClickListener(view -> {
-            openSpielmenueView();
-        });
-
-        up.setOnClickListener(view ->{
-       onUpMove();
-        })  ;
-        down.setOnClickListener(view ->{
-            onDownMove();
-        })  ;
-
-        right.setOnClickListener(view ->{
-            onRightMove();
-        })  ;
-
-     left.setOnClickListener(view ->{
-        onLeftMove();;
-    })  ;
-
-    h = new Handler() {
-            public void handleMessage(Message msg) {
-                finish();
-            }
-        };
-
-    herz1 = (ImageView) findViewById(R.id.herz1);
-    herz2 = (ImageView) findViewById(R.id.herz4);
-    herz3 = (ImageView) findViewById(R.id.herz5);
-
-    textScoreAnzeige = findViewById(R.id.txtPScoreAnzeige);
-
-    }
     public void onUpMove(){
         block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
         int currentBlockIndex = findBlockIndex(currentBlock);
@@ -793,38 +805,32 @@ Boolean gameEndDone = false;
 
                     if (level1[i][j] == 0) {
                         newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundResource(R.drawable.pfad);
-                        ++amountCookies;
+                        newImageView.setBackgroundColor(Color.BLUE);++amountCookies;
                     }
                     if (level1[i][j] == 1) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
                         newBlock.setVisited(true);
-                        newImageView.setBackgroundResource(R.drawable.wall_inner_top_right);
+                        newImageView.setBackgroundColor(Color.BLACK);
                     }
 
                     if (level1[i][j] == 2) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_inner_top));
                     }
                     if (level1[i][j] == 3) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_inner_top_right));
                     }
                     if (level1[i][j] == 4) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_left));
                     }
                     if (level1[i][j] == 5) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_inner_bottom_left));
                     }
                     if (level1[i][j] == 6) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_inner_bottom));
                     }
                     if (level1[i][j] == 7) {
@@ -833,112 +839,90 @@ Boolean gameEndDone = false;
                     }
                     if (level1[i][j] == 8) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_inner_bottom_right));
                     }
                     if (level1[i][j] == 9) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_right));
                     }
                     if (level1[i][j] == 10) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_block_left));
                     }
                     if (level1[i][j] == 11) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_block_middle));
                     }
                     if (level1[i][j] == 12) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_block_right));
                     }
                     if (level1[i][j] == 13) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_top_right));
                     }
                     if (level1[i][j] == 14) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_upper_end));
                     }
                     if (level1[i][j] == 15) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_left_right));
                     }
                     if (level1[i][j] == 16) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_top));
                     }
                     if (level1[i][j] == 17) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_lower_end));
                     }
                     if (level1[i][j] == 18) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_bottom_left));
                     }
                     if (level1[i][j] == 19) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_bottom));
                     }
                     if (level1[i][j] == 20) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_bottom_right));
                     }
                     if (level1[i][j] == 21) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_top_left));
                     }
                     if (level1[i][j] == 22) {
                         newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newBlock.setVisited(true);
                         newImageView.setBackground(getDrawable(R.drawable.wall_outer_top_right));
                     }
 
                     if (level1[i][j] == 40) {
-                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                      newImageView.setBackgroundColor(0);
-                        newImageView.setBackgroundResource(R.drawable.kirsche);
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                      newImageView.setBackgroundColor(Color.GREEN);
                         newBlock.setFruit(true);
                     }
 
 
                     if (level1[i][j] == 41) {
-                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundResource(R.drawable.eisfrucht);
-                        newImageView.setBackgroundColor(0);
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundColor(Color.BLUE);
                         newBlock.setFruit(true);
-                        newBlock.fruchtart = 1;
                     }
 
 
                     if (level1[i][j] == 42) {
-                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(0);
-                        newImageView.setBackgroundResource(R.drawable.ananas);
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundColor(Color.YELLOW);
                         newBlock.setFruit(true);
-                        newBlock.fruchtart = 2;
                     }
 
 
                     if (level1[i][j] == 43) {
-                        newBlock = new block(false, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
-                        newImageView.setBackgroundColor(0);
-                        newImageView.setBackgroundResource(R.drawable.feuerfrucht_transparent);
+                        newBlock = new block(true, blockHeight, blockWidth, xPosition, yPosition, newImageView, newRect);
+                        newImageView.setBackgroundColor(Color.RED);
                         newBlock.setFruit(true);
-                        newBlock.fruchtart = 3;
                     }
 
 
@@ -1019,7 +1003,7 @@ Boolean gameEndDone = false;
 
             //Red Ghost gets created
             newImageView = new ImageView(this);
-            newImageView.setBackground(getDrawable(R.drawable.rotergeist));
+            newImageView.setBackground(getDrawable(R.drawable.rotergeist_rechts));
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
@@ -1030,7 +1014,7 @@ Boolean gameEndDone = false;
 
             //Orange Ghost gets created
             newImageView = new ImageView(this);
-            newImageView.setBackground(getDrawable(R.drawable.orangegeist));
+            newImageView.setBackground(getDrawable(R.drawable.orangergeist_rechts));
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
@@ -1041,7 +1025,7 @@ Boolean gameEndDone = false;
 
             //Pink Ghost gets ceated
             newImageView = new ImageView(this);
-            newImageView.setBackground(getDrawable(R.drawable.pinkergeist));
+            newImageView.setBackground(getDrawable(R.drawable.pinkergeist_rechts));
             gameDisplay.addView(newImageView);
             layoutParams = new RelativeLayout.LayoutParams(entitySize, entitySize);
             newImageView.setLayoutParams(layoutParams);
@@ -1350,23 +1334,19 @@ Boolean gameEndDone = false;
     }
 
     private int[][] level1 = new int[][]{
-            {0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},
-            {9 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,4},
-            {9 ,0 ,10,11,13,0 ,14,0 ,14,0 ,21,16,16,22,0 ,0 ,10,12,0 ,10,11,11,12,0 ,21,22,0 ,0 ,0 ,14,0 ,14,0 ,21,11,12,0 ,14,0 ,4},
-            {9 ,0 ,0 ,0 ,15,0 ,15,0 ,15,0 ,4 ,0 ,0 ,0,22 ,0 ,0 ,0 ,0 ,42 ,0 ,0 ,0 ,0 ,5 ,6 ,11,22,0 ,5 ,11,8 ,0 ,15,0 ,0 ,0 ,15,0 ,4},
-            {9 ,0 ,10,11,8 ,0 ,17,0 ,17,0 ,5 ,6 ,6 ,6 ,8 ,0 ,14,0 ,0 ,0 ,14,0 ,14,0 ,0 ,0 ,0 ,15,0 ,40 ,0 ,0 ,0 ,15,0 ,14,42 ,15,0 ,4},
-            {9 ,0 ,0 ,40 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,15,0 ,0 ,0 ,15,0 ,4 ,22,0 ,14,0 ,15,0 ,10,11,22,0 ,15,0 ,17,0 ,17,0 ,4},
-            {9 ,0 ,21,22,0 ,21,22,0 ,21,16,16,22,0 ,21,22,0 ,5 ,11,11,11,8 ,0 ,5 ,8 ,0 ,15,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,0 ,4},
-            {9 ,0 ,5 ,8 ,0 ,4 ,9 ,0 ,5 ,6 ,6 ,8 ,0 ,5 ,9 ,0 ,0 ,0 ,0 ,0 ,0 ,41 ,0 ,0 ,0 ,15,0 ,5 ,11,22,0 ,15,0 ,5 ,12,0 ,21,22,0 ,4},
-            {9 ,0 ,43 ,0 ,0 ,5 ,8 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,17,0 ,21,16,12,0 ,10,22,0 ,14,0 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,4 ,9 ,0 ,4},
-            {9 ,0 ,10,12,0 ,41 ,0 ,0 ,10,11,11,11,12,0 ,0 ,0 ,5 ,8 ,0 ,0 ,0 ,17,0 ,17,0 ,17,0 ,10,11,8 ,0 ,17,0 ,10,12,0 ,5 ,8 ,43 ,4},
-            {9 ,19,19,19,19,21,13,19,19,19,19,19,19,19,19,19,19,19,19,14,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,4},
-            {0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0}
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
+            {1,0,1,1,1,0,1,0,1,0,1,1,0,0,0,0,1,1,0,1,1,1,1,0,1,1,0,0,0,1,0,1,0,1,1,1,0,1,0,1},
+            {1,0,0,0,1,0,1,0,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,0,1,0,0,0,1,0,1},
+            {1,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,0,1},
+            {1,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,1},
+            {1,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,1,0,1,1,0,1,1,0,1},
+            {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,1,1,0,1},
+            {1,0,1,1,0,0,0,0,1,1,1,1,1,0,0,0,1,1,0,0,0,1,0,1,0,1,0,1,1,1,0,1,0,1,1,0,1,1,0,1},
+            {1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     };
-
-
-
-
 
 // 40 Kirsche, 41 Eisfrucht, 42 Ananas,43 Feuerfrucht
 

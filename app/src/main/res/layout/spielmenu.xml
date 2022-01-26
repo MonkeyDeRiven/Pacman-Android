@@ -24,22 +24,6 @@
         app:layout_constraintVertical_bias="0.091" />
 
     <Button
-        android:id="@+id/btnEinstellungenSpielmenue"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/yellow"
-        android:text="Einstellungen"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSpielmenue"
-        app:layout_constraintVertical_bias="0.2" />
-
-    <Button
         android:id="@+id/btnHilfeSpielmenue"
         android:layout_width="250dp"
         android:layout_height="60dp"
@@ -50,10 +34,26 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSpielmenue"
-        app:layout_constraintVertical_bias="0.45" />
+        app:layout_constraintVertical_bias="0.501" />
+
+    <Button
+        android:id="@+id/btnEinstellungenSpielmenue"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/yellow"
+        android:text="Einstellungen"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSpielmenue"
+        app:layout_constraintVertical_bias="0.273" />
 
     <Button
         android:id="@+id/btnVerlassen"
@@ -67,10 +67,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSpielmenue"
-        app:layout_constraintVertical_bias="0.35" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/btnExitSpielmenue"

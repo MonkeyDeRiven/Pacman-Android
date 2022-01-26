@@ -15,6 +15,7 @@ public class fruchtlexikon extends AppCompatActivity {
             "Alle Geister gefrieren für x sec.",
             "200 Extra Punkte.",
             "Der PAC MAN brennt und ist schneller."};
+    String s3[] = {"","","",""};
 
 
     int images[] = {R.drawable.kirsche,R.drawable.eisfrucht,R.drawable.ananas,R.drawable.feuerfrucht_transparent};
@@ -25,7 +26,7 @@ public class fruchtlexikon extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         RecyclerView rv= findViewById(R.id.recycleview);
 
-        MyAdapter myAdapter = new MyAdapter(this,s1,s2,images);
+        MyAdapter myAdapter = new MyAdapter(this,s1,s2,s3,images);
         rv.setAdapter(myAdapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
