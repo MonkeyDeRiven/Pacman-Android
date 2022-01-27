@@ -153,8 +153,6 @@ skinanimater =(int) (Math.random()*3-0+1) + 0;
 
     protected void onResume() {
         super.onResume();
-mediaPlayer.start();
-
     }
 
 

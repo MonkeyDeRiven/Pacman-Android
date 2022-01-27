@@ -25,7 +25,7 @@ public class spielmenu extends AppCompatActivity {
 
         btnVerlassen.setOnClickListener(view -> {
             finish();
-
+            spielbildschirm.h.sendEmptyMessage(0);
         });
 
         btnEinstellungen.setOnClickListener(view -> {

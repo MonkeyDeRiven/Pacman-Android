@@ -586,6 +586,7 @@ public void resetFigures()
         pauseView();
         setControllerLayout();
 
+
   }
 Boolean gameEndDone = false;
     synchronized protected void onPause() {
@@ -667,7 +668,6 @@ Boolean gameEndDone = false;
                 synchronized public void run() { // wird periodisch im Timer thread aufgerufen
                     spielbildschirm.this.runOnUiThread(new Runnable() {
                         synchronized public void run() {
-
                             if (mapcreated) {
                                 if(!gamestart){
                                     pauseGame();
@@ -1425,8 +1425,8 @@ Boolean gameEndDone = false;
     {9 ,0 ,5 ,8 ,0 ,4 ,9 ,0 ,5 ,6 ,6 ,8 ,0 ,5 ,9 ,0 ,0 ,0 ,0 ,0 ,41 ,0 ,0 ,0 ,0 ,15,0 ,5 ,11,22,0 ,15,0 ,5 ,12,0 ,21,22,0 ,4},
     {9 ,0 ,0 ,42 ,0 ,5 ,8 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,17,0 ,21,16,12,0 ,10,22,0 ,14,43 ,15,0 ,0 ,0 ,15,0 ,15,0 ,0 ,0 ,0 ,4 ,9 ,0 ,4},
     {9 ,0 ,10,12,0 ,41 ,0 ,0 ,10,11,11,11,12,0 ,0 ,0 ,5 ,8 ,0 ,0 ,0 ,17,0 ,17,0 ,17,0 ,10,11,8 ,0 ,17,0 ,10,12,0 ,5 ,8 ,0 ,4},
-    {9 ,0, 0, 0, 0,21,22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-    {1,16,16,16,16, 1, 1,16,16,16,16,16,16,16,16,16,16,16,16, 1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1}};
+    {9 ,0, 0, 0, 0,21,22, 0, 0, 0, 0, 0, 0, 0,14, 0, 0, 0, 0,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    {1,16,16,16,16, 1, 1,16,16,16,16,16,16,16, 1,16,16,16,16, 1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1}};
 
 
 // 40 Kirsche, 41 Eisfrucht, 42 Ananas,43 Feuerfrucht
