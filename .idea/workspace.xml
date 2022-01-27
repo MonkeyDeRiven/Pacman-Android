@@ -12,14 +12,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2626e8a9-496f-4f5a-82f8-469f0e1fd1cb" name="Default Changelist" comment="Früchte">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pfadananas.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pfadcookie.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pfadeisfrucht.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pfadfeuerfrucht.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pfadkirsche.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pfadleer.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/snail.png" afterDir="false" />
+    <list default="true" id="2626e8a9-496f-4f5a-82f8-469f0e1fd1cb" name="Default Changelist" comment="Finalscreen alder">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/heat.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/heat2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/buttoneis.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/buttonflamme.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/buttonnormal.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.bin" afterDir="false" />
@@ -30,12 +28,21 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_sf_kxml_kxml2_2_3_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__net_sf_kxml_kxml2_2_3_0.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/pacman_android.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/pacman_android.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/Spieler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/Spieler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielbildschirm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielbildschirm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielmenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielmenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/anim/fadeout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/anim/fadeout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/spielbildschirm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/spielbildschirm.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/verlorenlayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/verlorenlayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/steuerungstutorial.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/steuerungstutorial.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,8 +59,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile" />
-        <option value="resourceFile" />
         <option value="Class" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -85,6 +92,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android-custom-viewC:/Users/Mojta/AndroidStudioProjects/pacman_android/app/src/main/java/com/example/pacman_android/GameView.java_SELECTED" value="GameView" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
     <property name="memory.settings.postsync.last.time.stamp" value="1642174814699" />
@@ -237,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643203777777</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Finalscreen alder">
+      <created>1643211355031</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1643211355031</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -260,7 +275,8 @@
     <MESSAGE value="Blöcke aktualisiert" />
     <MESSAGE value="Früchte hinzugefügt, Bestenliste visuell verschönert, Blockbilderauflösung verringert, Geschwindigkeit Geister und Pacman individualiseirt&#10;Bug entstanden: wenn pacman gegen bestimmte wände läuft, bleibt er stecken" />
     <MESSAGE value="Früchte" />
-    <option name="LAST_COMMIT_MESSAGE" value="Früchte" />
+    <MESSAGE value="Finalscreen alder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finalscreen alder" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -8,11 +8,11 @@
 
 
     <ImageButton
-        android:id="@+id/downb3"
+        android:id="@+id/down2"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:rotation="-90"
-        android:src="@drawable/steuerungsbutton"
+        android:background="@drawable/buttonnormal"
+        android:rotation="-180"
         android:text="v"
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,12 +23,12 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
-        android:id="@+id/rightb3"
+        android:id="@+id/right2"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/movebuttons"
-        android:rotation="180"
-        android:src="@drawable/steuerungsbutton"
+        android:background="@drawable/buttonnormal"
+        android:rotation="90"
+
         android:text="r"
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,12 +39,12 @@
         app:layout_constraintVertical_bias="0.932" />
 
     <ImageButton
-        android:id="@+id/upb3"
+        android:id="@+id/up2"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/movebuttons"
-        android:rotation="90"
-        android:src="@drawable/steuerungsbutton"
+        android:background="@drawable/buttonnormal"
+        android:rotation="0"
+
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,11 +54,11 @@
         app:layout_constraintVertical_bias="0.854" />
 
     <ImageButton
-        android:id="@+id/leftb3"
+        android:id="@+id/left2"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/movebuttons"
-        android:src="@drawable/steuerungsbutton"
+        android:background="@drawable/buttonnormal"
+        android:rotation="-90"
         android:text="left"
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,11 +69,11 @@
         app:layout_constraintVertical_bias="0.932" />
 
     <ImageButton
-        android:id="@+id/leftb"
+        android:id="@+id/left1"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/movebuttons"
-        android:src="@drawable/steuerungsbutton"
+        android:background="@drawable/buttonnormal"
+        android:rotation="-90"
         android:text="left"
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,13 +84,10 @@
         app:layout_constraintVertical_bias="0.932" />
 
     <ImageButton
-        android:id="@+id/upb"
+        android:id="@+id/up1"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/movebuttons"
-        android:rotation="90"
-        android:src="@drawable/steuerungsbutton"
-        android:text="ʌ"
+        android:background="@drawable/buttonnormal"
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,12 +97,12 @@
         app:layout_constraintVertical_bias="0.854" />
 
     <ImageButton
-        android:id="@+id/downb"
+        android:id="@+id/down1"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:rotation="-90"
-        android:src="@drawable/steuerungsbutton"
-        android:text="v"
+        android:background="@drawable/buttonnormal"
+        android:rotation="-180"
+        android:text="hallo"
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,12 +112,12 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
-        android:id="@+id/rightb"
+        android:id="@+id/right1"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/movebuttons"
-        android:rotation="180"
-        android:src="@drawable/steuerungsbutton"
+        android:background="@drawable/buttonnormal"
+        android:rotation="90"
+
         android:text="r"
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -131,7 +128,7 @@
         app:layout_constraintVertical_bias="0.932" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/downborder"
         android:layout_width="fill_parent"
         android:layout_height="94dp"
         android:background="@color/grey_font"
@@ -143,7 +140,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/upborder"
         android:layout_width="fill_parent"
         android:layout_height="42dp"
         android:background="@color/grey_font"
@@ -225,11 +222,11 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:background="#424242"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/downborder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/upborder"
         app:layout_constraintVertical_bias="1.0">
 
         <ImageView
@@ -248,55 +245,25 @@
             android:layout_marginEnd="485dp"
             android:layout_marginRight="485dp"
             android:layout_marginBottom="101dp"
-            android:translationZ="90dp"
             app:srcCompat="@drawable/gelbmundauf" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/pauseScreen"
-        android:layout_width="400dp"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:translationZ="120dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        android:id="@+id/pauseScreen"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="1.0">
-
 
         <TextView
             android:id="@+id/pauseCounter"
-            android:layout_width="554dp"
-            android:layout_height="165dp"
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="102dp"
-            android:layout_marginLeft="102dp"
-            android:layout_marginTop="112dp"
-            android:layout_marginEnd="75dp"
-            android:layout_marginRight="75dp"
-            android:layout_marginBottom="134dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="2dp"
+            android:alpha="1"
             android:gravity="center"
             android:text="3"
             android:textColor="#EFD700"
@@ -309,6 +276,8 @@
     </RelativeLayout>
 
 
+
+
     <TextView
         android:id="@+id/timeGone"
         android:layout_width="wrap_content"
@@ -317,11 +286,11 @@
         android:textColor="#000000"
         android:textSize="24sp"
         app:fontFamily="@font/arcadeclassicregular"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/upborder"
+        app:layout_constraintEnd_toEndOf="@+id/upborder"
         app:layout_constraintHorizontal_bias="0.831"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/upborder"
         app:layout_constraintVertical_bias="0.727" />
 
 

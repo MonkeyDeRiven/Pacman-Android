@@ -4,6 +4,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Context;
 
 import android.content.Intent;
@@ -268,8 +270,11 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
    public void pauseView(){
       startCounter = findViewById(R.id.pauseCounter);
-       rl = findViewById(R.id.pauseScreen);
-       rl.bringToFront();
+
+
+
+     startCounter.bringToFront();
+
        RelativeLayout spiellayout = findViewById(R.id.spielScreen);
 
 
@@ -383,33 +388,53 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     public void checkFruit()
     {
+        ImageButton left1,left2,right1,right2,up1,up2,down1,down2;
+        left1 = findViewById(R.id.left1);left2=findViewById(R.id.left2);right1=findViewById(R.id.right1);
+        right2=findViewById(R.id.right2);up1=findViewById(R.id.up1);up2=findViewById(R.id.up2);
+        down1=findViewById(R.id.down1);down2=findViewById(R.id.down2);
+
+
 
         if(gameField[yPosArray][xPosArray].isFruit())
         {gameField[yPosArray][xPosArray].setFruit(false);
 
             if(gameField[yPosArray][xPosArray].fruchtart==0)
-            {if(!redGhost.isFrozen) {redGhost.setSpeed(1);redGhost.entity.setBackgroundResource(R.drawable.snail);}
+            {pacman.fruitState++;
+                if(!redGhost.isFrozen) {redGhost.setSpeed(1);redGhost.entity.setBackgroundResource(R.drawable.snail);}
             if(!pinkGhost.isFrozen) {pinkGhost.setSpeed(1);pinkGhost.entity.setBackgroundResource(R.drawable.snail);}
             if(!orangeGhost.isFrozen) {orangeGhost.setSpeed(1);orangeGhost.entity.setBackgroundResource(R.drawable.snail);}
+
                 new CountDownTimer(10000, 1000) {
 
                     public void onTick(long millisUntilFinished) {
 
-                    }
+                    }                                                                       //KIRSCHE
 
                     public void onFinish() {
-                    resetFigures();
+                        pacman.fruitState--;if(pacman.fruitState==0){resetFigures();};
                     }
 
                 }.start();
             }
            else if(gameField[yPosArray][xPosArray].fruchtart==1)
-            {
+            {pacman.fruitState++;
+                left1.setBackgroundResource(R.drawable.buttoneis);left2.setBackgroundResource(R.drawable.buttoneis);
+                right1.setBackgroundResource(R.drawable.buttoneis);right2.setBackgroundResource(R.drawable.buttoneis);
+                up1.setBackgroundResource(R.drawable.buttoneis);up2.setBackgroundResource(R.drawable.buttoneis);
+                down1.setBackgroundResource(R.drawable.buttoneis);down2.setBackgroundResource(R.drawable.buttoneis);
+
                 redGhost.setFrozen(true); pinkGhost.setFrozen(true); orangeGhost.setFrozen(true);
                 redGhost.setSpeed(0);pinkGhost.setSpeed(0);orangeGhost.setSpeed(0);
                 redGhost.entity.setBackgroundResource(R.drawable.snowman);
                 pinkGhost.entity.setBackgroundResource(R.drawable.snowman);
                 orangeGhost.entity.setBackgroundResource(R.drawable.snowman);
+                Animation heat = AnimationUtils.loadAnimation(this,R.anim.heat);
+                TextView anzeige = findViewById(R.id.pauseCounter);
+                RelativeLayout spiellayout = findViewById(R.id.spielScreen);
+                anzeige.setBackgroundColor(Color.BLUE);
+                anzeige.setText("");
+                anzeige.bringToFront();
+                anzeige.startAnimation(heat);
                 new CountDownTimer(7000, 1000) {
 
                     public void onTick(long millisUntilFinished) {
@@ -417,7 +442,8 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                     }
 
                     public void onFinish() {
-                        redGhost.setFrozen(false);pinkGhost.setFrozen(false);orangeGhost.setFrozen(false);resetFigures();
+                        pacman.fruitState--;redGhost.setFrozen(false);pinkGhost.setFrozen(false);orangeGhost.setFrozen(false);if(pacman.fruitState==0){resetFigures();spiellayout.bringToFront()
+                        ;anzeige.setText("3");anzeige.setBackgroundColor(Color.TRANSPARENT);};
                     }
 
                 }.start();
@@ -428,8 +454,20 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                 pacman.playerScore+=200;
             }
           else  if(gameField[yPosArray][xPosArray].fruchtart==3)
-            {
-                pacman.setSpeed(4);
+            {pacman.fruitState++;
+                left1.setBackgroundResource(R.drawable.buttonflamme);left2.setBackgroundResource(R.drawable.buttonflamme);
+                right1.setBackgroundResource(R.drawable.buttonflamme);right2.setBackgroundResource(R.drawable.buttonflamme);
+                up1.setBackgroundResource(R.drawable.buttonflamme);up2.setBackgroundResource(R.drawable.buttonflamme);
+                down1.setBackgroundResource(R.drawable.buttonflamme);down2.setBackgroundResource(R.drawable.buttonflamme);
+
+                pacman.setSpeed(5);
+                Animation heat = AnimationUtils.loadAnimation(this,R.anim.heat);
+                TextView anzeige = findViewById(R.id.pauseCounter);
+                RelativeLayout spiellayout = findViewById(R.id.spielScreen);
+                anzeige.setBackgroundColor(Color.RED);
+                anzeige.setText("");
+                anzeige.bringToFront();
+                anzeige.startAnimation(heat);
                 new CountDownTimer(7000, 1000) {
 
                     public void onTick(long millisUntilFinished) {
@@ -437,7 +475,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                     }
 
                     public void onFinish() {
-                        resetFigures();
+                        pacman.fruitState--;if(pacman.fruitState==0){resetFigures();}spiellayout.bringToFront();anzeige.setText("3");anzeige.setBackgroundColor(Color.TRANSPARENT);
                     }
 
                 }.start();
@@ -447,11 +485,27 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     }
 public void resetFigures()
-{
+{ImageButton left1,left2,right1,right2,up1,up2,down1,down2;
+left1 = findViewById(R.id.left1);left2=findViewById(R.id.left2);right1=findViewById(R.id.right1);
+right2=findViewById(R.id.right2);up1=findViewById(R.id.up1);up2=findViewById(R.id.up2);
+down1=findViewById(R.id.down1);down2=findViewById(R.id.down2);
+
+left1.setBackgroundResource(R.drawable.buttonnormal);
+    left2.setBackgroundResource(R.drawable.buttonnormal);
+    right1.setBackgroundResource(R.drawable.buttonnormal);
+    right2.setBackgroundResource(R.drawable.buttonnormal);
+    up1.setBackgroundResource(R.drawable.buttonnormal);
+    up2.setBackgroundResource(R.drawable.buttonnormal);
+    down1.setBackgroundResource(R.drawable.buttonnormal);
+    down2.setBackgroundResource(R.drawable.buttonnormal);
+
+
     pacman.setSpeed(3);
-    redGhost.setSpeed(3);
-    pinkGhost.setSpeed(3);
+    redGhost.setSpeed(2);
+    pinkGhost.setSpeed(2);
     orangeGhost.setSpeed(3);
+
+
 
 
     redGhost.entity.setBackgroundResource(R.drawable.rotergeist);
@@ -463,16 +517,16 @@ public void resetFigures()
     public void setControllerLayout() {
 
         //Button for LEFT controller
-        ImageButton btnRight_L = findViewById(R.id.rightb);
-        ImageButton btnLeft_L = findViewById(R.id.leftb);
-        ImageButton btnUp_L = findViewById(R.id.upb);
-        ImageButton btnDown_L = findViewById(R.id.downb);
+        ImageButton btnRight_L = findViewById(R.id.right1);
+        ImageButton btnLeft_L = findViewById(R.id.left1);
+        ImageButton btnUp_L = findViewById(R.id.up1);
+        ImageButton btnDown_L = findViewById(R.id.down1);
 
         //Button for RIGHT controller
-        ImageButton btnRight_R = findViewById(R.id.rightb3);
-        ImageButton btnLeft_R = findViewById(R.id.leftb3);
-        ImageButton btnUp_R = findViewById(R.id.upb3);
-        ImageButton btnDown_R = findViewById(R.id.downb3);
+        ImageButton btnRight_R = findViewById(R.id.right2);
+        ImageButton btnLeft_R = findViewById(R.id.left2);
+        ImageButton btnUp_R = findViewById(R.id.up2);
+        ImageButton btnDown_R = findViewById(R.id.down2);
 
         //Pause Button
         ImageButton btnPause = findViewById(R.id.btnPause);
@@ -531,15 +585,14 @@ public void resetFigures()
         redGhost.setSpeed(0);
         orangeGhost.setSpeed(0);
         pinkGhost.setSpeed(0);
-        survivedmilliseconds -=20;
     }
     public void continueGame()
     {
         gamestart= true;
-        pacman.setSpeed(2);
-        redGhost.setSpeed(1);
-        orangeGhost.setSpeed(2);
-        pinkGhost.setSpeed(1);
+        pacman.setSpeed(3);
+        redGhost.setSpeed(2);
+        orangeGhost.setSpeed(3);
+        pinkGhost.setSpeed(2);
     }
 
     public boolean checkWin()
@@ -605,15 +658,15 @@ Boolean gameEndDone = false;
 
         setContentView(R.layout.spielbildschirm);
 
-        ImageButton up = findViewById(R.id.upb);
-        ImageButton left = findViewById(R.id.leftb);
-        ImageButton right = findViewById(R.id.rightb);
-        ImageButton down = findViewById(R.id.downb);
+        ImageButton up = findViewById(R.id.up1);
+        ImageButton left = findViewById(R.id.left1);
+        ImageButton right = findViewById(R.id.right1);
+        ImageButton down = findViewById(R.id.down1);
 
-        ImageButton up2 = findViewById(R.id.upb3);
-        ImageButton left2 = findViewById(R.id.leftb3);
-        ImageButton right2 = findViewById(R.id.rightb3);
-        ImageButton down2 = findViewById(R.id.downb3);
+        ImageButton up2 = findViewById(R.id.up2);
+        ImageButton left2 = findViewById(R.id.left2);
+        ImageButton right2 = findViewById(R.id.right2);
+        ImageButton down2 = findViewById(R.id.down2);
 
         ImageButton btnSpielmenue = (ImageButton) findViewById(R.id.btnSpielmenue);
 
@@ -669,9 +722,12 @@ Boolean gameEndDone = false;
                     spielbildschirm.this.runOnUiThread(new Runnable() {
                         synchronized public void run() {
                             if (mapcreated) {
+
                                 if(!gamestart){
                                     pauseGame();
                                 }
+
+
                                 if (pacmanIntersectsWithGhost(redGhost) || pacmanIntersectsWithGhost(orangeGhost) || pacmanIntersectsWithGhost(pinkGhost)){
                                     counter += 1;
                                     if(counter == 1)
@@ -769,7 +825,7 @@ Boolean gameEndDone = false;
         block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
         int currentBlockIndex = findBlockIndex(currentBlock);
         if(currentBlock.containsEntity(pacman.getEntity()) && gameField[(currentBlockIndex/40)-1][currentBlockIndex%40].getIsWall() == false){
-            pacman.getEntity().setRotation(0);
+            pacman.getEntity().setRotation(-90);
             pacman.setDirection(0);
         }
         else{
@@ -781,7 +837,9 @@ Boolean gameEndDone = false;
         block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
         int currentBlockIndex = findBlockIndex(currentBlock);
         if(currentBlock.containsEntity(pacman.getEntity()) && gameField[currentBlockIndex/40][(currentBlockIndex%40)-1].getIsWall() == false){
-            pacman.getEntity().setRotation(-90);
+            pacman.getEntity().setScaleX(-1);
+            if(pacman.getDirection()==0)pacman.getEntity().setRotation(90);
+            if(pacman.getDirection()==2)pacman.getEntity().setRotation(-90);
             pacman.setDirection(3);
         }
         else{
@@ -793,7 +851,7 @@ Boolean gameEndDone = false;
         block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
         int currentBlockIndex = findBlockIndex(currentBlock);
         if(currentBlock.containsEntity(pacman.getEntity()) && gameField[(currentBlockIndex/40)+1][currentBlockIndex%40].getIsWall() == false){
-            pacman.getEntity().setRotation(180);
+            pacman.getEntity().setRotation(90);
             pacman.setDirection(2);
         }
         else{
@@ -805,7 +863,9 @@ Boolean gameEndDone = false;
         block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
         int currentBlockIndex = findBlockIndex(currentBlock);
         if(currentBlock.containsEntity(pacman.getEntity()) && gameField[currentBlockIndex/40][(currentBlockIndex%40)+1].getIsWall() == false){
-            pacman.getEntity().setRotation(90);
+            pacman.getEntity().setScaleX(1);
+            if(pacman.getDirection()==0)pacman.getEntity().setRotation(90);
+            if(pacman.getDirection()==2)pacman.getEntity().setRotation(-90);
             pacman.setDirection(1);
         }
         else{
@@ -1117,6 +1177,7 @@ Boolean gameEndDone = false;
 
             mapcreated = true;
         }
+        pauseView();
     }
 
     public void setRandomPath(Ghost ghost){
@@ -1472,6 +1533,8 @@ Boolean gameEndDone = false;
             moveGhostToStartPos(pinkGhost, startingBlockPinkGhost);
             movePacmanToStartPos();
             pinkGhost.setInReach(true);
+            pauseGame();
+            pauseView();
             //onResume();
         }
     }
