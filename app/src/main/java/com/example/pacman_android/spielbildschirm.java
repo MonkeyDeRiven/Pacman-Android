@@ -87,6 +87,11 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     Ghost orangeGhost;
     Ghost pinkGhost;
 
+
+    Boolean red = false;
+    Boolean orange = false;
+    Boolean pink = false;
+
     public static Handler h;
 
     boolean mapcreated=false;
@@ -381,6 +386,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     }
 
+
     public void checkFruit()
     {
 
@@ -410,6 +416,10 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                 redGhost.entity.setBackgroundResource(R.drawable.snowman);
                 pinkGhost.entity.setBackgroundResource(R.drawable.snowman);
                 orangeGhost.entity.setBackgroundResource(R.drawable.snowman);
+                redGhost.isEatable = true;
+                pinkGhost.isEatable = true;
+                orangeGhost.isEatable = true;
+
                 new CountDownTimer(7000, 1000) {
 
                     public void onTick(long millisUntilFinished) {
@@ -417,6 +427,9 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                     }
 
                     public void onFinish() {
+                        redGhost.isEatable = false;
+                        pinkGhost.isEatable = false;
+                        orangeGhost.isEatable = false;
                         redGhost.setFrozen(false);pinkGhost.setFrozen(false);orangeGhost.setFrozen(false);resetFigures();
                     }
 
@@ -660,6 +673,8 @@ Boolean gameEndDone = false;
 
         setControllerLayout();
 
+
+
         Timer timer;
         {
             timer = new Timer();
@@ -672,10 +687,26 @@ Boolean gameEndDone = false;
                                 if(!gamestart){
                                     pauseGame();
                                 }
-                                if (pacmanIntersectsWithGhost(redGhost) || pacmanIntersectsWithGhost(orangeGhost) || pacmanIntersectsWithGhost(pinkGhost)){
+                                if ( (red = pacmanIntersectsWithGhost(redGhost)) || (orange = pacmanIntersectsWithGhost(orangeGhost)) || (pink = pacmanIntersectsWithGhost(pinkGhost))){
                                     counter += 1;
-                                    if(counter == 1)
+                                    if(counter == 1 && !redGhost.isFrozen() && !orangeGhost.isFrozen && !pinkGhost.isFrozen)
                                         onHitWithGhost();
+                                    else{
+                                        if(counter == 1){
+                                            if(red){
+                                                onHitWithGhostFrozen(redGhost, startingBlockRedGhost);
+                                                red = false;
+                                            }
+                                            else if(pink){
+                                                onHitWithGhostFrozen(pinkGhost, startingBlockPinkGhost);
+                                                pink = false;
+                                            }
+                                            else if(orange){
+                                                onHitWithGhostFrozen(orangeGhost, startingBlockOrangeGhost);
+                                                orange = false;
+                                            }
+                                        }
+                                    }
                                 }
                                 else {
                                     //Pacman gets moved first
@@ -1470,11 +1501,24 @@ Boolean gameEndDone = false;
             moveGhostToStartPos(redGhost, startingBlockRedGhost);
             moveGhostToStartPos(orangeGhost, startingBlockOrangeGhost);
             moveGhostToStartPos(pinkGhost, startingBlockPinkGhost);
-            movePacmanToStartPos();
             pinkGhost.setInReach(true);
+            movePacmanToStartPos();
+
             //onResume();
         }
     }
+
+    public void onHitWithGhostFrozen(Ghost ghost, block startingblock){
+       counter = 0;
+       ghost.setDirection(-1);
+       moveGhostToStartPos(ghost, startingblock);
+       pacman.playerScore += 150;
+       pacman.ateGhosts++;
+
+       if(ghost == pinkGhost)
+           pinkGhost.setInReach(true);
+    }
+
 
     // ==================== Bestenliste Funktionen ====================
 

@@ -19,6 +19,8 @@ public class Ghost {
     private int width;
     private int height;
 
+    public boolean isEatable = false;
+
     public int x;
     public int y;
 
