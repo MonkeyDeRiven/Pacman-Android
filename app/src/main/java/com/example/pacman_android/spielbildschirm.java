@@ -659,8 +659,8 @@ Boolean gameEndDone = false;
     synchronized protected void onPause() {
         super.onPause();
 
-        pacman.setDirection(-1);
-        redGhost.setDirection(-1);
+
+
 
        gamestart=false;
     }
