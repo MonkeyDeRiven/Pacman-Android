@@ -1241,19 +1241,11 @@ Boolean gameEndDone = false;
         newStop = new waypoint(currentNode);
         path.addWaypointEnd(newStop);
 
-        Random r1 = new Random();
-
-        int index = r1.nextInt(currentNode.getNeighbourListSize());
-        currentNode = currentNode.getNeighbour(index);
+        currentNode = currentNode.getNeighbour(0);
         newStop = new waypoint(currentNode);
         path.addWaypointEnd(newStop);
 
-        index = r1.nextInt(currentNode.getNeighbourListSize());
-        currentNode = currentNode.getNeighbour(index);
-        while(currentNode == path.getFirst().getNode()){
-            index = r1.nextInt(currentNode.getPrev().getNeighbourListSize());
-            currentNode = currentNode.getPrev().getNeighbour(index);
-        }
+        currentNode = currentNode.getNeighbour(0);
         newStop = new waypoint(currentNode);
         path.addWaypointEnd(newStop);
 
