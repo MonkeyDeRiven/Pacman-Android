@@ -44,16 +44,16 @@
 
     <ImageView
         android:id="@+id/buttonUp"
-        android:layout_width="130dp"
-        android:layout_height="116dp"
-        android:rotation="87"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonnormal"
+        android:rotation="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45"
-        app:srcCompat="@drawable/steuerungsbutton" />
+        app:layout_constraintVertical_bias="0.45" />
 
     <TextView
         android:id="@+id/right"
@@ -67,10 +67,10 @@
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.754"
+        app:layout_constraintHorizontal_bias="0.762"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.586" />
+        app:layout_constraintVertical_bias="0.634" />
 
     <TextView
         android:id="@+id/Unten"
@@ -91,28 +91,29 @@
 
     <ImageView
         android:id="@+id/buttonDown"
-        android:layout_width="130dp"
-        android:layout_height="116dp"
-        android:rotation="-91"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonnormal"
+        android:rotation="180"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.783"
-        app:srcCompat="@drawable/steuerungsbutton" />
+        app:layout_constraintVertical_bias="0.783" />
 
     <ImageView
         android:id="@+id/buttonLeft"
-        android:layout_width="130dp"
-        android:layout_height="116dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonnormal"
+        android:rotation="-90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62"
-        app:srcCompat="@drawable/steuerungsbutton" />
+        app:layout_constraintVertical_bias="0.62" />
 
     <TextView
         android:id="@+id/Links"
@@ -128,10 +129,10 @@
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/right"
-        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.586" />
+        app:layout_constraintVertical_bias="0.615" />
 
     <TextView
         android:id="@+id/Oben"
@@ -153,14 +154,15 @@
 
     <ImageView
         android:id="@+id/buttonRight"
-        android:layout_width="134dp"
-        android:layout_height="121dp"
-        android:rotationY="-182"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonnormal"
+        android:rotation="90"
+        android:rotationY="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.591"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.631"
-        app:srcCompat="@drawable/steuerungsbutton" />
+        app:layout_constraintVertical_bias="0.631" />
 </androidx.constraintlayout.widget.ConstraintLayout>

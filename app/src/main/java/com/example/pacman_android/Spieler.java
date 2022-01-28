@@ -20,6 +20,7 @@ public class Spieler {
     private int  speed=3;
     private int width;
     private int height;
+    public int fruitState=0;
 
     public int y;
     public int x;

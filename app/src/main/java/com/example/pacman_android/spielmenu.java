@@ -24,8 +24,10 @@ public class spielmenu extends AppCompatActivity {
         Button btnHilfe = (Button) findViewById(R.id.btnHilfeSpielmenue);
 
         btnVerlassen.setOnClickListener(view -> {
+            Intent i = new Intent(this,hauptbildschirm.class);
+            startActivity(i);
             finish();
-
+            spielbildschirm.h.sendEmptyMessage(0);
         });
 
         btnEinstellungen.setOnClickListener(view -> {
@@ -38,7 +40,10 @@ public class spielmenu extends AppCompatActivity {
 
         btnExit.setOnClickListener(view -> {
             finish();
+
+
         });
+
     }
 
     public void openEinstellungenActivity(){
