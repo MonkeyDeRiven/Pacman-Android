@@ -2,30 +2,25 @@ package com.example.pacman_android;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.content.Context;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
-import android.media.Image;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 
+import android.view.MotionEvent;
 import android.view.View;
 
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -448,7 +443,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                 anzeige.bringToFront();
                 anzeige.startAnimation(heat);
 
-                new CountDownTimer(7000, 1000) {
+                new CountDownTimer(7500, 1000) {
 
                     public void onTick(long millisUntilFinished) {
 
@@ -488,14 +483,15 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                 anzeige.setText("");
                 anzeige.bringToFront();
                 anzeige.startAnimation(heat);
-                new CountDownTimer(7000, 1000) {
+                new CountDownTimer(7500, 1000) {
 
                     public void onTick(long millisUntilFinished) {
 
                     }
 
                     public void onFinish() {
-                        pacman.fruitState--;if(pacman.fruitState==0){resetFigures();}spiellayout.bringToFront();anzeige.setText("3");anzeige.setBackgroundColor(Color.TRANSPARENT);
+                        pacman.fruitState--;if(pacman.fruitState==0){resetFigures();}
+                        spiellayout.bringToFront();anzeige.setText("3");anzeige.setBackgroundColor(Color.TRANSPARENT);
                     }
 
                 }.start();
@@ -694,30 +690,62 @@ Boolean gameEndDone = false;
             openSpielmenueView();
         });
 
-        up.setOnClickListener(view ->{
-            onUpMove();
+       up.setOnTouchListener(new View.OnTouchListener() {
+           @Override
+           public boolean onTouch(View view, MotionEvent motionEvent) {
+               onUpMove();
+               return false;
+           }
+       });
+        down.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                onDownMove();
+                return false;
+            }
         });
-        down.setOnClickListener(view ->{
-            onDownMove();
+        right.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                onRightMove();
+                return false;
+            }
         });
-        right.setOnClickListener(view ->{
-            onRightMove();
-        });
-        left.setOnClickListener(view ->{
-            onLeftMove();;
+        left.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                onLeftMove();
+                return false;
+            }
         });
 
-        up2.setOnClickListener(view ->{
-            onUpMove();
+        up2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                onUpMove();
+                return false;
+            }
         });
-        down2.setOnClickListener(view ->{
-            onDownMove();
+        down2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                onDownMove();
+                return false;
+            }
         });
-        right2.setOnClickListener(view ->{
-            onRightMove();
+        right2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                onRightMove();
+                return false;
+            }
         });
-        left2.setOnClickListener(view ->{
-            onLeftMove();;
+        left2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                onLeftMove();
+                return false;
+            }
         });
 
         h = new Handler() {
@@ -775,9 +803,11 @@ Boolean gameEndDone = false;
                                         if(pacman.reachedNextBlock()){
                                             block currentBlock = findEntitysNode(pacman.x + pacman.getWidth()/2, pacman.y + pacman.getHeight()/2).getField();
                                             int currentBlockIndex = findBlockIndex(pacman.getNextBlock());
-                                            if(pacman.getDirectionBuffer() == 0){
-                                                if(gameField[(currentBlockIndex/40)-1][currentBlockIndex%40].getIsWall() == false){
-                                                    pacman.getEntity().setRotation(0);
+                                            if(pacman.getDirection()==0){
+                                              //  if(gameField[(currentBlockIndex/40)-1][currentBlockIndex%40].getIsWall() == false){
+                                                   pacman.getEntity().setRotation(-90);
+                                                  //  if(pacman.getDirection()==2)pacman.getEntity().setRotation(180);
+                                                   // if(pacman.getDirection()==3)pacman.getEntity().setRotation(-90);
                                                     pacman.setDirection(0);
                                                     pacman.setDirectionBuffer(-1);
                                                     pacman.setNextBlock(null);
@@ -785,10 +815,12 @@ Boolean gameEndDone = false;
                                                 else{
                                                     pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
                                                 }
-                                            }
-                                            if(pacman.getDirectionBuffer() == 1){
-                                                if(gameField[currentBlockIndex/40][(currentBlockIndex%40)+1].getIsWall() == false){
-                                                    pacman.getEntity().setRotation(90);
+
+                                            if(pacman.getDirection()==1){
+                                              //  if(gameField[currentBlockIndex/40][(currentBlockIndex%40)+1].getIsWall() == false){
+                                                    pacman.getEntity().setRotation(0);
+                                                  //  if(pacman.getDirection()==2)pacman.getEntity().setRotation(90);
+                                                  //  if(pacman.getDirection()==3)pacman.getEntity().setRotation(180);
                                                     pacman.setDirection(1);
                                                     pacman.setDirectionBuffer(-1);
                                                     pacman.setNextBlock(null);
@@ -796,10 +828,12 @@ Boolean gameEndDone = false;
                                                 else{
                                                     pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
                                                 }
-                                            }
-                                            if(pacman.getDirectionBuffer() == 2){
-                                                if(gameField[(currentBlockIndex/40)+1][currentBlockIndex%40].getIsWall() == false){
-                                                    pacman.getEntity().setRotation(180);
+
+                                            if(pacman.getDirection()==2){
+                                             //   if(gameField[(currentBlockIndex/40)+1][currentBlockIndex%40].getIsWall() == false){
+                                                   pacman.getEntity().setRotation(90);
+                                                 //   if(pacman.getDirection()==1)pacman.getEntity().setRotation(-90);
+                                                 //   if(pacman.getDirection()==3)pacman.getEntity().setRotation(90);
                                                     pacman.setDirection(2);
                                                     pacman.setDirectionBuffer(-1);
                                                     pacman.setNextBlock(null);
@@ -807,10 +841,12 @@ Boolean gameEndDone = false;
                                                 else{
                                                     pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
                                                 }
-                                            }
-                                            if(pacman.getDirectionBuffer() == 3){
-                                                if(gameField[currentBlockIndex/40][(currentBlockIndex%40)-1].getIsWall() == false){
-                                                    pacman.getEntity().setRotation(-90);
+
+                                            if(pacman.getDirection()==3){
+                                             //   if(gameField[currentBlockIndex/40][(currentBlockIndex%40)-1].getIsWall() == false){
+                                                    pacman.getEntity().setRotation(180);
+                                                   // if(pacman.getDirection()==2)pacman.getEntity().setRotation(-90);
+                                                 //   if(pacman.getDirection()==1)pacman.getEntity().setRotation(180);
                                                     pacman.setDirection(3);
                                                     pacman.setDirectionBuffer(-1);
                                                     pacman.setNextBlock(null);
@@ -818,7 +854,7 @@ Boolean gameEndDone = false;
                                                 else{
                                                     pacman.setNextBlock(getNexBlock(currentBlock, pacman.getDirection()));
                                                 }
-                                            }
+
                                         }
                                     }
 
@@ -1555,7 +1591,7 @@ Boolean gameEndDone = false;
 
         pacman.life -= 1;
         if(pacman.life == 0)
-            gameEnd();
+          gameEnd();
         else{
             if(pacman.life == 1){
                 herz2.setVisibility(herz2.INVISIBLE);
@@ -1563,7 +1599,6 @@ Boolean gameEndDone = false;
             if(pacman.life == 2){
                 herz3.setVisibility(herz3.INVISIBLE);
             }
-            pauseView();
             moveGhostToStartPos(redGhost, startingBlockRedGhost);
             moveGhostToStartPos(orangeGhost, startingBlockOrangeGhost);
             moveGhostToStartPos(pinkGhost, startingBlockPinkGhost);
@@ -1590,6 +1625,8 @@ Boolean gameEndDone = false;
 
 
     // ==================== Bestenliste Funktionen ====================
+
+
 
     synchronized public void gameEnd(){
         savePlayerStats();
@@ -1724,6 +1761,8 @@ Boolean gameEndDone = false;
             e.printStackTrace();
         }
     }
+
+
 
     @Override
     public void getUserName(String username) {
