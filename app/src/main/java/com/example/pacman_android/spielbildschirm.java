@@ -89,6 +89,11 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
     Ghost orangeGhost;
     Ghost pinkGhost;
 
+
+    Boolean red = false;
+    Boolean orange = false;
+    Boolean pink = false;
+
     public static Handler h;
 
     boolean mapcreated=false;
@@ -386,6 +391,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
 
     }
 
+
     public void checkFruit()
     {
         ImageButton left1,left2,right1,right2,up1,up2,down1,down2;
@@ -428,6 +434,12 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                 redGhost.entity.setBackgroundResource(R.drawable.snowman);
                 pinkGhost.entity.setBackgroundResource(R.drawable.snowman);
                 orangeGhost.entity.setBackgroundResource(R.drawable.snowman);
+
+                redGhost.isEatable = true;
+                pinkGhost.isEatable = true;
+                orangeGhost.isEatable = true;
+
+
                 Animation heat = AnimationUtils.loadAnimation(this,R.anim.heat);
                 TextView anzeige = findViewById(R.id.pauseCounter);
                 RelativeLayout spiellayout = findViewById(R.id.spielScreen);
@@ -435,6 +447,7 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                 anzeige.setText("");
                 anzeige.bringToFront();
                 anzeige.startAnimation(heat);
+
                 new CountDownTimer(7000, 1000) {
 
                     public void onTick(long millisUntilFinished) {
@@ -442,8 +455,15 @@ public class spielbildschirm extends AppCompatActivity implements RankingDialog.
                     }
 
                     public void onFinish() {
+
+                        redGhost.isEatable = false;
+                        pinkGhost.isEatable = false;
+                        orangeGhost.isEatable = false;
+                        redGhost.setFrozen(false);pinkGhost.setFrozen(false);orangeGhost.setFrozen(false);resetFigures();
+
                         pacman.fruitState--;redGhost.setFrozen(false);pinkGhost.setFrozen(false);orangeGhost.setFrozen(false);if(pacman.fruitState==0){resetFigures();spiellayout.bringToFront()
                         ;anzeige.setText("3");anzeige.setBackgroundColor(Color.TRANSPARENT);};
+
                     }
 
                 }.start();
@@ -714,6 +734,8 @@ Boolean gameEndDone = false;
 
         setControllerLayout();
 
+
+
         Timer timer;
         {
             timer = new Timer();
@@ -727,11 +749,25 @@ Boolean gameEndDone = false;
                                     pauseGame();
                                 }
 
-
-                                if (pacmanIntersectsWithGhost(redGhost) || pacmanIntersectsWithGhost(orangeGhost) || pacmanIntersectsWithGhost(pinkGhost)){
-                                    counter += 1;
-                                    if(counter == 1)
+                                if ((red = pacmanIntersectsWithGhost(redGhost)) || (orange = pacmanIntersectsWithGhost(orangeGhost)) || (pink = pacmanIntersectsWithGhost(pinkGhost))){                                     counter += 1;
+                                    if(counter == 1 && !redGhost.isFrozen() && !orangeGhost.isFrozen && !pinkGhost.isFrozen)
                                         onHitWithGhost();
+                                    else{
+                                        if(counter == 1){
+                                            if(red){
+                                                onHitWithGhostFrozen(redGhost, startingBlockRedGhost);
+                                                red = false;
+                                            }
+                                            else if(pink){
+                                                onHitWithGhostFrozen(pinkGhost, startingBlockPinkGhost);
+                                                pink = false;
+                                            }
+                                            else if(orange){
+                                                onHitWithGhostFrozen(orangeGhost, startingBlockOrangeGhost);
+                                                orange = false;
+                                            }
+                                        }
+                                    }
                                 }
                                 else {
                                     //Pacman gets moved first
@@ -1531,13 +1567,27 @@ Boolean gameEndDone = false;
             moveGhostToStartPos(redGhost, startingBlockRedGhost);
             moveGhostToStartPos(orangeGhost, startingBlockOrangeGhost);
             moveGhostToStartPos(pinkGhost, startingBlockPinkGhost);
-            movePacmanToStartPos();
             pinkGhost.setInReach(true);
+            movePacmanToStartPos();
+
             pauseGame();
             pauseView();
+
             //onResume();
         }
     }
+
+    public void onHitWithGhostFrozen(Ghost ghost, block startingblock){
+       counter = 0;
+       ghost.setDirection(-1);
+       moveGhostToStartPos(ghost, startingblock);
+       pacman.playerScore += 150;
+       pacman.ateGhosts++;
+
+       if(ghost == pinkGhost)
+           pinkGhost.setInReach(true);
+    }
+
 
     // ==================== Bestenliste Funktionen ====================
 
@@ -1582,6 +1632,10 @@ Boolean gameEndDone = false;
     public void addHighscore(){
         int size = arrBestenListe.size();
         Boolean playerIsBetter = false;
+
+        if(size <= 5){
+            playerIsBetter = true;
+        }
 
         for(int i = 0; i<size; i++){
             if(pacman.playerScore >= arrBestenListe.get(i).score) {
