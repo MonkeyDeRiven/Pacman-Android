@@ -1243,17 +1243,11 @@ Boolean gameEndDone = false;
 
         Random r1 = new Random();
 
-        int index = r1.nextInt(currentNode.getNeighbourListSize());
-        currentNode = currentNode.getNeighbour(index);
+        currentNode = currentNode.getNeighbour(0);
         newStop = new waypoint(currentNode);
         path.addWaypointEnd(newStop);
 
-        index = r1.nextInt(currentNode.getNeighbourListSize());
-        currentNode = currentNode.getNeighbour(index);
-        while(currentNode == path.getFirst().getNode()){
-            index = r1.nextInt(currentNode.getPrev().getNeighbourListSize());
-            currentNode = currentNode.getPrev().getNeighbour(index);
-        }
+        currentNode = currentNode.getNeighbour(0);
         newStop = new waypoint(currentNode);
         path.addWaypointEnd(newStop);
 
@@ -1474,11 +1468,11 @@ Boolean gameEndDone = false;
                 if(i < arrayHeight-1 && gameField[i+1][j].getIsWall() == false){
                     currentNode.addNeighbour(findGraphNode(gameField[i+1][j]));
                 }
-                if(j > 0 && gameField[i][j-1].getIsWall() == false){
-                    currentNode.addNeighbour(findGraphNode(gameField[i][j-1]));
-                }
                 if(j < arrayLength-1 && gameField[i][j+1].getIsWall() == false){
                     currentNode.addNeighbour(findGraphNode(gameField[i][j+1]));
+                }
+                if(j > 0 && gameField[i][j-1].getIsWall() == false){
+                    currentNode.addNeighbour(findGraphNode(gameField[i][j-1]));
                 }
             }
         }
