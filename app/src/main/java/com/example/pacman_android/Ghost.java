@@ -99,7 +99,7 @@ public class Ghost {
         int pacmanCenterY = (int)entity.getY() + entity.getHeight()/2;
 
         int distance = (int) Math.sqrt((ghostCenterX - pacmanCenterX) * (ghostCenterX - pacmanCenterX) + (pacmanCenterX - pacmanCenterY) * (pacmanCenterX - pacmanCenterY));
-        if(distance < 500){
+        if(distance < 300){
             System.out.println("TRUE");
             return true;
         }
