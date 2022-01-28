@@ -1138,12 +1138,6 @@ Boolean gameEndDone = false;
                         newBlock.setFruit(true);newBlock.fruchtart=3;
                     }
 
-
-
-
-
-
-
                     if (i == 9 && j == 19) {
                         startingBlockPacman = newBlock;
                     }
@@ -1670,7 +1664,7 @@ Boolean gameEndDone = false;
         int size = arrBestenListe.size();
         Boolean playerIsBetter = false;
 
-        if(size <= 5){
+        if(size < 5){
             playerIsBetter = true;
         }
 

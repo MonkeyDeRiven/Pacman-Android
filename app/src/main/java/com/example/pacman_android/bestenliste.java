@@ -72,7 +72,7 @@ public class bestenliste extends AppCompatActivity {
         btnExit.setOnClickListener(view -> {
             finish();
         });
-       // saveFile();// CLEAR RANKING
+        //saveFile();// CLEAR RANKING
         loadData();
         sortArr();
         setUpBestenliste();

@@ -33,7 +33,7 @@
         <TextView
             android:id="@+id/Text"
             android:layout_width="515dp"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:gravity="start"
             android:text="HALLO"
             android:textAlignment="textStart"
@@ -64,7 +64,7 @@
         <TextView
             android:id="@+id/Text2"
             android:layout_width="515dp"
-            android:layout_height="50dp"
+            android:layout_height="62dp"
             android:gravity="start"
             android:text="HALLO"
             android:textAlignment="textStart"
