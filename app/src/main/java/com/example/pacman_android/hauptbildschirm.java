@@ -11,13 +11,17 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.myfirstapp.R;
 
@@ -50,7 +54,7 @@ public class hauptbildschirm extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(this, R.raw.pacmansong);
         mediaPlayer.start();
 
-        btnBestenliste = (Button)findViewById(R.id.btnBestenliste);
+        btnBestenliste = (Button) findViewById(R.id.btnBestenliste);
         btnEinstellungen = (Button) findViewById(R.id.btnEinsellungen);
         btnHilfe = (Button) findViewById(R.id.btnHilfeSpielmenue);
         btnSpielen = (Button) findViewById(R.id.btnSpielen);
@@ -58,31 +62,26 @@ public class hauptbildschirm extends AppCompatActivity {
         pacman = findViewById(R.id.pacmananimated);
 
 
-
-
-skinanimater =(int) (Math.random()*3-0+1) + 0;
-        if(skinanimater==0)  pacman.setBackgroundResource(R.drawable.pacmanmovementgelb);
-        if(skinanimater==1)  pacman.setBackgroundResource(R.drawable.pacmanmovementblau);
-        if(skinanimater==2)  pacman.setBackgroundResource(R.drawable.pacmanmovementgrun);
-        if(skinanimater==3)  pacman.setBackgroundResource(R.drawable.pacmanmovementrot);
+        skinanimater = (int) (Math.random() * 3 - 0 + 1) + 0;
+        if (skinanimater == 0) pacman.setBackgroundResource(R.drawable.pacmanmovementgelb);
+        if (skinanimater == 1) pacman.setBackgroundResource(R.drawable.pacmanmovementblau);
+        if (skinanimater == 2) pacman.setBackgroundResource(R.drawable.pacmanmovementgrun);
+        if (skinanimater == 3) pacman.setBackgroundResource(R.drawable.pacmanmovementrot);
         pacmanmovement = (AnimationDrawable) pacman.getBackground();
         pacmanmovement.start();
 
 
-
-
-
-        btnEinstellungen.setOnClickListener(view ->{
-       Intent i = new Intent(this,einstellungen.class);
-            animate(btnEinstellungen,i);
+        btnEinstellungen.setOnClickListener(view -> {
+            Intent i = new Intent(this, einstellungen.class);
+            animate(btnEinstellungen, i);
 
 
         });
 
 
-        btnSkinauswahl.setOnClickListener(view ->{
-            shake= AnimationUtils.loadAnimation(this, R.anim.shake);
-            Intent i = new Intent(this,skinliste.class);
+        btnSkinauswahl.setOnClickListener(view -> {
+            shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+            Intent i = new Intent(this, skinliste.class);
             shake.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
@@ -104,24 +103,101 @@ skinanimater =(int) (Math.random()*3-0+1) + 0;
         });
 
         btnBestenliste.setOnClickListener(view -> {
-            Intent i = new Intent(this,bestenliste.class);
-            animate(btnBestenliste,i);
+            Intent i = new Intent(this, bestenliste.class);
+            animate(btnBestenliste, i);
         });
 
         btnSpielen.setOnClickListener(view -> {
             mediaPlayer.stop();
             mediaPlayer.release();
-            Intent i = new Intent(this,spielbildschirm.class);
-            animate(btnSpielen,i);
+            TextView m = findViewById(R.id.m);
+            TextView a = findViewById(R.id.a);
+            TextView n = findViewById(R.id.n);
+            ImageView kleiderbugel = findViewById(R.id.skinauswahl);
+            Animation rightmove = AnimationUtils.loadAnimation(this, R.anim.heat2);
+            ImageView pacman = findViewById(R.id.pacmananimated);
+            pacman.startAnimation(rightmove);
+            new CountDownTimer(900, 1200) {
+
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                public void onFinish() {
+                    m.setText("");
+                }
+
+            }.start();
+            new CountDownTimer(1300, 1200) {
+
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                public void onFinish() {
+                    a.setText("");
+                }
+
+            }.start();
+            new CountDownTimer(1700, 1200) {
+
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                public void onFinish() {
+                    n.setText("");
+                }
+
+            }.start();
+
+            new CountDownTimer(2100, 1200) {
+
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                public void onFinish() {
+                    kleiderbugel.setVisibility(View.INVISIBLE);
+                }
+
+            }.start();
+
+
+
+        new CountDownTimer(2300, 2300) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                Intent i = new Intent(getBaseContext(), spielbildschirm.class);
+                startActivity(i);
+            }
+
+        }.start();
+
+            new CountDownTimer(2800, 2300) {
+
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                public void onFinish() {
+                    m.setText("m");a.setText("a");n.setText("n");kleiderbugel.setVisibility(View.VISIBLE);
+                }
+
+            }.start();
 
         });
 
         btnHilfe.setOnClickListener(view -> {
-            Intent i = new Intent(this,hilfe.class);
-            animate(btnHilfe,i);
+            Intent i = new Intent(this, hilfe.class);
+            animate(btnHilfe, i);
         });
-    }
 
+}
 
 
     public void openActivitySpielen(){

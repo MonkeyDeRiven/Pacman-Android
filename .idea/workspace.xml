@@ -12,17 +12,22 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2626e8a9-496f-4f5a-82f8-469f0e1fd1cb" name="Default Changelist" comment="Buttonchanges, Animation bei Eis- und Feuerfrucht und Buttontransitions, Der Counter zählt nun auch runter, nachdem Pacman gefangen wurde">
+    <list default="true" id="2626e8a9-496f-4f5a-82f8-469f0e1fd1cb" name="Default Changelist" comment="Buttons onTouch und nicht onClick, Unterschied:&#10;Buttons können jetzt gedrückt gehalten werden(Maus gedrückt halten und auf den Cursor in den Button rumbewegen)">
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/hauptbildschirm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/hauptbildschirm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielbildschirm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pacman_android/spielbildschirm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/anim/heat2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/anim/heat2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hauptbildschirm.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643289324133</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Buttons onTouch und nicht onClick, Unterschied:&#10;Buttons können jetzt gedrückt gehalten werden(Maus gedrückt halten und auf den Cursor in den Button rumbewegen)">
+      <created>1643331716130</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1643331716130</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -264,7 +276,8 @@
     <MESSAGE value="Früchte" />
     <MESSAGE value="Finalscreen alder" />
     <MESSAGE value="Buttonchanges, Animation bei Eis- und Feuerfrucht und Buttontransitions, Der Counter zählt nun auch runter, nachdem Pacman gefangen wurde" />
-    <option name="LAST_COMMIT_MESSAGE" value="Buttonchanges, Animation bei Eis- und Feuerfrucht und Buttontransitions, Der Counter zählt nun auch runter, nachdem Pacman gefangen wurde" />
+    <MESSAGE value="Buttons onTouch und nicht onClick, Unterschied:&#10;Buttons können jetzt gedrückt gehalten werden(Maus gedrückt halten und auf den Cursor in den Button rumbewegen)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Buttons onTouch und nicht onClick, Unterschied:&#10;Buttons können jetzt gedrückt gehalten werden(Maus gedrückt halten und auf den Cursor in den Button rumbewegen)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

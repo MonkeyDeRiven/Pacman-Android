@@ -1670,7 +1670,7 @@ Boolean gameEndDone = false;
         int size = arrBestenListe.size();
         Boolean playerIsBetter = false;
 
-        if(size <= 5){
+        if(size < 5){
             playerIsBetter = true;
         }
 
